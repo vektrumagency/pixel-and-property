@@ -1,0 +1,314 @@
+{
+  "nav": {
+    "digital": "Digital",
+    "management": "Management",
+    "investments": "Investments",
+    "contact": "Contact"
+  },
+  "home": {
+    "eyebrow": "Estoril, Portugal",
+    "headline": "The Full Real Estate Ecosystem",
+    "aboutLabel": "About us",
+    "aboutTitleLine1": "One group.",
+    "aboutTitleEm": "Three sectors.",
+    "aboutTitleLine2": "One vision.",
+    "aboutText": "Pixel & Property is a real estate group based in Estoril, Portugal. We combine premium media production, professional property management, and investment strategy to offer a truly integrated approach to the real estate market — for agents, developers, and investors who refuse to settle for ordinary.",
+    "statYears": "Years of experience",
+    "statSectors": "Sectors of activity",
+    "statPT": "All of Portugal",
+    "statEN": "Bilingual",
+    "sectors": {
+      "label": "Sectors",
+      "title": "Explore our sectors",
+      "viewAll": "View All",
+      "items": {
+        "digital": {
+          "name": "Digital",
+          "tags": "Photography · Video · Drone",
+          "cta": "Explore Digital"
+        },
+        "management": {
+          "name": "Management",
+          "tags": "Rental Management · Reporting",
+          "cta": "Explore Management"
+        },
+        "investments": {
+          "name": "Investments",
+          "tags": "Coming soon",
+          "cta": "Coming soon"
+        }
+      }
+    }
+  },
+  "digital": {
+    "hero": {
+      "eyebrow": "Pixel & Property Digital",
+      "headline": "Your property's first showing happens online.<br>Make it unforgettable.",
+      "cta": "Discover our services"
+    },
+    "clients": {
+      "label": "Trusted by Portugal's leading agencies"
+    },
+    "about": {
+      "label": "About us",
+      "title": "The media studio that quality real estate deserves",
+      "text1": "Pixel & Property Digital is a forward-thinking real estate media studio, built for agents and developers who market to the world. We combine professional HDR photography, cinematic video, drone footage, and cutting-edge AI technology to transform listings into compelling visual stories.",
+      "text2": "Specialised in strategic social media content, for showcasing properties or building personal brands. With over 8 years of camera experience and 4 years of social media expertise.",
+      "cta": "Meet the Team"
+    },
+    "stats": {
+      "label": "Facts & Numbers",
+      "title": "Results that speak for themselves",
+      "team": "Team members",
+      "projects": "Projects delivered",
+      "views": "Online views",
+      "value": "Property value captured",
+      "years": "Years of experience",
+      "delivery": "Fastest turnaround"
+    },
+    "services": {
+      "title": "Build Your Presence. Stand Out. Attract Attention.",
+      "subtitle": "Discover the full potential of our services.",
+      "cta": "Discover more",
+      "items": [
+        {
+          "tag": "",
+          "name": "HDR Photography",
+          "desc": "Professional interior and exterior photography. A blend of architectural and real estate photography that captures every detail of your property with precision and quality. Delivered within 24 hours."
+        },
+        {
+          "tag": "",
+          "name": "Promotional Videos",
+          "desc": "Short-form vertical videos, designed to dominate social media — Instagram Reels, TikTok, and Facebook. Content that captures attention and drives results."
+        },
+        {
+          "tag": "",
+          "name": "Cinematic Video",
+          "desc": "The classic look with a modern touch. Full horizontal property tour videos with smooth camera movements and professional color grading. Delivered in 3 days."
+        },
+        {
+          "tag": "",
+          "name": "Drone & Aerial Photography",
+          "desc": "Aerial photography and video that reveal perspectives ground-level images can never capture — inside and outside the property."
+        },
+        {
+          "tag": "",
+          "name": "AI Integration",
+          "desc": "We transform empty properties into beautifully staged spaces and projects still under construction into photorealistic final visualisations. The future of your property, visible today."
+        },
+        {
+          "tag": "",
+          "name": "Social Media Management",
+          "desc": "We handle the strategy, posting, and scheduling of your property content on social media — so you can stay focused on what really matters: the sale."
+        }
+      ]
+    },
+    "reels": {
+      "title": "Scroll-stopping content. Results that sell."
+    },
+    "portfolio": {
+      "title": "Selected Projects",
+      "viewAll": "View All",
+      "caseStudy": "View Project",
+      "back": "Portfolio",
+      "year": "Year",
+      "location": "Location",
+      "services": "Services",
+      "strategyLabel": "The Strategy",
+      "whatWeDidLabel": "What We Did",
+      "resultsLabel": "Results",
+      "projectCta": "I Want a Project Like This"
+    },
+    "pricing": {
+      "label": "Pricing",
+      "title": "Transparent pricing. No surprises.<br>Just exceptional media.",
+      "note": "All prices are per property. Monthly packages available for agencies with regular volume. Travel included within 50km of Estoril. €0.50/km beyond.",
+      "perProperty": "per property",
+      "book": "Book Now",
+      "tiers": [
+        {
+          "name": "Essence",
+          "price": "250",
+          "features": ["Cinematic Horizontal Video", "HDR Photography (25+)", "AI Home Staging"]
+        },
+        {
+          "name": "Signature",
+          "price": "465",
+          "popular": true,
+          "features": ["Everything in Essence PLUS:", "Promotional Vertical Video"]
+        },
+        {
+          "name": "Prestige",
+          "price": "640",
+          "features": ["Everything in Signature PLUS:"]
+        },
+        {
+          "name": "Other Services",
+          "price": "",
+          "custom": "Enquire",
+          "customLabel": "on request",
+          "features": ["Drone Photos & Video", "Horizontal or Vertical Vlog", "\"Netflix\" Style YouTube Video", "Personal Brand Video", "Social Media Management", "Manychat Automations"]
+        }
+      ]
+    },
+    "testimonials": {
+      "label": "Clients",
+      "title": "Trusted by agents. Proven results.",
+      "items": [
+        { "text": "The quality of their work exceeded all our expectations. The photos and videos completely transformed our listings.", "author": "Maria Santos", "role": "Director, RE/MAX Cascais" },
+        { "text": "Impeccable professionalism from first contact. The cinematic videos are simply extraordinary.", "author": "João Ferreira", "role": "Consultant, Keller Williams Lisbon" },
+        { "text": "The drone footage and AI virtual staging made all the difference. We sold the property in record time.", "author": "Ana Costa", "role": "CEO, Costa Properties" },
+        { "text": "Outstanding turnaround time. We had the photos and video ready to publish within 48 hours of the shoot.", "author": "Carla Mendes", "role": "Agent, ERA Cascais" },
+        { "text": "The bilingual team was perfect for our international clients. Seamless communication in English and Portuguese.", "author": "David Miller", "role": "Managing Partner, The Agency Algarve" },
+        { "text": "The social media videos generated more engagement than any content we have ever posted. Incredible results.", "author": "Sofia Oliveira", "role": "Marketing Director, Century 21 Estoril" }
+      ]
+    },
+    "how": {
+      "label": "How it works",
+      "title": "Four simple steps to sell",
+      "steps": [
+        { "name": "Book", "desc": "Contact us via WhatsApp, email, or book directly. We confirm within 24 hours." },
+        { "name": "Shoot", "desc": "We arrive ready. Photography, video, drone — everything captured in a single 1–2 hour visit." },
+        { "name": "Edit", "desc": "Professional color grading, AI enhancements, virtual staging, and video editing." },
+        { "name": "Deliver", "desc": "Photos in 48h. Cinematic videos in 3 days. Social media content in 10 days." }
+      ]
+    },
+    "faq": {
+      "label": "FAQs",
+      "title": "Everything you need to know",
+      "items": [
+        { "q": "What's included in a standard shoot?", "a": "Every shoot includes 25+ HDR photos, a cinematic horizontal video (2–3 min), a vertical social media video (30–60 sec), drone footage, and professional editing. AI services available as an add-on." },
+        { "q": "How quickly do you deliver?", "a": "Photos: 48 hours. Cinematic videos: 3 days. Social media videos: 10 days. AI services within 24–48 hours. Rush delivery available." },
+        { "q": "Where do you operate?", "a": "We serve properties across all of Portugal — Lisbon, Cascais, Estoril, Porto, Algarve, Comporta, and the Silver Coast. Travel included within 50km of Estoril." },
+        { "q": "Do you work in English and Portuguese?", "a": "Yes. Pixel & Property operates fully in both English and Portuguese. Website, communication, and deliverables are available in both languages." }
+      ]
+    },
+    "contact": {
+      "label": "Contact",
+      "title": "Ready to elevate your listings?",
+      "subtitle": "Whether you're booking your first shoot or discussing a monthly partnership, we'd love to hear from you.",
+      "location": "Estoril, Portugal — Serving all of Portugal",
+      "whatsapp": "Chat on WhatsApp",
+      "form": {
+        "name": "Name",
+        "namePlaceholder": "Your name",
+        "email": "Email",
+        "phone": "Phone (optional)",
+        "message": "Message",
+        "messagePlaceholder": "How can we help?",
+        "submit": "Send Message"
+      }
+    }
+  },
+  "management": {
+    "hero": {
+      "eyebrow": "Pixel & Property Management",
+      "headline": "Your property deserves<br>more than a manager.<br><em>It deserves a partner.</em>",
+      "cta": "Discover our services"
+    },
+    "pillars": [
+      {
+        "title": "Total peace of mind",
+        "desc": "We handle everything — tenants, maintenance, documentation and payments. Landlords receive detailed monthly reports with zero hassle."
+      },
+      {
+        "title": "Maximised returns",
+        "desc": "Dynamic pricing strategy, rigorous tenant selection and maximised occupancy. Your property works for you — even when you're on the other side of the world."
+      },
+      {
+        "title": "Premium experience",
+        "desc": "Every interaction — with owners and tenants alike — is handled with professionalism and attention to detail. Because service quality reflects property value."
+      }
+    ],
+    "about": {
+      "label": "About us",
+      "text1": "Pixel & Property Management was born from a real gap we identified in the market: property owners with valuable assets who lacked access to truly professional, transparent and dedicated management.",
+      "text2": "Based in Estoril, we serve domestic and international property owners across all of Portugal. With a bilingual approach and a digital reporting system, owners always maintain full control — effortlessly.",
+      "cta": "Get in Touch"
+    },
+    "services": {
+      "label": "What we do",
+      "title": "Full management. Zero complications.",
+      "cta": "Get in Touch",
+      "items": [
+        {
+          "name": "Rental Management",
+          "desc": "Rigorous tenant selection and screening, contracts, rent collection, deposit management and renewals. All handled with legal compliance and full transparency."
+        },
+        {
+          "name": "Maintenance & Repairs",
+          "desc": "A trusted network of technicians and service providers. Fast emergency response, preventive maintenance and works supervision — without any owner intervention required."
+        },
+        {
+          "name": "Reporting & Transparency",
+          "desc": "Detailed monthly reports covering income, expenses, occupancy and property condition. Permanent digital access to your property's complete history."
+        },
+        {
+          "name": "Legal & Tax Management",
+          "desc": "Legal oversight of tenancy, compliance with Portuguese legislation, income declaration support and mandatory documentation management."
+        },
+        {
+          "name": "International Owners",
+          "desc": "Fully bilingual service for non-resident owners. Communication in English and Portuguese, adapted to your timezone and the needs of remote property management."
+        },
+        {
+          "name": "Property Preparation",
+          "desc": "Home staging, professional cleaning, photography and video (in partnership with Pixel & Property Digital) to ensure your property is presented to the market in the best possible light."
+        }
+      ]
+    },
+    "how": {
+      "label": "How it works",
+      "title": "From first contact to ongoing management",
+      "steps": [
+        { "name": "Free consultation", "desc": "We analyse your property, the local market, and present a tailored proposal with no commitment." },
+        { "name": "Onboarding", "desc": "We handle all documentation, property inspection, photography and rental strategy definition." },
+        { "name": "Active management", "desc": "Listing on platforms, tenant selection, contracts and daily management — all under our team's supervision." },
+        { "name": "Monthly report", "desc": "You receive a detailed report of everything that happened at your property. Full transparency, always." }
+      ]
+    },
+    "showroom": {
+      "label": "Portfolio",
+      "title": "Properties under our management",
+      "subtitle": "Get in touch to learn more about any of these properties.",
+      "cta": "Get in Touch",
+      "properties": [
+        { "name": "Modern Villa", "location": "Cascais", "tags": "4 bedrooms · Pool · Garden" },
+        { "name": "Contemporary Apartment", "location": "Estoril", "tags": "3 bedrooms · Sea view · Garage" },
+        { "name": "Pine Tree Estate", "location": "Cascais", "tags": "5 bedrooms · Pool · 1,200m²" },
+        { "name": "Luxury Development", "location": "Cascais", "tags": "Development · 24h Security · Gym" }
+      ]
+    },
+    "pricing": {
+      "label": "Pricing",
+      "title": "Simple, transparent,<br>no surprises.",
+      "note": "No setup fees. No hidden costs. Just a transparent percentage on rent actually received.",
+      "book": "Get in Touch",
+      "tiers": [
+        {
+          "name": "Essential",
+          "tagline": "Long-term rental management",
+          "features": ["Tenant management", "Rent collection", "Monthly report", "Email & phone support"]
+        },
+        {
+          "name": "Premium",
+          "tagline": "Full dedicated management",
+          "popular": true,
+          "features": ["Everything in Essential PLUS:", "Maintenance & repairs", "Legal & tax management", "Professional property photography", "Dedicated manager"]
+        },
+        {
+          "name": "Concierge",
+          "tagline": "Premium personalised service",
+          "features": ["Everything in Premium PLUS:", "Personalised 24/7 service", "Full home staging", "Multiple property management", "Custom reporting"]
+        }
+      ]
+    }
+  },
+  "footer": {
+    "cta": "Let's elevate your real estate presence.",
+    "ctaButton": "Get in Touch",
+    "connect": "Connect",
+    "location": "Estoril, Portugal",
+    "copy": "© 2026 Pixel & Property. All rights reserved."
+  }
+}
