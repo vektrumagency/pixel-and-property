@@ -1,23 +1,14 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { unsplash, PLACEHOLDER_IMAGES } from "@/lib/assets";
+import { unsplash } from "@/lib/assets";
 import { Reveal } from "@/components/reveal";
 import { Link } from "@/i18n/navigation";
-
-const images = [
-  PLACEHOLDER_IMAGES.portfolio[0],
-  PLACEHOLDER_IMAGES.portfolio[1],
-  PLACEHOLDER_IMAGES.portfolio[2],
-  PLACEHOLDER_IMAGES.portfolio[7],
-];
+import { managedProperties } from "@/data/managed-properties";
+import type { Locale } from "@/i18n/routing";
 
 export function ManagementShowroom() {
   const t = useTranslations("management.showroom");
-  const properties = t.raw("properties") as {
-    name: string;
-    location: string;
-    tags: string;
-  }[];
+  const locale = useLocale() as Locale;
 
   return (
     <section className="bg-white px-6 py-16 lg:px-24 lg:py-32">
@@ -31,13 +22,13 @@ export function ManagementShowroom() {
       </Reveal>
 
       <div className="flex flex-col gap-16 lg:gap-24">
-        {properties.map((property, i) => (
-          <Reveal key={property.name} className="group">
-            <Link href="/contact" className="block">
+        {managedProperties.map((property) => (
+          <Reveal key={property.slug} className="group">
+            <Link href={`/management/${property.slug}`} className="block">
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5 lg:aspect-[21/9]">
                 <Image
-                  src={unsplash(images[i])}
-                  alt={property.name}
+                  src={unsplash(property.heroImage)}
+                  alt={property.name[locale]}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -45,14 +36,15 @@ export function ManagementShowroom() {
                 <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-6 lg:flex-row lg:items-end lg:justify-between lg:p-12">
                   <div>
                     <h3 className="font-serif text-2xl font-light text-white lg:text-4xl">
-                      {property.name}
+                      {property.name[locale]}
                     </h3>
                     <p className="mt-2 text-[0.6rem] uppercase tracking-[0.2em] text-gold">
-                      {property.location} · {property.tags}
+                      {property.location} ·{" "}
+                      {property.tags.map((tag) => tag[locale]).join(" · ")}
                     </p>
                   </div>
                   <span className="inline-block w-fit border border-white/40 px-6 py-3 text-[0.58rem] font-medium uppercase tracking-[0.2em] text-white transition-colors group-hover:border-gold group-hover:text-gold-light">
-                    {t("cta")}
+                    {t("viewDetails")}
                   </span>
                 </div>
               </div>

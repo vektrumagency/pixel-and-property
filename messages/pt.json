@@ -272,12 +272,10 @@
       "title": "Propriedades sob a nossa gestão",
       "subtitle": "Fale connosco para saber mais sobre qualquer uma destas propriedades.",
       "cta": "Falar Connosco",
-      "properties": [
-        { "name": "Villa Moderna", "location": "Cascais", "tags": "4 quartos · Piscina · Jardim" },
-        { "name": "Apartamento Contemporâneo", "location": "Estoril", "tags": "3 quartos · Vista mar · Garagem" },
-        { "name": "Quinta dos Pinheiros", "location": "Cascais", "tags": "5 quartos · Piscina · 1.200m²" },
-        { "name": "Condomínio de Luxo", "location": "Cascais", "tags": "Condomínio · Segurança 24h · Ginásio" }
-      ]
+      "back": "Propriedades",
+      "viewDetails": "Ver Detalhes",
+      "amenitiesLabel": "Detalhes do Imóvel",
+      "propertyCta": "Tenho um Imóvel Assim"
     },
     "pricing": {
       "label": "Preços",
