@@ -1,11 +1,35 @@
+import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
+import { routing, type Locale } from "@/i18n/routing";
 import { unsplash, PLACEHOLDER_IMAGES, PLACEHOLDER_HERO_VIDEO } from "@/lib/assets";
 import { DigitalClients } from "@/components/digital/clients";
 import { SectorsShowcase } from "@/components/sectors-showcase";
+import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { Reveal } from "@/components/reveal";
+import { localeAlternates } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  const loc = locale as Locale;
+  const t = await getTranslations({ locale, namespace: "home" });
+
+  const title = `Pixel & Property — ${t("headline")}`;
+  const description = t("aboutText");
+
+  return {
+    title,
+    description,
+    alternates: localeAlternates(loc, "/"),
+    openGraph: { title, description },
+  };
+}
 
 export default async function HomePage({
   params,
@@ -73,6 +97,8 @@ export default async function HomePage({
       <SectorsShowcase />
 
       <DigitalClients />
+
+      <TestimonialsCarousel />
     </>
   );
 }

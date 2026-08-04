@@ -1,5 +1,6 @@
 {
   "nav": {
+    "home": "Home",
     "digital": "Digital",
     "management": "Management",
     "investments": "Investments",
@@ -38,6 +39,10 @@
           "cta": "Em breve"
         }
       }
+    },
+    "testimonials": {
+      "label": "Depoimentos",
+      "title": "Nas Palavras Deles"
     }
   },
   "digital": {

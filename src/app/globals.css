@@ -26,6 +26,15 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Lenis pins html/body to the viewport height (h-full/min-h-full) for the
+   sticky footer layout, but that stops its ResizeObserver from ever seeing
+   real content-height changes, so its scroll limit goes stale after client
+   side navigation to a taller page. Let it size to content while active. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
 @keyframes page-in {
   from {
     opacity: 0;
@@ -50,11 +59,11 @@ body {
   }
 }
 
-@keyframes scroll-testimonials {
+@keyframes fill-bar {
   from {
-    transform: translateX(0);
+    width: 0%;
   }
   to {
-    transform: translateX(-50%);
+    width: 100%;
   }
 }
