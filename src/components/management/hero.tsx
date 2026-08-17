@@ -1,6 +1,5 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { unsplash, PLACEHOLDER_IMAGES } from "@/lib/assets";
 
 export function ManagementHero() {
   const t = useTranslations("management.hero");
@@ -8,7 +7,7 @@ export function ManagementHero() {
   return (
     <section className="relative flex h-[100svh] min-h-[600px] flex-col justify-end overflow-hidden">
       <Image
-        src={unsplash(PLACEHOLDER_IMAGES.gallery[2])}
+        src="/images/covers/management-hero.jpg"
         alt=""
         fill
         priority

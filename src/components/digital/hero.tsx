@@ -1,6 +1,5 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { unsplash, PLACEHOLDER_IMAGES } from "@/lib/assets";
 
 export function DigitalHero() {
   const t = useTranslations("digital.hero");
@@ -8,7 +7,7 @@ export function DigitalHero() {
   return (
     <section className="relative flex h-[100svh] min-h-[600px] flex-col justify-end overflow-hidden">
       <Image
-        src={unsplash(PLACEHOLDER_IMAGES.digitalHero)}
+        src="/images/covers/digital-hero.jpg"
         alt=""
         fill
         priority
