@@ -1,14 +1,16 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { unsplash, PLACEHOLDER_IMAGES } from "@/lib/assets";
+import { cldUrl } from "@/lib/cloudinary";
 
-export function DigitalHero() {
+const FALLBACK = "https://images.unsplash.com/photo-1728049006379-f1f2c3dbb910?w=1600&q=80&auto=format&fit=crop";
+
+export function DigitalHero({ src }: { src?: string }) {
   const t = useTranslations("digital.hero");
 
   return (
     <section className="relative flex h-[100svh] min-h-[600px] flex-col justify-end overflow-hidden">
       <Image
-        src={unsplash(PLACEHOLDER_IMAGES.digitalHero)}
+        src={cldUrl(src ?? FALLBACK)}
         alt=""
         fill
         priority

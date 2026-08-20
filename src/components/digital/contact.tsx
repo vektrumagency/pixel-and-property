@@ -1,11 +1,39 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Reveal } from "@/components/reveal";
+
+type Status = "idle" | "submitting" | "success" | "error";
 
 export function DigitalContact() {
   const t = useTranslations("digital.contact");
   const f = useTranslations("digital.contact.form");
+
+  const [status, setStatus] = useState<Status>("idle");
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setStatus("submitting");
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error();
+      setStatus("success");
+      setForm({ name: "", email: "", phone: "", message: "" });
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  function update(field: keyof typeof form) {
+    return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setForm((prev) => ({ ...prev, [field]: e.target.value }));
+  }
 
   return (
     <section id="contact" className="grid gap-12 bg-white px-6 py-16 lg:grid-cols-2 lg:gap-24 lg:px-24 lg:py-32">
@@ -46,31 +74,61 @@ export function DigitalContact() {
         </div>
       </Reveal>
 
-      <Reveal
-        as="form"
-        delay={150}
-        className="flex flex-col gap-5"
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <Field label={f("name")} type="text" placeholder={f("namePlaceholder")} />
-        <Field label={f("email")} type="email" placeholder="email@example.com" />
-        <Field label={f("phone")} type="tel" placeholder="+351 ..." />
-        <div className="flex flex-col gap-2">
-          <label className="text-[0.6rem] uppercase tracking-[0.15em] text-text-muted">
-            {f("message")}
-          </label>
-          <textarea
-            rows={4}
-            placeholder={f("messagePlaceholder")}
-            className="border border-gold/25 bg-transparent px-4 py-3 text-[0.8rem] text-black placeholder:text-black/30 focus:border-gold-dark/60 focus:outline-none"
-          />
-        </div>
-        <button
-          type="submit"
-          className="mt-2 border border-gold-dark/50 py-3.5 text-[0.6rem] font-medium uppercase tracking-[0.22em] transition-colors hover:bg-gold hover:border-gold hover:text-black"
-        >
-          {f("submit")}
-        </button>
+      <Reveal as="form" delay={150} className="flex flex-col gap-5" onSubmit={handleSubmit}>
+        {status === "success" ? (
+          <div className="flex flex-col gap-4 py-12 text-center">
+            <p className="text-[0.85rem] text-black/70">{f("successMessage")}</p>
+          </div>
+        ) : (
+          <>
+            <Field
+              label={f("name")}
+              type="text"
+              placeholder={f("namePlaceholder")}
+              value={form.name}
+              onChange={update("name")}
+              required
+            />
+            <Field
+              label={f("email")}
+              type="email"
+              placeholder="email@example.com"
+              value={form.email}
+              onChange={update("email")}
+              required
+            />
+            <Field
+              label={f("phone")}
+              type="tel"
+              placeholder="+351 ..."
+              value={form.phone}
+              onChange={update("phone")}
+            />
+            <div className="flex flex-col gap-2">
+              <label className="text-[0.6rem] uppercase tracking-[0.15em] text-text-muted">
+                {f("message")}
+              </label>
+              <textarea
+                rows={4}
+                placeholder={f("messagePlaceholder")}
+                value={form.message}
+                onChange={update("message")}
+                required
+                className="border border-gold/25 bg-transparent px-4 py-3 text-[0.8rem] text-black placeholder:text-black/30 focus:border-gold-dark/60 focus:outline-none"
+              />
+            </div>
+            {status === "error" && (
+              <p className="text-[0.72rem] text-red-600">{f("errorMessage")}</p>
+            )}
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              className="mt-2 border border-gold-dark/50 py-3.5 text-[0.6rem] font-medium uppercase tracking-[0.22em] transition-colors hover:bg-gold hover:border-gold hover:text-black disabled:opacity-50"
+            >
+              {status === "submitting" ? f("submitting") : f("submit")}
+            </button>
+          </>
+        )}
       </Reveal>
     </section>
   );
@@ -80,10 +138,16 @@ function Field({
   label,
   type,
   placeholder,
+  value,
+  onChange,
+  required,
 }: {
   label: string;
   type: string;
   placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
 }) {
   return (
     <div className="flex flex-col gap-2">
@@ -93,6 +157,9 @@ function Field({
       <input
         type={type}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        required={required}
         className="border border-gold/25 bg-transparent px-4 py-3 text-[0.8rem] text-black placeholder:text-black/30 focus:border-gold-dark/60 focus:outline-none"
       />
     </div>

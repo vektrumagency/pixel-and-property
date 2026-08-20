@@ -196,7 +196,10 @@
         "phone": "Phone (optional)",
         "message": "Message",
         "messagePlaceholder": "How can we help?",
-        "submit": "Send Message"
+        "submit": "Send Message",
+        "submitting": "Sending…",
+        "successMessage": "Message sent! We'll be in touch shortly.",
+        "errorMessage": "Something went wrong. Please try again or contact us directly."
       }
     }
   },

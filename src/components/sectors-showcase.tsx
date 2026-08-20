@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { unsplash, PLACEHOLDER_IMAGES } from "@/lib/assets";
 import { Reveal } from "@/components/reveal";
 
 const sectors = [
@@ -9,19 +8,19 @@ const sectors = [
     key: "digital",
     href: "/digital",
     enabled: true,
-    image: unsplash(PLACEHOLDER_IMAGES.portfolio[0]),
+    image: "https://images.unsplash.com/photo-1622015663319-e97e697503ee?w=1400&q=80&auto=format&fit=crop",
   },
   {
     key: "management",
     href: "/management",
     enabled: true,
-    image: unsplash(PLACEHOLDER_IMAGES.about),
+    image: "https://images.unsplash.com/photo-1642976975710-1d8890dbf5ab?w=1400&q=80&auto=format&fit=crop",
   },
   {
     key: "investments",
     href: "/investments",
     enabled: false,
-    image: unsplash(PLACEHOLDER_IMAGES.portfolio[7]),
+    image: "https://images.unsplash.com/photo-1711110065918-388182f86e00?w=1400&q=80&auto=format&fit=crop",
   },
 ] as const;
 

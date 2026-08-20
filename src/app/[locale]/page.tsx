@@ -2,7 +2,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { unsplash, PLACEHOLDER_IMAGES, PLACEHOLDER_HERO_VIDEO } from "@/lib/assets";
+import { getPageAssets } from "@/lib/projects";
 import { DigitalClients } from "@/components/digital/clients";
 import { SectorsShowcase } from "@/components/sectors-showcase";
 import { Reveal } from "@/components/reveal";
@@ -17,6 +17,10 @@ export default async function HomePage({
   setRequestLocale(locale);
 
   const t = await getTranslations("home");
+  const assets = await getPageAssets("home");
+
+  const heroVideo = assets.hero_video?.publicId ?? "https://videos.pexels.com/video-files/4407791/4407791-uhd_2732_1440_25fps.mp4";
+  const heroPoster = assets.hero_poster?.publicId ?? "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1600&q=80&auto=format&fit=crop";
 
   return (
     <>
@@ -26,10 +30,10 @@ export default async function HomePage({
           muted
           loop
           playsInline
-          poster={unsplash(PLACEHOLDER_IMAGES.homeHero)}
+          poster={heroPoster}
           className="absolute inset-0 h-full w-full object-cover object-[center_60%]"
         >
-          <source src={PLACEHOLDER_HERO_VIDEO} type="video/mp4" />
+          <source src={heroVideo} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/25" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />

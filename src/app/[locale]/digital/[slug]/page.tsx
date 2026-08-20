@@ -4,12 +4,13 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { routing, type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
-import { unsplash } from "@/lib/assets";
-import { projects, getProject } from "@/data/projects";
+import { cldUrl } from "@/lib/cloudinary";
+import { getProjectSlugs, getProjectBySlug } from "@/lib/projects";
 import { Reveal } from "@/components/reveal";
 
-export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+export async function generateStaticParams() {
+  const slugs = await getProjectSlugs("digital");
+  return slugs.map((slug) => ({ slug }));
 }
 
 export default async function ProjectPage({
@@ -21,7 +22,7 @@ export default async function ProjectPage({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
-  const project = getProject(slug);
+  const project = await getProjectBySlug(slug);
   if (!project) notFound();
 
   const loc = locale as Locale;
@@ -31,7 +32,7 @@ export default async function ProjectPage({
     <>
       <section className="relative flex h-[70vh] min-h-[480px] flex-col justify-end overflow-hidden">
         <Image
-          src={unsplash(project.heroImage)}
+          src={cldUrl(project.heroImage, { w: 1600 })}
           alt={project.name[loc]}
           fill
           priority
@@ -78,7 +79,7 @@ export default async function ProjectPage({
       <div className="grid grid-cols-2">
         {project.gallery.slice(0, 2).map((img, i) => (
           <Reveal key={i} delay={i * 100} className="relative aspect-[3/4] lg:aspect-[4/5]">
-            <Image src={unsplash(img)} alt="" fill className="object-cover" />
+            <Image src={cldUrl(img, { w: 800 })} alt="" fill className="object-cover" />
           </Reveal>
         ))}
       </div>
@@ -99,7 +100,7 @@ export default async function ProjectPage({
       <div className="grid grid-cols-2">
         {project.gallery.slice(2, 4).map((img, i) => (
           <Reveal key={i} delay={i * 100} className="relative aspect-[3/4] lg:aspect-[4/5]">
-            <Image src={unsplash(img)} alt="" fill className="object-cover" />
+            <Image src={cldUrl(img, { w: 800 })} alt="" fill className="object-cover" />
           </Reveal>
         ))}
       </div>

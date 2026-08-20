@@ -5,7 +5,8 @@ import { useEffect, useRef, useState, type ElementType, type ComponentPropsWitho
 type RevealProps<T extends ElementType> = {
   as?: T;
   delay?: number;
-} & Omit<ComponentPropsWithoutRef<T>, "as">;
+  className?: string;
+} & Omit<ComponentPropsWithoutRef<T>, "as" | "className">;
 
 export function Reveal<T extends ElementType = "div">({
   as,

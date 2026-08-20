@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
-import { legacyAsset } from "@/lib/assets";
 import { Reveal } from "@/components/reveal";
+
+const LEGACY_ASSETS = "https://pixelandproperty.netlify.app";
 
 const logos = [
   { file: "Vendo Logo.svg", alt: "Vendo" },
@@ -26,7 +27,7 @@ export function DigitalClients() {
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={`${logo.file}-${i}`}
-              src={legacyAsset(`assets/logos/client-logos/${encodeURIComponent(logo.file)}`)}
+              src={`${LEGACY_ASSETS}/assets/logos/client-logos/${encodeURIComponent(logo.file)}`}
               alt={logo.alt}
               className="h-6 w-auto min-w-[90px] shrink-0 object-contain opacity-55 brightness-0 lg:h-[38px] lg:min-w-[130px]"
             />

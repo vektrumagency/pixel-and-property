@@ -2,6 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { getPageAssets } from "@/lib/projects";
 import { ManagementHero } from "@/components/management/hero";
 import { ManagementPillars } from "@/components/management/pillars";
 import { ManagementServices } from "@/components/management/services";
@@ -18,9 +19,11 @@ export default async function ManagementPage({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
+  const assets = await getPageAssets("management");
+
   return (
     <>
-      <ManagementHero />
+      <ManagementHero src={assets.hero_image?.publicId} />
       <ManagementPillars />
       <ManagementServices />
       <ManagementShowroom />

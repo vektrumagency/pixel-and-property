@@ -1,14 +1,13 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { unsplash, PLACEHOLDER_IMAGES } from "@/lib/assets";
 import { Reveal } from "@/components/reveal";
 import { Link } from "@/i18n/navigation";
 
 const images = [
-  PLACEHOLDER_IMAGES.portfolio[0],
-  PLACEHOLDER_IMAGES.portfolio[1],
-  PLACEHOLDER_IMAGES.portfolio[2],
-  PLACEHOLDER_IMAGES.portfolio[7],
+  "https://images.unsplash.com/photo-1622015663319-e97e697503ee?w=1400&q=80&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1533044309907-0fa3413da946?w=1400&q=80&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1685514823717-7e1ff6ee0563?w=1400&q=80&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1711110065918-388182f86e00?w=1400&q=80&auto=format&fit=crop",
 ];
 
 export function ManagementShowroom() {
@@ -36,7 +35,7 @@ export function ManagementShowroom() {
             <Link href="/contact" className="block">
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5 lg:aspect-[21/9]">
                 <Image
-                  src={unsplash(images[i])}
+                  src={images[i]}
                   alt={property.name}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"

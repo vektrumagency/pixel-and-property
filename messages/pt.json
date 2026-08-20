@@ -196,7 +196,10 @@
         "phone": "Telefone (opcional)",
         "message": "Mensagem",
         "messagePlaceholder": "Como podemos ajudar?",
-        "submit": "Enviar Mensagem"
+        "submit": "Enviar Mensagem",
+        "submitting": "A enviar…",
+        "successMessage": "Mensagem enviada! Entraremos em contacto brevemente.",
+        "errorMessage": "Algo correu mal. Tente novamente ou contacte-nos diretamente."
       }
     }
   },
