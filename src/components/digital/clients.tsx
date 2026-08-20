@@ -4,10 +4,10 @@ import { Reveal } from "@/components/reveal";
 const LEGACY_ASSETS = "https://pixelandproperty.netlify.app";
 
 const logos = [
-  { file: "Vendo Logo.svg", alt: "Vendo" },
-  { file: "Coldwell Banker Logo.png", alt: "Coldwell Banker" },
-  { file: "Era Logo.webp", alt: "ERA" },
-  { file: "jll logo.png", alt: "JLL" },
+  { file: "vendo.svg", alt: "Vendo" },
+  { file: "coldwell-banker.png", alt: "Coldwell Banker" },
+  { file: "era.png", alt: "ERA" },
+  { file: "jll.png", alt: "JLL" },
 ];
 
 export function DigitalClients() {
@@ -27,9 +27,9 @@ export function DigitalClients() {
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={`${logo.file}-${i}`}
-              src={`${LEGACY_ASSETS}/assets/logos/client-logos/${encodeURIComponent(logo.file)}`}
+              src={`/images/logos/${logo.file}`}
               alt={logo.alt}
-              className="h-6 w-auto min-w-[90px] shrink-0 object-contain opacity-55 brightness-0 lg:h-[38px] lg:min-w-[130px]"
+              className="h-7 w-auto shrink-0 object-contain opacity-55 brightness-0 lg:h-10"
             />
           ))}
         </div>

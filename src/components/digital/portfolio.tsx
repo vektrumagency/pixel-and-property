@@ -21,31 +21,30 @@ export function DigitalPortfolio({ projects }: { projects: Project[] }) {
       <div className="flex flex-col gap-16 lg:gap-24">
         {projects.map((project) => (
           <Reveal key={project.slug} className="group">
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5 lg:aspect-[21/9]">
-              <Image
-                src={cldUrl(project.heroImage, { w: 1400 })}
-                alt={project.name[locale]}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-6 lg:flex-row lg:items-end lg:justify-between lg:p-12">
-                <div>
-                  <h3 className="font-serif text-2xl font-light text-white lg:text-4xl">
-                    {project.name[locale]}
-                  </h3>
-                  <p className="mt-2 text-[0.6rem] uppercase tracking-[0.2em] text-gold">
-                    {project.location} · {project.services[locale]}
-                  </p>
+            <Link href={`/digital/${project.slug}`} className="block">
+              <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5 lg:aspect-[21/9]">
+                <Image
+                  src={cldUrl(project.heroImage, { w: 1400 })}
+                  alt={project.name[locale]}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-6 lg:flex-row lg:items-end lg:justify-between lg:p-12">
+                  <div>
+                    <h3 className="font-serif text-2xl font-light text-white lg:text-4xl">
+                      {project.name[locale]}
+                    </h3>
+                    <p className="mt-2 text-[0.6rem] uppercase tracking-[0.2em] text-gold">
+                      {project.location} · {project.services[locale]}
+                    </p>
+                  </div>
+                  <span className="inline-block w-fit border border-white/40 px-6 py-3 text-[0.58rem] font-medium uppercase tracking-[0.2em] text-white transition-colors group-hover:border-gold group-hover:text-gold-light">
+                    {t("caseStudy")}
+                  </span>
                 </div>
-                <Link
-                  href={`/digital/${project.slug}`}
-                  className="inline-block w-fit border border-white/40 px-6 py-3 text-[0.58rem] font-medium uppercase tracking-[0.2em] text-white transition-colors hover:border-gold hover:text-gold-light"
-                >
-                  {t("caseStudy")}
-                </Link>
               </div>
-            </div>
+            </Link>
           </Reveal>
         ))}
       </div>

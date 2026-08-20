@@ -1,5 +1,6 @@
 {
   "nav": {
+    "home": "Home",
     "digital": "Digital",
     "management": "Management",
     "investments": "Investments",
@@ -38,6 +39,10 @@
           "cta": "Coming soon"
         }
       }
+    },
+    "testimonials": {
+      "label": "Testimonials",
+      "title": "In Their Words"
     }
   },
   "digital": {
@@ -275,12 +280,10 @@
       "title": "Properties under our management",
       "subtitle": "Get in touch to learn more about any of these properties.",
       "cta": "Get in Touch",
-      "properties": [
-        { "name": "Modern Villa", "location": "Cascais", "tags": "4 bedrooms · Pool · Garden" },
-        { "name": "Contemporary Apartment", "location": "Estoril", "tags": "3 bedrooms · Sea view · Garage" },
-        { "name": "Pine Tree Estate", "location": "Cascais", "tags": "5 bedrooms · Pool · 1,200m²" },
-        { "name": "Luxury Development", "location": "Cascais", "tags": "Development · 24h Security · Gym" }
-      ]
+      "back": "Properties",
+      "viewDetails": "View Details",
+      "amenitiesLabel": "Property Details",
+      "propertyCta": "I Have a Property Like This"
     },
     "pricing": {
       "label": "Pricing",

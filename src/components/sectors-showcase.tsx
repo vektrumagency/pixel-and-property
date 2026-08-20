@@ -8,19 +8,19 @@ const sectors = [
     key: "digital",
     href: "/digital",
     enabled: true,
-    image: "https://images.unsplash.com/photo-1622015663319-e97e697503ee?w=1400&q=80&auto=format&fit=crop",
+    image: "/images/covers/digital-card.jpg",
   },
   {
     key: "management",
     href: "/management",
     enabled: true,
-    image: "https://images.unsplash.com/photo-1642976975710-1d8890dbf5ab?w=1400&q=80&auto=format&fit=crop",
+    image: "/images/covers/management-card.jpg",
   },
   {
     key: "investments",
     href: "/investments",
     enabled: false,
-    image: "https://images.unsplash.com/photo-1711110065918-388182f86e00?w=1400&q=80&auto=format&fit=crop",
+    image: "/images/covers/investments-card.jpg",
   },
 ] as const;
 

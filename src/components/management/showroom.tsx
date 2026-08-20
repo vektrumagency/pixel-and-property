@@ -1,22 +1,14 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
+import { unsplash } from "@/lib/assets";
 import { Reveal } from "@/components/reveal";
 import { Link } from "@/i18n/navigation";
-
-const images = [
-  "https://images.unsplash.com/photo-1622015663319-e97e697503ee?w=1400&q=80&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1533044309907-0fa3413da946?w=1400&q=80&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1685514823717-7e1ff6ee0563?w=1400&q=80&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1711110065918-388182f86e00?w=1400&q=80&auto=format&fit=crop",
-];
+import { managedProperties } from "@/data/managed-properties";
+import type { Locale } from "@/i18n/routing";
 
 export function ManagementShowroom() {
   const t = useTranslations("management.showroom");
-  const properties = t.raw("properties") as {
-    name: string;
-    location: string;
-    tags: string;
-  }[];
+  const locale = useLocale() as Locale;
 
   return (
     <section className="bg-white px-6 py-16 lg:px-24 lg:py-32">
@@ -30,13 +22,13 @@ export function ManagementShowroom() {
       </Reveal>
 
       <div className="flex flex-col gap-16 lg:gap-24">
-        {properties.map((property, i) => (
-          <Reveal key={property.name} className="group">
-            <Link href="/contact" className="block">
+        {managedProperties.map((property) => (
+          <Reveal key={property.slug} className="group">
+            <Link href={`/management/${property.slug}`} className="block">
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5 lg:aspect-[21/9]">
                 <Image
-                  src={images[i]}
-                  alt={property.name}
+                  src={unsplash(property.heroImage)}
+                  alt={property.name[locale]}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -44,14 +36,15 @@ export function ManagementShowroom() {
                 <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-6 lg:flex-row lg:items-end lg:justify-between lg:p-12">
                   <div>
                     <h3 className="font-serif text-2xl font-light text-white lg:text-4xl">
-                      {property.name}
+                      {property.name[locale]}
                     </h3>
                     <p className="mt-2 text-[0.6rem] uppercase tracking-[0.2em] text-gold">
-                      {property.location} · {property.tags}
+                      {property.location} ·{" "}
+                      {property.tags.map((tag) => tag[locale]).join(" · ")}
                     </p>
                   </div>
                   <span className="inline-block w-fit border border-white/40 px-6 py-3 text-[0.58rem] font-medium uppercase tracking-[0.2em] text-white transition-colors group-hover:border-gold group-hover:text-gold-light">
-                    {t("cta")}
+                    {t("viewDetails")}
                   </span>
                 </div>
               </div>
