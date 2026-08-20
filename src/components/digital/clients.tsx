@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Reveal } from "@/components/reveal";
 
-const LEGACY_ASSETS = "https://pixelandproperty.netlify.app";
 
 const logos = [
   { file: "vendo.svg", alt: "Vendo" },

@@ -120,8 +120,7 @@ insert into projects (slug, category, location, year, name, services, strategy, 
     'https://images.unsplash.com/photo-1551524164-6bb6236c70fb?w=1200&q=80&auto=format&fit=crop'
   ], 8);
 
+-- Only seed home page assets; digital/management heroes default to committed cover photos
 insert into page_assets (page, slot, media_type, public_id) values
   ('home', 'hero_video', 'video', 'https://videos.pexels.com/video-files/4407791/4407791-uhd_2732_1440_25fps.mp4'),
-  ('home', 'hero_poster', 'image', 'https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1600&q=80&auto=format&fit=crop'),
-  ('digital', 'hero_image', 'image', 'https://images.unsplash.com/photo-1728049006379-f1f2c3dbb910?w=1600&q=80&auto=format&fit=crop'),
-  ('management', 'hero_image', 'image', 'https://images.unsplash.com/photo-1642976975710-1d8890dbf5ab?w=1600&q=80&auto=format&fit=crop');
+  ('home', 'hero_poster', 'image', 'https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1600&q=80&auto=format&fit=crop');
