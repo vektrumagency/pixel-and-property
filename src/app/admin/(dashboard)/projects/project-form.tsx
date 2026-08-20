@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { saveProject, deleteProject, type ProjectFormData } from "@/app/admin/(dashboard)/projects/actions";
+import { MediaUploader } from "@/components/admin/media-uploader";
 
 const EMPTY: ProjectFormData = {
   slug: "",
@@ -154,18 +155,21 @@ export function ProjectForm({ initial }: { initial?: ProjectFormData }) {
       </Section>
 
       <Section title="Media">
-        <Field label="Hero Image URL or Cloudinary public_id">
-          <input value={data.hero_image} onChange={(e) => set("hero_image", e.target.value)} placeholder="pixel/projects/villa-moderna/hero" className={input} />
-        </Field>
-        <div className="space-y-2">
+        <MediaUploader
+          label="Hero image"
+          value={data.hero_image}
+          onChange={(v) => set("hero_image", v)}
+          folder={`pixel/projects/${data.slug || "_new"}`}
+        />
+        <div className="space-y-3">
           <label className="text-[0.68rem] font-medium text-neutral-600">Gallery (4 images)</label>
           {data.gallery.map((url, i) => (
-            <input
+            <MediaUploader
               key={i}
+              label={`Gallery ${i + 1}`}
               value={url}
-              onChange={(e) => set("gallery", data.gallery.map((u, j) => j === i ? e.target.value : u))}
-              placeholder={`Gallery image ${i + 1}`}
-              className={input}
+              onChange={(v) => set("gallery", data.gallery.map((u, j) => j === i ? v : u))}
+              folder={`pixel/projects/${data.slug || "_new"}`}
             />
           ))}
         </div>

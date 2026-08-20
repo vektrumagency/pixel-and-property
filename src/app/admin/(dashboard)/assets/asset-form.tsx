@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { saveAsset } from "./actions";
+import { MediaUploader } from "@/components/admin/media-uploader";
 
 export function AssetForm({
   page,
@@ -28,16 +29,16 @@ export function AssetForm({
   }
 
   return (
-    <form onSubmit={handleSave} className="flex gap-3">
-      <input
+    <form onSubmit={handleSave} className="space-y-3">
+      <MediaUploader
         value={value}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder={`URL or Cloudinary public_id for ${mediaType}`}
-        className="flex-1 rounded border border-neutral-300 px-3 py-2 text-[0.8rem] focus:border-black focus:outline-none"
+        onChange={setValue}
+        folder={`pixel/pages/${page}/${slot}`}
+        mediaType={mediaType}
       />
       <button
         type="submit"
-        disabled={saving}
+        disabled={saving || value === currentValue}
         className="rounded bg-black px-4 py-2 text-[0.72rem] font-medium text-white hover:opacity-80 disabled:opacity-50"
       >
         {saved ? "Saved!" : saving ? "Saving…" : "Save"}
