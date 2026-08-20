@@ -19,8 +19,12 @@ export default async function HomePage({
   const t = await getTranslations("home");
   const assets = await getPageAssets("home");
 
-  const heroVideo = assets.hero_video?.publicId ?? "https://videos.pexels.com/video-files/4407791/4407791-uhd_2732_1440_25fps.mp4";
-  const heroPoster = assets.hero_poster?.publicId ?? "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1600&q=80&auto=format&fit=crop";
+  const heroVideo =
+    assets.hero_video?.publicId ??
+    "https://videos.pexels.com/video-files/4407791/4407791-uhd_2732_1440_25fps.mp4";
+  const heroPoster =
+    assets.hero_poster?.publicId ??
+    "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1600&q=80&auto=format&fit=crop";
 
   return (
     <>
