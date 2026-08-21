@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { localeAlternates } from "@/lib/seo";
 import { DigitalHero } from "@/components/digital/hero";
-import { DigitalAbout } from "@/components/digital/about";
 import { DigitalStats } from "@/components/digital/stats";
 import { DigitalServices } from "@/components/digital/services";
 import { DigitalPortfolio } from "@/components/digital/portfolio";
@@ -46,7 +45,6 @@ export default async function DigitalPage({
   return (
     <>
       <DigitalHero />
-      <DigitalAbout />
       <DigitalStats />
       <DigitalServices />
       <DigitalPortfolio />

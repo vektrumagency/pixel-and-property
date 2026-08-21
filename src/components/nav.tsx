@@ -39,7 +39,7 @@ function TikTokIcon({ className }: { className?: string }) {
 const sectors = [
   { key: "digital", href: "/digital", enabled: true },
   { key: "management", href: "/management", enabled: true },
-  { key: "investments", href: "/investments", enabled: false },
+  { key: "investments", href: "/investments", enabled: true },
 ] as const;
 
 const socials = [

@@ -35,8 +35,8 @@
         },
         "investments": {
           "name": "Investments",
-          "tags": "Coming soon",
-          "cta": "Coming soon"
+          "tags": "Investment Strategy · Coming soon",
+          "cta": "Explore Investments"
         }
       }
     },
@@ -48,7 +48,7 @@
   "digital": {
     "hero": {
       "eyebrow": "Pixel & Property Digital",
-      "headline": "Your property's first showing happens online.<br>Make it unforgettable.",
+      "headline": "Your property's first showing happens online.<br><em>Make it unforgettable.</em>",
       "cta": "Discover our services"
     },
     "clients": {
@@ -211,6 +211,12 @@
       "headline": "Your property deserves<br>more than a manager.<br><em>It deserves a partner.</em>",
       "cta": "Discover our services"
     },
+    "about": {
+      "label": "About us",
+      "title": "The management partner your property deserves",
+      "text1": "Pixel & Property Management is a rental management team dedicated to landlords who want returns without the hassle. We handle tenants, maintenance, documentation and payments, with detailed monthly reporting — so your property works for you, wherever you are.",
+      "text2": "We combine dynamic pricing strategy, rigorous tenant selection and a premium service standard, treating every interaction with the professionalism your property's value deserves."
+    },
     "pillars": [
       {
         "title": "Total peace of mind",
@@ -305,6 +311,48 @@
           "features": ["Everything in Premium PLUS:", "Personalised 24/7 service", "Full home staging", "Multiple property management", "Custom reporting"]
         }
       ]
+    }
+  },
+  "investments": {
+    "hero": {
+      "eyebrow": "Pixel & Property Investments",
+      "headline": "The group's third pillar.<br><em>Under construction.</em>",
+      "cta": "Become a partner"
+    },
+    "vision": {
+      "label": "Our vision",
+      "title": "Invest in real estate, without doing it alone",
+      "text1": "Pixel & Property Investments will connect investors with carefully selected real estate opportunities across Portugal — from urban rehabilitation to long-term rentals — held to the same standard we already apply to our media production and property management.",
+      "text2": "We're building this third pillar of the group on the trust we've already earned with agencies, developers, and owners. We're not accepting investments yet — but we want you to be the first to know when we open."
+    },
+    "pillars": [
+      {
+        "title": "Selected opportunities",
+        "desc": "We review every property against the same quality standards we apply to our photography and management — location, appreciation potential, and risk."
+      },
+      {
+        "title": "Close collaboration",
+        "desc": "No anonymous middlemen. Every investor has direct access to the team managing and reporting on the property, from day one to return."
+      },
+      {
+        "title": "Aligned with the investor",
+        "desc": "We only move forward with opportunities we'd invest in ourselves — our interests are aligned with our partners'."
+      }
+    ],
+    "partner": {
+      "label": "Partners",
+      "title": "Want to become a partner?",
+      "subtitle": "If you represent a developer, family office, or institutional investor interested in collaborating with us, leave your contact details.",
+      "form": {
+        "name": "Name",
+        "namePlaceholder": "Your name",
+        "email": "Email",
+        "company": "Company / Organisation",
+        "companyPlaceholder": "Optional",
+        "message": "Message",
+        "messagePlaceholder": "Tell us a bit about your interest...",
+        "submit": "Submit"
+      }
     }
   },
   "footer": {

@@ -12,7 +12,7 @@ export function DigitalFaq() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="mx-auto max-w-3xl bg-white px-6 py-16 lg:py-32">
+    <section className="mx-auto max-w-3xl bg-white px-6 pt-16 pb-16 lg:pt-32 lg:pb-32">
       <Reveal>
         <span className="mb-4 block text-[0.52rem] uppercase tracking-[0.45em] text-gold-dark">
           {t("label")}

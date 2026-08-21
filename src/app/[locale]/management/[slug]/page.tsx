@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { unsplash } from "@/lib/assets";
 import { managedProperties, getManagedProperty } from "@/data/managed-properties";
 import { Reveal } from "@/components/reveal";
+import { MediaCarousel } from "@/components/media-carousel";
 
 export function generateStaticParams() {
   return managedProperties.map((property) => ({ slug: property.slug }));
@@ -58,7 +59,7 @@ export default async function ManagedPropertyPage({
         </Link>
       </div>
 
-      <section className="border-b border-gold/15 bg-white px-6 py-16 lg:px-24 lg:py-24">
+      <section className="border-b border-gold/15 bg-white px-6 pt-16 pb-16 lg:px-24 lg:pt-24 lg:pb-24">
         <Reveal className="mx-auto flex max-w-3xl flex-col gap-5">
           {property.description.map((paragraph, i) => (
             <p key={i} className="text-[0.9rem] leading-[1.9] text-black/70 lg:text-base">
@@ -68,43 +69,9 @@ export default async function ManagedPropertyPage({
         </Reveal>
       </section>
 
-      <div className="grid grid-cols-2">
-        {property.gallery.map((img, i) => (
-          <Reveal key={i} delay={i * 80} className="relative aspect-square lg:aspect-[4/3]">
-            <Image src={unsplash(img)} alt="" fill className="object-cover" />
-          </Reveal>
-        ))}
+      <div className="mb-16 lg:mb-32">
+        <MediaCarousel images={property.gallery} alt={property.name[loc]} />
       </div>
-
-      <section className="grid gap-6 bg-white px-6 py-16 lg:grid-cols-[1fr_2.5fr] lg:px-24 lg:py-24">
-        <Reveal>
-          <span className="text-[0.6rem] uppercase tracking-[0.3em] text-gold-dark">
-            {t("amenitiesLabel")}
-          </span>
-        </Reveal>
-        <Reveal delay={100}>
-          <ul className="max-w-2xl">
-            {property.amenities.map((amenity) => (
-              <li
-                key={amenity[loc]}
-                className="flex items-center gap-2 border-b border-black/[0.07] py-3 text-[0.85rem] text-black/70"
-              >
-                <span className="shrink-0 text-gold-dark">—</span>
-                {amenity[loc]}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-      </section>
-
-      <section className="bg-white px-6 pb-24 text-center lg:px-24">
-        <Link
-          href="/contact"
-          className="inline-block border border-gold-dark/50 px-8 py-3.5 text-[0.6rem] font-medium uppercase tracking-[0.2em] transition-colors hover:border-gold hover:text-gold-dark"
-        >
-          {t("propertyCta")}
-        </Link>
-      </section>
     </>
   );
 }

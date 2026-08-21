@@ -4,12 +4,10 @@ import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { localeAlternates } from "@/lib/seo";
-import { ManagementHero } from "@/components/management/hero";
-import { ManagementPillars } from "@/components/management/pillars";
-import { ManagementServices } from "@/components/management/services";
-import { ManagementShowroom } from "@/components/management/showroom";
-import { ManagementHow } from "@/components/management/how";
-import { ManagementPricing } from "@/components/management/pricing";
+import { InvestmentsHero } from "@/components/investments/hero";
+import { InvestmentsVision } from "@/components/investments/vision";
+import { InvestmentsPillars } from "@/components/investments/pillars";
+import { InvestmentsPartner } from "@/components/investments/partner";
 
 export async function generateMetadata({
   params,
@@ -19,20 +17,20 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   const loc = locale as Locale;
-  const t = await getTranslations({ locale, namespace: "management" });
+  const t = await getTranslations({ locale, namespace: "investments" });
 
-  const title = t("services.title");
-  const description = t("about.text1");
+  const title = t("vision.title");
+  const description = t("vision.text1");
 
   return {
     title,
     description,
-    alternates: localeAlternates(loc, "/management"),
+    alternates: localeAlternates(loc, "/investments"),
     openGraph: { title, description },
   };
 }
 
-export default async function ManagementPage({
+export default async function InvestmentsPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -43,12 +41,10 @@ export default async function ManagementPage({
 
   return (
     <>
-      <ManagementHero />
-      <ManagementPillars />
-      <ManagementServices />
-      <ManagementShowroom />
-      <ManagementHow />
-      <ManagementPricing />
+      <InvestmentsHero />
+      <InvestmentsVision />
+      <InvestmentsPillars />
+      <InvestmentsPartner />
     </>
   );
 }
