@@ -1,13 +1,13 @@
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { unsplash } from "@/lib/assets";
+import { cldUrl } from "@/lib/cloudinary";
 import { Reveal } from "@/components/reveal";
 import { Link } from "@/i18n/navigation";
 import { HorizontalScrollGallery } from "@/components/horizontal-scroll-gallery";
-import { managedProperties } from "@/data/managed-properties";
+import type { Project } from "@/lib/projects";
 import type { Locale } from "@/i18n/routing";
 
-export function ManagementShowroom() {
+export function ManagementShowroom({ projects }: { projects: Project[] }) {
   const t = useTranslations("management.showroom");
   const locale = useLocale() as Locale;
 
@@ -21,7 +21,7 @@ export function ManagementShowroom() {
       </Reveal>
 
       <HorizontalScrollGallery
-        slides={managedProperties.map((property) => (
+        slides={projects.map((property) => (
           <Link
             key={property.slug}
             href={`/management/${property.slug}`}
@@ -29,7 +29,7 @@ export function ManagementShowroom() {
           >
             <div className="relative h-[90vh] w-full overflow-hidden bg-black/5 lg:h-auto lg:aspect-[21/9]">
               <Image
-                src={unsplash(property.heroImage)}
+                src={cldUrl(property.heroImage, { w: 1400 })}
                 alt={property.name[locale]}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -42,8 +42,7 @@ export function ManagementShowroom() {
                     {property.name[locale]}
                   </h3>
                   <p className="mt-2 text-[0.6rem] uppercase tracking-[0.2em] text-gold">
-                    {property.location} ·{" "}
-                    {property.tags.map((tag) => tag[locale]).join(" · ")}
+                    {property.location} · {property.services[locale]}
                   </p>
                 </div>
                 <span className="inline-block w-fit border border-white/40 px-6 py-3 text-[0.58rem] font-medium uppercase tracking-[0.2em] text-white transition-colors group-hover:border-gold group-hover:text-gold-light">

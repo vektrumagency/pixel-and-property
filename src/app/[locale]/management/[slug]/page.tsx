@@ -4,13 +4,14 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { routing, type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
-import { unsplash } from "@/lib/assets";
-import { managedProperties, getManagedProperty } from "@/data/managed-properties";
+import { cldUrl } from "@/lib/cloudinary";
+import { getProjectSlugs, getProjectBySlug } from "@/lib/projects";
 import { Reveal } from "@/components/reveal";
 import { MediaCarousel } from "@/components/media-carousel";
 
-export function generateStaticParams() {
-  return managedProperties.map((property) => ({ slug: property.slug }));
+export async function generateStaticParams() {
+  const slugs = await getProjectSlugs("management");
+  return slugs.map((slug) => ({ slug }));
 }
 
 export default async function ManagedPropertyPage({
@@ -22,7 +23,7 @@ export default async function ManagedPropertyPage({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
-  const property = getManagedProperty(slug);
+  const property = await getProjectBySlug(slug);
   if (!property) notFound();
 
   const loc = locale as Locale;
@@ -32,7 +33,7 @@ export default async function ManagedPropertyPage({
     <>
       <section className="relative flex h-[70vh] min-h-[480px] flex-col justify-end overflow-hidden">
         <Image
-          src={unsplash(property.heroImage)}
+          src={cldUrl(property.heroImage, { w: 1600 })}
           alt={property.name[loc]}
           fill
           priority
@@ -45,7 +46,7 @@ export default async function ManagedPropertyPage({
           </h1>
           <div className="flex flex-wrap gap-x-10 gap-y-2 text-[0.6rem] uppercase tracking-[0.2em] text-white/80">
             <span>{property.location}</span>
-            <span>{property.tags.map((tag) => tag[loc]).join(" · ")}</span>
+            <span>{property.services[loc]}</span>
           </div>
         </div>
       </section>
