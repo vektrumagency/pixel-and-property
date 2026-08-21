@@ -22,9 +22,8 @@ export async function generateMetadata({
   const loc = locale as Locale;
   const t = await getTranslations({ locale, namespace: "management" });
 
-  const pillars = t.raw("pillars") as { title: string; desc: string }[];
   const title = t("services.title");
-  const description = pillars[0].desc;
+  const description = t("about.text1");
 
   return {
     title,

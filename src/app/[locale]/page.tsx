@@ -78,7 +78,9 @@ export default async function HomePage({
         </Reveal>
       </section>
 
-      <section className="grid gap-12 bg-white px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-32 lg:px-24 lg:py-44">
+      <DigitalClients />
+
+      <section className="grid gap-12 bg-white px-6 pt-16 pb-0 lg:grid-cols-[1.1fr_0.9fr] lg:gap-32 lg:px-24 lg:pt-32">
         <Reveal>
           <span className="mb-4 block text-[0.52rem] uppercase tracking-[0.45em] text-gold-dark">
             {t("aboutLabel")}
@@ -103,8 +105,6 @@ export default async function HomePage({
       </section>
 
       <SectorsShowcase />
-
-      <DigitalClients />
 
       <TestimonialsCarousel />
     </>

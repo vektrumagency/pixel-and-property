@@ -1,16 +1,13 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { cldUrl } from "@/lib/cloudinary";
 
-const FALLBACK = "https://images.unsplash.com/photo-1728049006379-f1f2c3dbb910?w=1600&q=80&auto=format&fit=crop";
-
-export function DigitalHero({ src }: { src?: string }) {
-  const t = useTranslations("digital.hero");
+export function InvestmentsHero() {
+  const t = useTranslations("investments.hero");
 
   return (
     <section className="relative flex h-[100svh] min-h-[600px] flex-col justify-end overflow-hidden">
       <Image
-        src={src ? cldUrl(src) : "/images/covers/digital-hero.jpg"}
+        src="/images/covers/investments-card.jpg"
         alt=""
         fill
         priority
@@ -29,7 +26,7 @@ export function DigitalHero({ src }: { src?: string }) {
           dangerouslySetInnerHTML={{ __html: t.raw("headline") }}
         />
         <a
-          href="#services"
+          href="#partner"
           className="mt-8 inline-block border border-white/40 px-8 py-3.5 text-[0.6rem] font-medium uppercase tracking-[0.2em] transition-colors hover:border-gold hover:text-gold-light"
         >
           {t("cta")}

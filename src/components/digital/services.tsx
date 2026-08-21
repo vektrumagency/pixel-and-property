@@ -24,9 +24,9 @@ export function DigitalServices() {
   }
 
   return (
-    <section id="services" className="bg-white px-6 py-16 lg:px-24 lg:py-32">
+    <section id="services" className="bg-white px-6 pt-16 pb-0 lg:px-24 lg:pt-32">
       <Reveal className="mb-12 lg:mb-16">
-        <h2 className="max-w-2xl font-serif text-[clamp(1.8rem,4vw,2.8rem)] font-light">
+        <h2 className="max-w-2xl font-serif text-[clamp(1.8rem,4vw,2.8rem)] font-light lg:max-w-none lg:whitespace-nowrap">
           {t("title")}
         </h2>
         <p className="mt-4 text-[0.78rem] text-black/50">{t("subtitle")}</p>

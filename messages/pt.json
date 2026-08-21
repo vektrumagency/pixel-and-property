@@ -35,8 +35,8 @@
         },
         "investments": {
           "name": "Investments",
-          "tags": "Em breve",
-          "cta": "Em breve"
+          "tags": "Estratégia de Investimento · Em breve",
+          "cta": "Explorar Investments"
         }
       }
     },
@@ -48,7 +48,7 @@
   "digital": {
     "hero": {
       "eyebrow": "Pixel & Property Digital",
-      "headline": "A primeira visita ao seu imóvel acontece online.<br>Torne-a inesquecível.",
+      "headline": "A primeira visita ao seu imóvel acontece online.<br><em>Torne-a inesquecível.</em>",
       "cta": "Conheça os nossos serviços"
     },
     "clients": {
@@ -214,6 +214,12 @@
       "headline": "O seu imóvel merece<br>mais do que um gestor.<br><em>Merece um parceiro.</em>",
       "cta": "Conheça os nossos serviços"
     },
+    "about": {
+      "label": "Sobre nós",
+      "title": "O parceiro de gestão que o seu imóvel merece",
+      "text1": "A Pixel & Property Management é uma equipa de gestão de arrendamento dedicada a proprietários que procuram rentabilidade sem esforço. Tratamos de inquilinos, manutenção, documentação e pagamentos, com relatórios mensais detalhados — para que o seu imóvel trabalhe por si, esteja você onde estiver.",
+      "text2": "Combinamos estratégia de preço dinâmica, seleção rigorosa de inquilinos e um padrão de atendimento premium, tratando cada interação com o profissionalismo que o valor do seu imóvel exige."
+    },
     "pillars": [
       {
         "title": "Tranquilidade total",
@@ -308,6 +314,48 @@
           "features": ["Tudo do Premium MAIS:", "Serviço personalizado 24/7", "Home staging completo", "Gestão de múltiplos imóveis", "Relatórios personalizados"]
         }
       ]
+    }
+  },
+  "investments": {
+    "hero": {
+      "eyebrow": "Pixel & Property Investments",
+      "headline": "O terceiro pilar do grupo.<br><em>Em construção.</em>",
+      "cta": "Torne-se parceiro"
+    },
+    "vision": {
+      "label": "A nossa visão",
+      "title": "Investir em imobiliário, sem o trabalho de o fazer sozinho",
+      "text1": "A Pixel & Property Investments vai ligar investidores a oportunidades imobiliárias cuidadosamente selecionadas em Portugal — desde reabilitação urbana a arrendamento de longa duração — com a mesma exigência que já aplicamos à produção de media e à gestão de propriedades.",
+      "text2": "Estamos a construir esta terceira área do grupo com base na confiança já criada junto de agências, promotores e proprietários. Ainda não estamos a aceitar investimentos — mas queremos que seja o primeiro a saber quando abrirmos."
+    },
+    "pillars": [
+      {
+        "title": "Oportunidades selecionadas",
+        "desc": "Analisamos cada imóvel com os mesmos critérios de qualidade que aplicamos à nossa fotografia e gestão — localização, potencial de valorização e risco."
+      },
+      {
+        "title": "Acompanhamento próximo",
+        "desc": "Sem intermediários anónimos. Cada investidor tem acesso direto à equipa que gere e comunica o imóvel, do primeiro dia ao retorno."
+      },
+      {
+        "title": "Alinhados com o investidor",
+        "desc": "Só avançamos com oportunidades em que nós próprios investiríamos — os nossos interesses estão alinhados com os dos nossos parceiros."
+      }
+    ],
+    "partner": {
+      "label": "Parceiros",
+      "title": "Quer tornar-se parceiro?",
+      "subtitle": "Se representa um promotor, family office ou investidor institucional interessado em colaborar connosco, deixe os seus contactos.",
+      "form": {
+        "name": "Nome",
+        "namePlaceholder": "O seu nome",
+        "email": "Email",
+        "company": "Empresa / Organização",
+        "companyPlaceholder": "Opcional",
+        "message": "Mensagem",
+        "messagePlaceholder": "Conte-nos um pouco sobre o seu interesse...",
+        "submit": "Enviar"
+      }
     }
   },
   "footer": {

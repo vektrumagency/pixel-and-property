@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { cldUrl } from "@/lib/cloudinary";
 import { getProjectSlugs, getProjectBySlug } from "@/lib/projects";
 import { Reveal } from "@/components/reveal";
+import { MediaCarousel } from "@/components/media-carousel";
 
 export async function generateStaticParams() {
   const slugs = await getProjectSlugs("digital");
@@ -66,7 +67,7 @@ export default async function ProjectPage({
         </Link>
       </div>
 
-      <section className="border-b border-gold/15 bg-white px-6 py-16 lg:px-24 lg:py-24">
+      <section className="border-b border-gold/15 bg-white px-6 pt-16 pb-16 lg:px-24 lg:pt-24 lg:pb-24">
         <Reveal className="mx-auto flex max-w-3xl flex-col gap-5">
           {project.description.map((paragraph, i) => (
             <p key={i} className="text-[0.9rem] leading-[1.9] text-black/70 lg:text-base">
@@ -76,80 +77,9 @@ export default async function ProjectPage({
         </Reveal>
       </section>
 
-      <div className="grid grid-cols-2">
-        {project.gallery.slice(0, 2).map((img, i) => (
-          <Reveal key={i} delay={i * 100} className="relative aspect-[3/4] lg:aspect-[4/5]">
-            <Image src={cldUrl(img, { w: 800 })} alt="" fill className="object-cover" />
-          </Reveal>
-        ))}
+      <div className="mb-16 lg:mb-32">
+        <MediaCarousel images={project.gallery} alt={project.name[loc]} />
       </div>
-
-      <section className="grid gap-6 bg-white px-6 py-16 lg:grid-cols-[1fr_2.5fr] lg:px-24 lg:py-24">
-        <Reveal>
-          <span className="text-[0.6rem] uppercase tracking-[0.3em] text-gold-dark">
-            {t("strategyLabel")}
-          </span>
-        </Reveal>
-        <Reveal delay={100}>
-          <p className="max-w-2xl text-[0.9rem] leading-[1.9] text-black/70 lg:text-base">
-            {project.strategy[loc]}
-          </p>
-        </Reveal>
-      </section>
-
-      <div className="grid grid-cols-2">
-        {project.gallery.slice(2, 4).map((img, i) => (
-          <Reveal key={i} delay={i * 100} className="relative aspect-[3/4] lg:aspect-[4/5]">
-            <Image src={cldUrl(img, { w: 800 })} alt="" fill className="object-cover" />
-          </Reveal>
-        ))}
-      </div>
-
-      <section className="grid gap-6 bg-white px-6 py-16 lg:grid-cols-[1fr_2.5fr] lg:px-24 lg:py-24">
-        <Reveal>
-          <span className="text-[0.6rem] uppercase tracking-[0.3em] text-gold-dark">
-            {t("whatWeDidLabel")}
-          </span>
-        </Reveal>
-        <Reveal delay={100}>
-          <p className="max-w-2xl text-[0.9rem] leading-[1.9] text-black/70 lg:text-base">
-            {project.whatWeDid[loc]}
-          </p>
-        </Reveal>
-      </section>
-
-      <section className="bg-white px-6 py-16 lg:px-24 lg:py-24">
-        <Reveal className="border-b border-gold/20 pb-4">
-          <span className="text-[0.6rem] uppercase tracking-[0.3em] text-gold-dark">
-            {t("resultsLabel")}
-          </span>
-        </Reveal>
-        <div>
-          {project.results.map((result, i) => (
-            <Reveal
-              key={i}
-              delay={i * 100}
-              className="grid gap-4 border-b border-gold/10 py-8 lg:grid-cols-[1fr_2.5fr] lg:items-center lg:gap-6"
-            >
-              <div className="font-serif text-5xl font-light text-black lg:text-6xl">
-                {result.value}
-              </div>
-              <p className="max-w-xl text-[0.85rem] leading-[1.8] text-black/60">
-                {result.label[loc]}
-              </p>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-white px-6 pb-24 text-center lg:px-24">
-        <Link
-          href="/contact"
-          className="inline-block border border-gold-dark/50 px-8 py-3.5 text-[0.6rem] font-medium uppercase tracking-[0.2em] transition-colors hover:border-gold hover:text-gold-dark"
-        >
-          {t("projectCta")}
-        </Link>
-      </section>
     </>
   );
 }

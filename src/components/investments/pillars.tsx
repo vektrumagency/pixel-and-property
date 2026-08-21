@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
 import { Reveal } from "@/components/reveal";
 
-export function ManagementPillars() {
-  const t = useTranslations("management");
+export function InvestmentsPillars() {
+  const t = useTranslations("investments");
   const pillars = t.raw("pillars") as { title: string; desc: string }[];
 
   return (
