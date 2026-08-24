@@ -44,6 +44,7 @@ export async function POST(request: Request) {
   });
 
   if (error) {
+    console.error("leads insert failed:", error.message, error.code, error.details, error.hint);
     return Response.json({ error: "Failed to submit" }, { status: 500 });
   }
 
