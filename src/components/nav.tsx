@@ -3,49 +3,12 @@
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-
-function FacebookIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.9h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94Z" />
-    </svg>
-  );
-}
-
-function InstagramIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      className={className}
-    >
-      <rect x="2.5" y="2.5" width="19" height="19" rx="5" />
-      <circle cx="12" cy="12" r="4.3" />
-      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-function TikTokIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M16.6 2h-3.2v13.6a2.9 2.9 0 1 1-2.06-2.78V9.6a6.1 6.1 0 1 0 5.26 6.04V8.9a8.3 8.3 0 0 0 4.6 1.4V7.1a5.1 5.1 0 0 1-4.6-5.1Z" />
-    </svg>
-  );
-}
+import { socials } from "@/components/social-links";
 
 const sectors = [
   { key: "digital", href: "/digital", enabled: true },
   { key: "management", href: "/management", enabled: true },
   { key: "investments", href: "/investments", enabled: true },
-] as const;
-
-const socials = [
-  { name: "Facebook", href: "#", icon: FacebookIcon },
-  { name: "Instagram", href: "#", icon: InstagramIcon },
-  { name: "TikTok", href: "#", icon: TikTokIcon },
 ] as const;
 
 export function Nav() {
@@ -183,10 +146,10 @@ export function Nav() {
               {tFooter("connect")}
             </h3>
             <a
-              href="mailto:pixelandproperty.contact@gmail.com"
+              href="mailto:geral@pixelandproperty.com"
               className="block text-sm text-black/70 hover:text-black"
             >
-              pixelandproperty.contact@gmail.com
+              geral@pixelandproperty.com
             </a>
             <a
               href="tel:+351918881199"
@@ -194,6 +157,9 @@ export function Nav() {
             >
               +351 918 881 199
             </a>
+            <span className="block text-[0.68rem] text-black/35">
+              {tFooter("phoneNote")}
+            </span>
             <span className="block text-sm text-black/40">
               {tFooter("location")}
             </span>
@@ -204,6 +170,8 @@ export function Nav() {
               <a
                 key={social.name}
                 href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={social.name}
                 className="flex h-9 w-9 items-center justify-center rounded-full bg-black text-white transition-colors hover:bg-gold-dark"
               >

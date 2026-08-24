@@ -22,7 +22,7 @@ export function InvestmentsHero() {
           <span className="h-px w-16 bg-white/40" />
         </div>
         <h1
-          className="max-w-3xl font-serif text-[clamp(2.2rem,7vw,5rem)] font-light leading-[1.05] [&_em]:text-gold-light [&_em]:not-italic"
+          className="max-w-5xl font-serif text-[clamp(2.2rem,6vw,4.4rem)] font-light leading-[1.05] [&_em]:text-gold-light [&_em]:not-italic"
           dangerouslySetInnerHTML={{ __html: t.raw("headline") }}
         />
         <a

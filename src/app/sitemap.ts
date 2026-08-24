@@ -33,6 +33,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...entriesFor("/", 1, "monthly"),
     ...entriesFor("/digital", 0.8, "monthly"),
     ...entriesFor("/management", 0.8, "monthly"),
+    ...entriesFor("/investments", 0.8, "monthly"),
+    ...entriesFor("/services", 0.7, "monthly"),
     ...entriesFor("/contact", 0.6, "yearly"),
     ...digitalProjects.flatMap((project) =>
       entriesFor(`/digital/${project.slug}`, 0.7, "monthly"),

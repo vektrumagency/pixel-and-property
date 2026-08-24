@@ -13,7 +13,7 @@
     "aboutTitleLine1": "One group.",
     "aboutTitleEm": "Three sectors.",
     "aboutTitleLine2": "One vision.",
-    "aboutText": "Pixel & Property is a real estate group based in Estoril, Portugal. We combine premium media production, professional property management, and investment strategy to offer a truly integrated approach to the real estate market — for agents, developers, and investors who refuse to settle for ordinary.",
+    "aboutText": "Pixel & Property is a real estate group based in Estoril, Portugal. We combine premium media production, professional property management, and investment strategy to offer a truly integrated approach to the real estate market — for agents, developers, investors, and real estate professionals.",
     "statYears": "Years of experience",
     "statSectors": "Sectors of activity",
     "statPT": "All of Portugal",
@@ -25,7 +25,7 @@
       "items": {
         "digital": {
           "name": "Digital",
-          "tags": "Photography · Video · Drone",
+          "tags": "Photography & Video · Drone · 3D Renders · AI Integration",
           "cta": "Explore Digital"
         },
         "management": {
@@ -57,8 +57,9 @@
     "about": {
       "label": "About us",
       "title": "The media studio that quality real estate deserves",
-      "text1": "Pixel & Property Digital is a forward-thinking real estate media studio, built for agents and developers who market to the world. We combine professional HDR photography, cinematic video, drone footage, and cutting-edge AI technology to transform listings into compelling visual stories.",
-      "text2": "Specialised in strategic social media content, for showcasing properties or building personal brands. With over 8 years of camera experience and 4 years of social media expertise.",
+      "text1": "Pixel & Property Digital is a forward-thinking real estate media studio built around one purpose: elevating the way property is presented.",
+      "text2": "With 20+ digital services available, for agencies, developers, agents, investors and professionals across the real estate industry. You focus on selling. We focus on everything digital that gets you there.",
+      "tagline": "Become a partner. Elevate your presentation.",
       "cta": "Meet the Team"
     },
     "stats": {
@@ -67,6 +68,7 @@
       "team": "Team members",
       "projects": "Projects delivered",
       "views": "Online views",
+      "trending": "Highest trending content",
       "value": "Property value captured",
       "years": "Years of experience",
       "delivery": "Fastest turnaround"
@@ -126,33 +128,32 @@
     },
     "pricing": {
       "label": "Pricing",
-      "title": "Transparent pricing. No surprises.<br>Just exceptional media.",
-      "note": "All prices are per property. Monthly packages available for agencies with regular volume. Travel included within 50km of Estoril. €0.50/km beyond.",
+      "title": "Straightforward packages. No surprises.<br>Just exceptional media.",
+      "note": "No fixed prices, no obligation — every request is reviewed individually and answered with a personalised quote. Travel included within 50km of Estoril. €0.50/km beyond.",
       "perProperty": "per property",
       "book": "Book Now",
+      "popular": "Most Popular",
       "tiers": [
         {
           "name": "Essence",
-          "price": "250",
-          "features": ["Cinematic Horizontal Video", "HDR Photography (25+)", "AI Home Staging"]
+          "tagline": "5 Properties",
+          "features": ["HDR Interior", "HDR Exterior", "Drone Photos"]
         },
         {
           "name": "Signature",
-          "price": "465",
+          "tagline": "Per Property",
           "popular": true,
-          "features": ["Everything in Essence PLUS:", "Promotional Vertical Video"]
+          "features": ["HDR Interior", "HDR Exterior", "Drone Photos", "Cinematic Video (Horizontal)"]
         },
         {
           "name": "Prestige",
-          "price": "640",
-          "features": ["Everything in Signature PLUS:"]
+          "tagline": "Per Property",
+          "features": ["HDR Interior", "HDR Exterior", "Drone Photos", "Cinematic Video (Horizontal)", "Promotional Video (Social Media)"]
         },
         {
-          "name": "Other Services",
-          "price": "",
-          "custom": "Enquire",
-          "customLabel": "on request",
-          "features": ["Drone Photos & Video", "Horizontal or Vertical Vlog", "\"Netflix\" Style YouTube Video", "Personal Brand Video", "Social Media Management", "Manychat Automations"]
+          "name": "Enquire",
+          "tagline": "On Demand",
+          "features": ["AI Home Staging", "Advanced AI Construction", "Moodboard", "3D Renders", "2D Plans", "Brochures", "More"]
         }
       ]
     },
@@ -182,18 +183,22 @@
       "label": "FAQs",
       "title": "Everything you need to know",
       "items": [
-        { "q": "What's included in a standard shoot?", "a": "Every shoot includes 25+ HDR photos, a cinematic horizontal video (2–3 min), a vertical social media video (30–60 sec), drone footage, and professional editing. AI services available as an add-on." },
-        { "q": "How quickly do you deliver?", "a": "Photos: 48 hours. Cinematic videos: 3 days. Social media videos: 10 days. AI services within 24–48 hours. Rush delivery available." },
-        { "q": "Where do you operate?", "a": "We serve properties across all of Portugal — Lisbon, Cascais, Estoril, Porto, Algarve, Comporta, and the Silver Coast. Travel included within 50km of Estoril." },
-        { "q": "Do you work in English and Portuguese?", "a": "Yes. Pixel & Property operates fully in both English and Portuguese. Website, communication, and deliverables are available in both languages." }
+        { "q": "What areas of Portugal do you operate in?", "a": "We operate across all of Portugal, working with agencies, developers, agents and property owners nationwide." },
+        { "q": "Do you operate outside of Portugal?", "a": "Our primary focus is Portugal, though our work has already extended beyond its borders for select clients. We approach each of these projects individually, tailoring the scope, budget and logistics to deliver the same standard our clients expect at home. Reach out to discuss your project, and let's explore the possibilities together." },
+        { "q": "How quickly can I get my property media delivered?", "a": "Delivery time is typically 48 business hours for photography, 3 to 5 business days for cinematic video, and up to 7 business days for social media promotional video. We generally deliver ahead of schedule, though timelines may vary depending on requested revisions, AI server maintenance, or other reasons beyond our control." },
+        { "q": "How do I book a shoot?", "a": "Simply get in touch with us by phone or email, and we'll schedule a session that fits your timeline." },
+        { "q": "How many photos are included in one photoshoot?", "a": "Unlike other companies, we don't work with a maximum number of photographs. The total varies according to the size of the property, and we always take care to capture every angle that best presents and sells the property, tailored to our clients' needs." },
+        { "q": "Do you work in English and Portuguese?", "a": "Yes, our team operates bilingually in English, Portuguese and Spanish to support domestic and international clients alike." },
+        { "q": "Can I make changes to my project after delivery?", "a": "Every project includes two complimentary revisions after delivery. Changes involving music or AI-generated components may incur additional costs." }
       ]
     },
     "contact": {
       "label": "Contact",
-      "title": "Ready to elevate your listings?",
-      "subtitle": "Whether you're booking your first shoot or discussing a monthly partnership, we'd love to hear from you.",
+      "title": "Let's talk.",
+      "subtitle": "Whatever stage you're at — a first shoot, a property to manage, or an investment opportunity to explore — we'd love to hear from you.",
       "location": "Estoril, Portugal — Serving all of Portugal",
       "whatsapp": "Chat on WhatsApp",
+      "phoneNote": "Call charged at the national mobile rate",
       "form": {
         "name": "Name",
         "namePlaceholder": "Your name",
@@ -214,12 +219,6 @@
       "headline": "Your property deserves<br>more than a manager.<br><em>It deserves a partner.</em>",
       "cta": "Discover our services"
     },
-    "about": {
-      "label": "About us",
-      "title": "The management partner your property deserves",
-      "text1": "Pixel & Property Management is a rental management team dedicated to landlords who want returns without the hassle. We handle tenants, maintenance, documentation and payments, with detailed monthly reporting — so your property works for you, wherever you are.",
-      "text2": "We combine dynamic pricing strategy, rigorous tenant selection and a premium service standard, treating every interaction with the professionalism your property's value deserves."
-    },
     "pillars": [
       {
         "title": "Total peace of mind",
@@ -236,8 +235,10 @@
     ],
     "about": {
       "label": "About us",
-      "text1": "Pixel & Property Management was born from a real gap we identified in the market: property owners with valuable assets who lacked access to truly professional, transparent and dedicated management.",
-      "text2": "Based in Estoril, we serve domestic and international property owners across all of Portugal. With a bilingual approach and a digital reporting system, owners always maintain full control — effortlessly.",
+      "title": "The management partner your property deserves",
+      "text1": "Pixel & Property Management was born from a gap we identified in the market: property owners with valuable assets who lacked access to truly professional, transparent and dedicated management.",
+      "text2": "Based in Portugal, we manage properties nationwide, drawing on our in-house digital department to present every asset at its full potential, driving greater visibility, stronger lead generation and, ultimately, higher returns for our owners.",
+      "tagline": "We manage. You profit.",
       "cta": "Get in Touch"
     },
     "services": {
@@ -296,6 +297,7 @@
       "title": "Simple, transparent,<br>no surprises.",
       "note": "No setup fees. No hidden costs. Just a transparent percentage on rent actually received.",
       "book": "Get in Touch",
+      "popular": "Most Popular",
       "tiers": [
         {
           "name": "Essential",
@@ -319,14 +321,15 @@
   "investments": {
     "hero": {
       "eyebrow": "Pixel & Property Investments",
-      "headline": "The group's third pillar.<br><em>Under construction.</em>",
+      "headline": "Some opportunities never reach the market.<br><em>We make sure our partners are first in line.</em>",
       "cta": "Become a partner"
     },
     "vision": {
       "label": "Our vision",
       "title": "Invest in real estate, without doing it alone",
-      "text1": "Pixel & Property Investments will connect investors with carefully selected real estate opportunities across Portugal — from urban rehabilitation to long-term rentals — held to the same standard we already apply to our media production and property management.",
-      "text2": "We're building this third pillar of the group on the trust we've already earned with agencies, developers, and owners. We're not accepting investments yet — but we want you to be the first to know when we open."
+      "text1": "Pixel & Property Investments connects investors to carefully selected real estate opportunities, from projects fully developed by us to strong opportunities identified before they reach the market.",
+      "text2": "We're building this third pillar of the group on the trust we've already earned with developers, agencies and owners.",
+      "tagline": "Coming soon. Discover how you can become a partner."
     },
     "pillars": [
       {
@@ -345,7 +348,7 @@
     "partner": {
       "label": "Partners",
       "title": "Want to become a partner?",
-      "subtitle": "If you represent a developer, family office, or institutional investor interested in collaborating with us, leave your contact details.",
+      "subtitle": "The finished product will always come with more competition. Become a member while we build, and be among the first to hear of every investment opportunity as it arises. The market rewards those who arrive early.",
       "form": {
         "name": "Name",
         "namePlaceholder": "Your name",
@@ -358,10 +361,40 @@
       }
     }
   },
+  "servicesCatalog": {
+    "eyebrow": "All Services",
+    "title": "Choose exactly what you need.",
+    "subtitle": "No packages required. Select one or more services below and request a personalised quote — we'll take it from there.",
+    "categories": {
+      "media": "Photography & Video",
+      "ondemand": "On-Demand"
+    },
+    "add": "Add to quote",
+    "added": "Added",
+    "panelTitle": "Your quote request",
+    "emptyState": "Select the services you're interested in to request a quote.",
+    "selectedLabel": "selected",
+    "cta": "Get a Quote",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "message": "Message (optional)",
+      "messagePlaceholder": "Anything else we should know?",
+      "submit": "Request Quote"
+    },
+    "success": {
+      "title": "Request received.",
+      "text": "Thanks — we've got your selection and will be in touch shortly with a personalised quote.",
+      "reset": "Request another quote"
+    }
+  },
   "footer": {
     "cta": "Let's elevate your real estate presence.",
     "ctaButton": "Get in Touch",
     "connect": "Connect",
+    "phoneNote": "Call charged at the national mobile rate",
     "location": "Estoril, Portugal",
     "copy": "© 2026 Pixel & Property. All rights reserved."
   }

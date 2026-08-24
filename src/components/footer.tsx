@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { socials } from "@/components/social-links";
 
 export function Footer() {
   const t = useTranslations("footer");
@@ -18,6 +19,21 @@ export function Footer() {
           >
             {t("ctaButton")}
           </Link>
+
+          <div className="mt-8 flex items-center gap-3">
+            {socials.map((social) => (
+              <a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.name}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-gold-dark/30 text-black/60 transition-colors hover:border-gold hover:bg-gold-dark hover:text-white"
+              >
+                <social.icon className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
         </div>
 
         <div className="flex flex-col gap-3">
@@ -39,14 +55,15 @@ export function Footer() {
         <div className="flex flex-col gap-3">
           <h3 className="font-serif text-lg font-normal">{t("connect")}</h3>
           <a
-            href="mailto:pixelandproperty.contact@gmail.com"
+            href="mailto:geral@pixelandproperty.com"
             className="text-sm text-black/70 hover:text-black"
           >
-            pixelandproperty.contact@gmail.com
+            geral@pixelandproperty.com
           </a>
           <a href="tel:+351918881199" className="text-sm text-black/70 hover:text-black">
             +351 918 881 199
           </a>
+          <span className="text-[0.68rem] text-black/35">{t("phoneNote")}</span>
           <span className="text-sm text-black/40">{t("location")}</span>
         </div>
       </div>
