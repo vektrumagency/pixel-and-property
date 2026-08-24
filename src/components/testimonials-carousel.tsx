@@ -14,15 +14,18 @@ function TestimonialCard({
   className?: string;
 }) {
   return (
-    <div className={`border border-gold/15 bg-white p-8 ${className}`}>
-      <span className="mb-6 block font-serif text-5xl leading-none text-gold/40">
+    <div
+      className={`relative overflow-hidden border border-gold/20 bg-gold/[0.04] p-8 ${className}`}
+    >
+      <span className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-gold-dark via-gold to-gold-light" />
+      <span className="mb-6 block font-serif text-5xl leading-none text-gold">
         &ldquo;
       </span>
       <p className="min-h-[9em] text-base font-light leading-[1.6] text-black/75">
         {item.text}
       </p>
-      <div className="mt-6 border-t border-black/10 pt-4">
-        <p className="text-[0.68rem] font-medium uppercase tracking-[0.1em]">
+      <div className="mt-6 border-t border-gold/20 pt-4">
+        <p className="text-[0.68rem] font-medium uppercase tracking-[0.1em] text-gold-dark">
           {item.author}
         </p>
         <p className="mt-1 text-[0.6rem] tracking-[0.08em] text-text-muted">

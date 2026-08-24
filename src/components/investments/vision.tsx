@@ -19,6 +19,12 @@ export function InvestmentsVision() {
         <p className="mt-5 max-w-2xl text-[0.85rem] leading-[1.9] text-black/55">
           {t("text2")}
         </p>
+        <a
+          href="#partner"
+          className="mt-6 inline-block text-[0.72rem] font-medium uppercase tracking-[0.15em] text-gold-dark transition-colors hover:text-gold"
+        >
+          {t("tagline")}
+        </a>
       </Reveal>
     </section>
   );

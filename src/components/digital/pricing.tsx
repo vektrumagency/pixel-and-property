@@ -4,10 +4,8 @@ import { Link } from "@/i18n/navigation";
 
 type Tier = {
   name: string;
-  price: string;
+  tagline: string;
   popular?: boolean;
-  custom?: string;
-  customLabel?: string;
   features: string[];
 };
 
@@ -40,32 +38,11 @@ export function DigitalPricing() {
           >
             {tier.popular && (
               <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-gold px-4 py-1 text-[0.48rem] font-semibold uppercase tracking-[0.2em] text-black">
-                Mais Popular
+                {t("popular")}
               </span>
             )}
-            <p className="mb-4 font-serif text-xl font-normal">{tier.name}</p>
-            <div className="mb-8">
-              {tier.custom ? (
-                <>
-                  <span className="font-serif text-3xl font-light">
-                    {tier.custom}
-                  </span>
-                  <span className="mt-1 block text-[0.55rem] text-text-muted">
-                    {tier.customLabel}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <span className="align-top text-base text-gold-dark">€</span>
-                  <span className="font-serif text-5xl font-light leading-none">
-                    {tier.price}
-                  </span>
-                  <span className="mt-0.5 block text-[0.55rem] text-text-muted">
-                    {t("perProperty")}
-                  </span>
-                </>
-              )}
-            </div>
+            <p className="mb-3 font-serif text-xl font-normal">{tier.name}</p>
+            <p className="mb-8 text-[0.75rem] leading-[1.6] text-black/55">{tier.tagline}</p>
             <ul className="mb-8 space-y-0">
               {tier.features.map((f) => (
                 <li

@@ -77,7 +77,7 @@ export function DigitalServices() {
 
       <Reveal className="mt-12 text-center lg:mt-16">
         <Link
-          href="/contact"
+          href="/services"
           className="inline-block border border-gold-dark/50 px-8 py-3.5 text-[0.6rem] font-medium uppercase tracking-[0.2em] transition-colors hover:border-gold hover:text-gold-dark"
         >
           {t("cta")}

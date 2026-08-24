@@ -38,7 +38,7 @@ export function ManagementPricing() {
           >
             {tier.popular && (
               <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-gold px-4 py-1 text-[0.48rem] font-semibold uppercase tracking-[0.2em] text-black">
-                Mais Popular
+                {t("popular")}
               </span>
             )}
             <p className="mb-3 font-serif text-xl font-normal">{tier.name}</p>

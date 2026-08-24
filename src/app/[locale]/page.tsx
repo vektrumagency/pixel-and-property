@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
@@ -72,28 +73,44 @@ export default async function HomePage({
 
       <DigitalClients />
 
-      <section className="grid gap-12 bg-white px-6 pt-16 pb-0 lg:grid-cols-[1.1fr_0.9fr] lg:gap-32 lg:px-24 lg:pt-32">
-        <Reveal>
-          <span className="mb-4 block text-[0.52rem] uppercase tracking-[0.45em] text-gold-dark">
-            {t("aboutLabel")}
-          </span>
-          <h2 className="mb-6 font-serif text-[clamp(1.8rem,6vw,3.2rem)] font-light leading-[1.18]">
-            {t("aboutTitleLine1")}
-            <br />
-            <em className="text-gold-dark">{t("aboutTitleEm")}</em>
-            <br />
-            {t("aboutTitleLine2")}
-          </h2>
-          <p className="text-[0.78rem] leading-[2.1] text-black/60">
-            {t("aboutText")}
-          </p>
+      <section className="grid gap-10 bg-white px-6 pt-16 pb-0 lg:grid-cols-2 lg:items-stretch lg:gap-16 lg:px-24 lg:pt-32">
+        <Reveal className="relative aspect-[4/3] overflow-hidden lg:aspect-auto lg:h-full lg:min-h-[480px]">
+          <Image
+            src="/images/covers/digital-hero.jpg"
+            alt=""
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 border border-gold/20" />
         </Reveal>
-        <Reveal delay={150} className="grid grid-cols-2 gap-8">
-          <Stat value="8+" label={t("statYears")} />
-          <Stat value="3" label={t("statSectors")} />
-          <Stat value="PT" label={t("statPT")} />
-          <Stat value="EN" label={t("statEN")} />
-        </Reveal>
+
+        <div className="flex flex-col justify-center">
+          <Reveal delay={100}>
+            <span className="mb-4 block text-[0.52rem] uppercase tracking-[0.45em] text-gold-dark">
+              {t("aboutLabel")}
+            </span>
+            <h2 className="mb-6 font-serif text-[clamp(1.8rem,6vw,3.2rem)] font-light leading-[1.18]">
+              {t("aboutTitleLine1")}
+              <br />
+              <em className="text-gold-dark">{t("aboutTitleEm")}</em>
+              <br />
+              {t("aboutTitleLine2")}
+            </h2>
+            <p className="text-[0.78rem] leading-[2.1] text-black/60">
+              {t("aboutText")}
+            </p>
+          </Reveal>
+
+          <Reveal
+            delay={200}
+            className="mt-10 grid grid-cols-2 gap-8 border-t border-gold/15 pt-8 lg:mt-12 lg:grid-cols-4 lg:pt-10"
+          >
+            <Stat value="8+" label={t("statYears")} />
+            <Stat value="3" label={t("statSectors")} />
+            <Stat value="PT" label={t("statPT")} />
+            <Stat value="EN" label={t("statEN")} />
+          </Reveal>
+        </div>
       </section>
 
       <SectorsShowcase />

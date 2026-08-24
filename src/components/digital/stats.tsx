@@ -5,12 +5,12 @@ import { Reveal } from "@/components/reveal";
 export function DigitalStats() {
   const t = useTranslations("digital.stats");
 
-  const stats = [
-    { target: 6, suffix: "", label: t("team") },
-    { target: 182, suffix: "+", label: t("projects") },
-    { target: 270, suffix: "k+", label: t("views") },
+  const stats: { target: number; suffix: string; prefix?: string; label: string }[] = [
+    { target: 13, suffix: "", label: t("team") },
+    { target: 5, suffix: "M+", label: t("views") },
+    { target: 500, suffix: "k+", prefix: ">", label: t("trending") },
     { target: 1, suffix: "B+", label: t("value") },
-    { target: 8, suffix: "+", label: t("years") },
+    { target: 1000, suffix: "+", label: t("projects") },
     { target: 48, suffix: "h", label: t("delivery") },
   ];
 
@@ -33,6 +33,7 @@ export function DigitalStats() {
             className="bg-black/[0.03] px-6 py-8 lg:px-8 lg:py-10"
           >
             <div className="mb-3 font-sans text-4xl font-light text-black lg:text-5xl">
+              {stat.prefix}
               <CountUp target={stat.target} suffix={stat.suffix} />
             </div>
             <div className="text-[0.72rem] text-black/55 lg:text-[0.8rem]">

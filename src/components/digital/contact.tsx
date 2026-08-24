@@ -21,10 +21,10 @@ export function DigitalContact() {
         </p>
         <div className="flex flex-col gap-3">
           <a
-            href="mailto:pixelandproperty.contact@gmail.com"
+            href="mailto:geral@pixelandproperty.com"
             className="text-[0.72rem] tracking-[0.1em] text-black/65 hover:text-gold-dark"
           >
-            pixelandproperty.contact@gmail.com
+            geral@pixelandproperty.com
           </a>
           <a
             href="tel:+351918881199"
@@ -32,6 +32,9 @@ export function DigitalContact() {
           >
             +351 918 881 199
           </a>
+          <span className="-mt-1.5 text-[0.62rem] text-text-muted/70">
+            {t("phoneNote")}
+          </span>
           <span className="text-[0.72rem] text-text-muted">
             {t("location")}
           </span>

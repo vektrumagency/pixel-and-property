@@ -13,7 +13,7 @@
     "aboutTitleLine1": "Um grupo.",
     "aboutTitleEm": "Três sectores.",
     "aboutTitleLine2": "Uma visão.",
-    "aboutText": "A Pixel & Property é um grupo imobiliário com base em Estoril, Portugal. Combinamos produção de media premium, gestão profissional de propriedades e estratégia de investimento para oferecer uma abordagem verdadeiramente integrada ao mercado imobiliário — para agentes, promotores e investidores que recusam o comum.",
+    "aboutText": "A Pixel & Property é um grupo imobiliário com base em Estoril, Portugal. Combinamos produção de media premium, gestão profissional de propriedades e estratégia de investimento para oferecer uma abordagem verdadeiramente integrada ao mercado imobiliário, para agentes, promotores, investidores e profissionais do setor imobiliário.",
     "statYears": "Anos de experiência",
     "statSectors": "Sectores de atuação",
     "statPT": "Todo o Portugal",
@@ -25,12 +25,12 @@
       "items": {
         "digital": {
           "name": "Digital",
-          "tags": "Fotografia · Vídeo · Drone",
+          "tags": "Fotografia & Vídeo · Drone · 3D Renders · AI Integration",
           "cta": "Explorar Digital"
         },
         "management": {
           "name": "Management",
-          "tags": "Gestão de Arrendamento · Reporte",
+          "tags": "Gestão de Arrendamento · Relatórios",
           "cta": "Explorar Management"
         },
         "investments": {
@@ -57,8 +57,9 @@
     "about": {
       "label": "Sobre nós",
       "title": "O estúdio de media que o imobiliário de qualidade merece",
-      "text1": "A Pixel & Property Digital é um estúdio de media imobiliária com visão de futuro, criado para agentes e promotores que comunicam para o mundo. Combinamos fotografia HDR profissional, vídeo cinematográfico, imagens aéreas com drone e tecnologias de IA de vanguarda para transformar anúncios em histórias visuais.",
-      "text2": "Especializados em conteúdo estratégico para redes sociais, para apresentar imóveis ou construir marcas pessoais. Com mais de 8 anos de experiência em câmara e 4 anos de especialização em redes sociais.",
+      "text1": "A Pixel & Property Digital é um estúdio de media imobiliária com visão de futuro, construído à volta de um único propósito: elevar a forma como os imóveis são apresentados.",
+      "text2": "Com mais de 20 serviços digitais disponíveis, para agências, promotores, agentes, investidores e profissionais de todo o setor imobiliário. Você foca-se em vender. Nós focamo-nos em tudo o resto, no digital, que o leva até lá.",
+      "tagline": "Torne-se parceiro. Eleve a sua apresentação.",
       "cta": "Conhecer a Equipa"
     },
     "stats": {
@@ -67,6 +68,7 @@
       "team": "Membros na equipa",
       "projects": "Projetos entregues",
       "views": "Visualizações online",
+      "trending": "Conteúdo mais viral",
       "value": "Valor de imóveis captados",
       "years": "Anos de experiência",
       "delivery": "Entrega mais rápida"
@@ -84,7 +86,7 @@
         {
           "tag": "",
           "name": "Vídeos Promocionais",
-          "desc": "Vídeos verticais de formato curto, concebidos para dominar as redes sociais — Instagram Reels, TikTok e Facebook. Conteúdo que capta atenção e gera resultados."
+          "desc": "Vídeos verticais de formato curto, concebidos para dominar as redes sociais: Instagram Reels, TikTok e Facebook. Conteúdo que capta atenção e gera resultados."
         },
         {
           "tag": "",
@@ -94,7 +96,7 @@
         {
           "tag": "",
           "name": "Drone e Fotografia Aérea",
-          "desc": "Fotografia e vídeo aéreo que revelam perspetivas que as imagens ao nível do solo nunca conseguem captar — dentro e fora do imóvel."
+          "desc": "Fotografia e vídeo aéreo que revelam perspetivas que as imagens ao nível do solo nunca conseguem captar, dentro e fora do imóvel."
         },
         {
           "tag": "",
@@ -104,7 +106,7 @@
         {
           "tag": "",
           "name": "Gestão de Redes Sociais",
-          "desc": "Tratamos da estratégia, publicação e agendamento do conteúdo dos seus imóveis nas redes sociais — para que se mantenha focado no que realmente importa: a venda."
+          "desc": "Tratamos da estratégia, publicação e agendamento do conteúdo dos seus imóveis nas redes sociais, para que se mantenha focado no que realmente importa: a venda."
         }
       ]
     },
@@ -126,33 +128,32 @@
     },
     "pricing": {
       "label": "Preços",
-      "title": "Preços transparentes. Sem surpresas.<br>Apenas media excecional.",
-      "note": "Todos os preços são por imóvel. Pacotes mensais disponíveis para agências com volume regular. Deslocação incluída até 50km do Estoril. €0,50/km além desta distância.",
+      "title": "Pacotes claros. Sem surpresas.<br>Apenas media excecional.",
+      "note": "Sem preços fixos, sem compromisso: cada pedido é analisado individualmente e respondido com um orçamento personalizado. Deslocação incluída até 50km do Estoril. €0,50/km além desta distância.",
       "perProperty": "por imóvel",
       "book": "Reservar Agora",
+      "popular": "Mais Popular",
       "tiers": [
         {
           "name": "Essence",
-          "price": "250",
-          "features": ["Vídeo Horizontal Cinematográfico", "Fotografias HDR (25+)", "Home Staging com IA"]
+          "tagline": "5 Imóveis",
+          "features": ["HDR Interior", "HDR Exterior", "Fotos de Drone"]
         },
         {
           "name": "Signature",
-          "price": "465",
+          "tagline": "Por Imóvel",
           "popular": true,
-          "features": ["Tudo do Essence MAIS:", "Vídeo Vertical Promocional"]
+          "features": ["HDR Interior", "HDR Exterior", "Fotos de Drone", "Vídeo Cinematográfico (Horizontal)"]
         },
         {
           "name": "Prestige",
-          "price": "640",
-          "features": ["Tudo do Signature MAIS:"]
+          "tagline": "Por Imóvel",
+          "features": ["HDR Interior", "HDR Exterior", "Fotos de Drone", "Vídeo Cinematográfico (Horizontal)", "Vídeo Promocional (Redes Sociais)"]
         },
         {
-          "name": "Outros Serviços",
-          "price": "",
-          "custom": "Consulta",
-          "customLabel": "sob pedido",
-          "features": ["Drone Photos & Vídeo", "Vlog Horizontal ou Vertical", "Vídeo YouTube \"Netflix\"", "Vídeo de Marca Pessoal", "Gestão de Redes Sociais", "Automações Manychat"]
+          "name": "Enquire",
+          "tagline": "Sob Pedido",
+          "features": ["Home Staging com IA", "Construção Avançada com IA", "Moodboard", "Renders 3D", "Plantas 2D", "Brochuras", "Mais"]
         }
       ]
     },
@@ -173,7 +174,7 @@
       "title": "Quatro passos simples para vender",
       "steps": [
         { "name": "Marcar", "desc": "Contacte-nos por WhatsApp, email ou reserve diretamente. Confirmamos em 24 horas." },
-        { "name": "Captar", "desc": "Chegamos prontos. Fotografia, vídeo, drone — tudo numa única visita de 1–2 horas." },
+        { "name": "Captar", "desc": "Chegamos prontos. Fotografia, vídeo, drone, tudo numa única visita de 1–2 horas." },
         { "name": "Editar", "desc": "Gradação de cor profissional, melhorias com IA, home staging virtual e edição de vídeo." },
         { "name": "Entregar", "desc": "Fotografias em 48h. Vídeos cinematográficos em 3 dias. Redes sociais em 10 dias." }
       ]
@@ -182,18 +183,22 @@
       "label": "FAQs",
       "title": "Tudo o que precisa de saber",
       "items": [
-        { "q": "O que está incluído numa sessão padrão?", "a": "Cada sessão inclui 25+ fotografias HDR, vídeo horizontal cinematográfico (2–3 min), vídeo vertical para redes sociais (30–60 seg), imagens de drone e edição profissional. Serviços de IA disponíveis como add-on." },
-        { "q": "Em quanto tempo entregam?", "a": "Fotografias: 48 horas. Vídeos cinematográficos: 3 dias. Vídeos para redes sociais: 10 dias. Serviços com IA em 24–48 horas. Entrega urgente disponível." },
-        { "q": "Onde é que operam?", "a": "Servimos imóveis em todo Portugal — Lisboa, Cascais, Estoril, Porto, Algarve, Comporta e Costa de Prata. Deslocação incluída até 50km do Estoril." },
-        { "q": "Trabalham em inglês e português?", "a": "Sim. A Pixel & Property opera totalmente em inglês e português. Website, comunicação e entregáveis disponíveis em ambos os idiomas." }
+        { "q": "Em que zonas de Portugal atuam?", "a": "Operamos em todo o Portugal, trabalhando com agências, promotores, agentes e proprietários em todo o país." },
+        { "q": "Trabalham fora de Portugal?", "a": "O nosso foco principal é Portugal, mas o nosso trabalho já se estendeu além-fronteiras para clientes selecionados. Analisamos cada um destes projetos individualmente, ajustando o âmbito, orçamento e logística para entregar o mesmo padrão que os nossos clientes esperam em casa. Contacte-nos para falar sobre o seu projeto, e vamos explorar as possibilidades juntos." },
+        { "q": "Em quanto tempo recebo a media do meu imóvel?", "a": "O prazo de entrega é tipicamente de 48 horas úteis para fotografia, 3 a 5 dias úteis para vídeo cinematográfico, e até 7 dias úteis para vídeo promocional para redes sociais. Normalmente entregamos antes do prazo, embora os tempos possam variar consoante revisões pedidas, manutenção dos servidores de IA, ou outros motivos fora do nosso controlo." },
+        { "q": "Como marco uma sessão?", "a": "Basta contactar-nos por telefone ou email, e agendamos uma sessão que se ajuste ao seu calendário." },
+        { "q": "Quantas fotos estão incluídas numa sessão?", "a": "Ao contrário de outras empresas, não trabalhamos com um número máximo de fotografias. O total varia consoante o tamanho do imóvel, e temos sempre o cuidado de captar todos os ângulos que melhor apresentam e vendem o imóvel, adaptados às necessidades de cada cliente." },
+        { "q": "Trabalham em inglês e português?", "a": "Sim, a nossa equipa opera de forma bilingue em inglês, português e espanhol, para apoiar clientes nacionais e internacionais." },
+        { "q": "Posso fazer alterações ao projeto depois da entrega?", "a": "Cada projeto inclui duas revisões gratuitas após a entrega. Alterações que envolvam música ou componentes gerados por IA podem ter custos adicionais." }
       ]
     },
     "contact": {
       "label": "Contacto",
-      "title": "Pronto para elevar os seus anúncios?",
-      "subtitle": "Quer esteja a marcar a sua primeira sessão ou a discutir uma parceria mensal, gostaríamos de ouvir de si.",
-      "location": "Estoril, Portugal — Ao serviço de todo o Portugal",
+      "title": "Vamos falar.",
+      "subtitle": "Seja qual for a fase em que está: uma primeira sessão, um imóvel para gerir, ou uma oportunidade de investimento a explorar. Gostaríamos de ouvir de si.",
+      "location": "Estoril, Portugal · Ao serviço de todo o Portugal",
       "whatsapp": "Conversar no WhatsApp",
+      "phoneNote": "Chamada para rede móvel nacional",
       "form": {
         "name": "Nome",
         "namePlaceholder": "O seu nome",
@@ -211,30 +216,26 @@
       "headline": "O seu imóvel merece<br>mais do que um gestor.<br><em>Merece um parceiro.</em>",
       "cta": "Conheça os nossos serviços"
     },
-    "about": {
-      "label": "Sobre nós",
-      "title": "O parceiro de gestão que o seu imóvel merece",
-      "text1": "A Pixel & Property Management é uma equipa de gestão de arrendamento dedicada a proprietários que procuram rentabilidade sem esforço. Tratamos de inquilinos, manutenção, documentação e pagamentos, com relatórios mensais detalhados — para que o seu imóvel trabalhe por si, esteja você onde estiver.",
-      "text2": "Combinamos estratégia de preço dinâmica, seleção rigorosa de inquilinos e um padrão de atendimento premium, tratando cada interação com o profissionalismo que o valor do seu imóvel exige."
-    },
     "pillars": [
       {
         "title": "Tranquilidade total",
-        "desc": "Tratamos de tudo — inquilinos, manutenção, documentação e pagamentos. O proprietário recebe relatórios mensais detalhados e não precisa de se preocupar com mais nada."
+        "desc": "Tratamos de tudo: inquilinos, manutenção, documentação e pagamentos. O proprietário recebe relatórios mensais detalhados e não precisa de se preocupar com mais nada."
       },
       {
         "title": "Rendimento maximizado",
-        "desc": "Estratégia de preço dinâmica, seleção rigorosa de inquilinos e ocupação maximizada. O seu imóvel trabalha por si — mesmo quando está no outro lado do mundo."
+        "desc": "Estratégia de preço dinâmica, seleção rigorosa de inquilinos e ocupação maximizada. O seu imóvel trabalha por si, mesmo quando está no outro lado do mundo."
       },
       {
         "title": "Experiência premium",
-        "desc": "Cada interação — com proprietários e inquilinos — é tratada com profissionalismo e atenção ao detalhe. Porque o nível do serviço reflete o valor do imóvel."
+        "desc": "Cada interação, com proprietários e inquilinos, é tratada com profissionalismo e atenção ao detalhe. Porque o nível do serviço reflete o valor do imóvel."
       }
     ],
     "about": {
       "label": "Sobre nós",
-      "text1": "A Pixel & Property Management nasceu da necessidade real que vimos no mercado: proprietários com imóveis de valor que não tinham acesso a uma gestão verdadeiramente profissional, transparente e dedicada.",
-      "text2": "Operamos com base em Estoril, servindo proprietários nacionais e internacionais em todo o Portugal. Com uma abordagem bilingue e um sistema de reporte digital, o proprietário tem sempre controlo total — sem esforço.",
+      "title": "O parceiro de gestão que o seu imóvel merece",
+      "text1": "A Pixel & Property Management nasceu de uma lacuna que identificámos no mercado: proprietários com imóveis de valor que não tinham acesso a uma gestão verdadeiramente profissional, transparente e dedicada.",
+      "text2": "Com base em Portugal, gerimos propriedades em todo o país, apoiados no nosso departamento digital interno para apresentar cada imóvel no seu potencial máximo, gerando maior visibilidade, mais leads e, em última análise, maior rentabilidade para os nossos proprietários.",
+      "tagline": "Nós gerimos. Você lucra.",
       "cta": "Falar Connosco"
     },
     "services": {
@@ -248,10 +249,10 @@
         },
         {
           "name": "Manutenção & Reparações",
-          "desc": "Rede de técnicos e prestadores de serviço de confiança. Resposta rápida a emergências, manutenção preventiva e supervisão de obras — sem que o proprietário precise de intervir."
+          "desc": "Rede de técnicos e prestadores de serviço de confiança. Resposta rápida a emergências, manutenção preventiva e supervisão de obras, sem que o proprietário precise de intervir."
         },
         {
-          "name": "Reporte & Transparência",
+          "name": "Relatórios & Transparência",
           "desc": "Relatórios mensais detalhados com rendimentos, despesas, ocupação e estado do imóvel. Acesso digital permanente ao histórico completo da sua propriedade."
         },
         {
@@ -274,8 +275,8 @@
       "steps": [
         { "name": "Consulta gratuita", "desc": "Analisamos o seu imóvel, o mercado local e apresentamos uma proposta personalizada sem compromisso." },
         { "name": "Onboarding", "desc": "Tratamos de toda a documentação, visita ao imóvel, fotografia e definição da estratégia de arrendamento." },
-        { "name": "Gestão activa", "desc": "Publicação em plataformas, seleção de inquilinos, contratos e gestão diária — tudo sob controlo da nossa equipa." },
-        { "name": "Reporte mensal", "desc": "Recebe um relatório detalhado com tudo o que aconteceu no seu imóvel. Transparência total, sempre." }
+        { "name": "Gestão activa", "desc": "Publicação em plataformas, seleção de inquilinos, contratos e gestão diária, tudo sob controlo da nossa equipa." },
+        { "name": "Relatório mensal", "desc": "Recebe um relatório detalhado com tudo o que aconteceu no seu imóvel. Transparência total, sempre." }
       ]
     },
     "showroom": {
@@ -293,6 +294,7 @@
       "title": "Simples, transparente,<br>sem surpresas.",
       "note": "Sem taxas de setup. Sem custos ocultos. Apenas uma percentagem transparente sobre a renda efectivamente recebida.",
       "book": "Falar Connosco",
+      "popular": "Mais Popular",
       "tiers": [
         {
           "name": "Essential",
@@ -316,19 +318,20 @@
   "investments": {
     "hero": {
       "eyebrow": "Pixel & Property Investments",
-      "headline": "O terceiro pilar do grupo.<br><em>Em construção.</em>",
+      "headline": "Algumas oportunidades nunca chegam ao mercado.<br><em>Garantimos que os nossos parceiros são os primeiros a saber.</em>",
       "cta": "Torne-se parceiro"
     },
     "vision": {
       "label": "A nossa visão",
       "title": "Investir em imobiliário, sem o trabalho de o fazer sozinho",
-      "text1": "A Pixel & Property Investments vai ligar investidores a oportunidades imobiliárias cuidadosamente selecionadas em Portugal — desde reabilitação urbana a arrendamento de longa duração — com a mesma exigência que já aplicamos à produção de media e à gestão de propriedades.",
-      "text2": "Estamos a construir esta terceira área do grupo com base na confiança já criada junto de agências, promotores e proprietários. Ainda não estamos a aceitar investimentos — mas queremos que seja o primeiro a saber quando abrirmos."
+      "text1": "A Pixel & Property Investments liga investidores a oportunidades imobiliárias cuidadosamente selecionadas, desde projetos totalmente desenvolvidos por nós até oportunidades sólidas identificadas antes de chegarem ao mercado.",
+      "text2": "Estamos a construir este terceiro pilar do grupo com base na confiança que já conquistámos junto de promotores, agências e proprietários.",
+      "tagline": "Brevemente. Descubra como se pode tornar parceiro."
     },
     "pillars": [
       {
         "title": "Oportunidades selecionadas",
-        "desc": "Analisamos cada imóvel com os mesmos critérios de qualidade que aplicamos à nossa fotografia e gestão — localização, potencial de valorização e risco."
+        "desc": "Analisamos cada imóvel com os mesmos critérios de qualidade que aplicamos à nossa fotografia e gestão: localização, potencial de valorização e risco."
       },
       {
         "title": "Acompanhamento próximo",
@@ -336,13 +339,13 @@
       },
       {
         "title": "Alinhados com o investidor",
-        "desc": "Só avançamos com oportunidades em que nós próprios investiríamos — os nossos interesses estão alinhados com os dos nossos parceiros."
+        "desc": "Só avançamos com oportunidades em que nós próprios investiríamos: os nossos interesses estão alinhados com os dos nossos parceiros."
       }
     ],
     "partner": {
       "label": "Parceiros",
       "title": "Quer tornar-se parceiro?",
-      "subtitle": "Se representa um promotor, family office ou investidor institucional interessado em colaborar connosco, deixe os seus contactos.",
+      "subtitle": "O produto final virá sempre com mais concorrência. Torne-se membro enquanto construímos, e seja dos primeiros a saber de cada oportunidade de investimento assim que surgir. O mercado recompensa quem chega primeiro.",
       "form": {
         "name": "Nome",
         "namePlaceholder": "O seu nome",
@@ -355,10 +358,40 @@
       }
     }
   },
+  "servicesCatalog": {
+    "eyebrow": "Todos os Serviços",
+    "title": "Escolha exatamente o que precisa.",
+    "subtitle": "Sem necessidade de pacotes. Selecione um ou mais serviços abaixo e peça um orçamento personalizado. Nós tratamos do resto.",
+    "categories": {
+      "media": "Fotografia & Vídeo",
+      "ondemand": "Sob Pedido"
+    },
+    "add": "Adicionar ao pedido",
+    "added": "Adicionado",
+    "panelTitle": "O seu pedido de orçamento",
+    "emptyState": "Selecione os serviços que pretende para pedir um orçamento.",
+    "selectedLabel": "selecionados",
+    "cta": "Pedir Orçamento",
+    "form": {
+      "name": "Nome",
+      "namePlaceholder": "O seu nome",
+      "email": "Email",
+      "phone": "Telefone (opcional)",
+      "message": "Mensagem (opcional)",
+      "messagePlaceholder": "Mais alguma coisa que devamos saber?",
+      "submit": "Pedir Orçamento"
+    },
+    "success": {
+      "title": "Pedido recebido.",
+      "text": "Obrigado, recebemos a sua seleção e entraremos em contacto em breve com um orçamento personalizado.",
+      "reset": "Pedir outro orçamento"
+    }
+  },
   "footer": {
     "cta": "Vamos elevar a sua presença imobiliária.",
     "ctaButton": "Falar Connosco",
     "connect": "Contacto",
+    "phoneNote": "Chamada para rede móvel nacional",
     "location": "Estoril, Portugal",
     "copy": "© 2026 Pixel & Property. Todos os direitos reservados."
   }

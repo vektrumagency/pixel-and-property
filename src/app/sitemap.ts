@@ -30,6 +30,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...entriesFor("/", 1, "monthly"),
     ...entriesFor("/digital", 0.8, "monthly"),
     ...entriesFor("/management", 0.8, "monthly"),
+    ...entriesFor("/investments", 0.8, "monthly"),
+    ...entriesFor("/services", 0.7, "monthly"),
     ...entriesFor("/contact", 0.6, "yearly"),
     ...projects.flatMap((project) => entriesFor(`/digital/${project.slug}`, 0.7, "monthly")),
     ...managedProperties.flatMap((property) =>

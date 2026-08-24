@@ -24,7 +24,7 @@ const sectors = [
   },
 ] as const;
 
-type About = { title: string; text1: string; text2: string };
+type About = { title: string; text1: string; text2: string; tagline: string };
 
 export function SectorsShowcase() {
   const t = useTranslations("home.sectors");
@@ -37,16 +37,19 @@ export function SectorsShowcase() {
       title: tDigitalAbout("title"),
       text1: tDigitalAbout("text1"),
       text2: tDigitalAbout("text2"),
+      tagline: tDigitalAbout("tagline"),
     },
     management: {
       title: tManagementAbout("title"),
       text1: tManagementAbout("text1"),
       text2: tManagementAbout("text2"),
+      tagline: tManagementAbout("tagline"),
     },
     investments: {
       title: tInvestmentsVision("title"),
       text1: tInvestmentsVision("text1"),
       text2: tInvestmentsVision("text2"),
+      tagline: tInvestmentsVision("tagline"),
     },
   };
 
@@ -96,6 +99,9 @@ export function SectorsShowcase() {
                       </p>
                       <p className="mt-2 text-[0.8rem] leading-[1.7] text-white/70">
                         {about.text2}
+                      </p>
+                      <p className="mt-3 text-[0.7rem] font-medium uppercase tracking-[0.15em] text-gold-light">
+                        {about.tagline}
                       </p>
                     </div>
                   )}
