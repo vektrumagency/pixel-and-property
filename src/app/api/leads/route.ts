@@ -7,10 +7,13 @@ export async function POST(request: Request) {
     return Response.json({ error: "Invalid request" }, { status: 400 });
   }
 
-  const { name, email, phone, message } = body;
+  const { name, email, phone, message, source } = body;
   if (!name || !email || !message) {
     return Response.json({ error: "Missing required fields" }, { status: 400 });
   }
+
+  const SOURCES = ["contact", "investments", "services"];
+  const leadSource = SOURCES.includes(source) ? source : "contact";
 
   const cookieStore = await cookies();
   const supabase = createServerClient(
@@ -37,7 +40,7 @@ export async function POST(request: Request) {
     email: email.trim(),
     phone: phone?.trim() || null,
     message: message.trim(),
-    source: "investments",
+    source: leadSource,
   });
 
   if (error) {

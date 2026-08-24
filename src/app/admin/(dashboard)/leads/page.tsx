@@ -22,13 +22,14 @@ export default async function AdminLeadsPage() {
               <th className="px-4 py-3 font-medium text-neutral-600">Email</th>
               <th className="px-4 py-3 font-medium text-neutral-600">Phone</th>
               <th className="px-4 py-3 font-medium text-neutral-600">Message</th>
+              <th className="px-4 py-3 font-medium text-neutral-600">Source</th>
               <th className="px-4 py-3 font-medium text-neutral-600">Date</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-neutral-100">
             {leads?.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-neutral-400">
+                <td colSpan={6} className="px-4 py-8 text-center text-neutral-400">
                   No leads yet.
                 </td>
               </tr>
@@ -44,6 +45,11 @@ export default async function AdminLeadsPage() {
                 <td className="px-4 py-3 text-neutral-600">{lead.phone ?? "—"}</td>
                 <td className="max-w-xs px-4 py-3 text-neutral-600">
                   <p className="line-clamp-2">{lead.message}</p>
+                </td>
+                <td className="px-4 py-3">
+                  <span className="rounded-full bg-neutral-100 px-2 py-1 text-[0.65rem] capitalize text-neutral-600">
+                    {lead.source}
+                  </span>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap text-neutral-500">
                   {new Date(lead.created_at).toLocaleDateString("pt-PT", {

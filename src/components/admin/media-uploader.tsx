@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { cldUrl } from "@/lib/cloudinary";
+import { cldUrl, cldVideoThumb } from "@/lib/cloudinary";
 
 type Props = {
   value: string;
@@ -81,8 +81,17 @@ export function MediaUploader({
 
   const preview = value ? (
     mediaType === "video" ? (
-      <div className="flex h-24 w-40 items-center justify-center rounded border border-neutral-300 bg-neutral-100 text-[0.65rem] text-neutral-500">
-        Video attached
+      <div className="relative h-24 w-40">
+        <img
+          src={cldVideoThumb(value, { w: 320 })}
+          alt=""
+          className="h-24 w-40 rounded border border-neutral-300 bg-neutral-100 object-cover"
+        />
+        <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black/55 text-[0.7rem] text-white">
+            ▶
+          </span>
+        </span>
       </div>
     ) : (
       <img

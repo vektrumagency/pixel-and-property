@@ -23,7 +23,7 @@ export default async function ProjectPage({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
-  const project = await getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug, "digital");
   if (!project) notFound();
 
   const loc = locale as Locale;
@@ -78,7 +78,7 @@ export default async function ProjectPage({
       </section>
 
       <div className="mb-16 lg:mb-32">
-        <MediaCarousel images={project.gallery} alt={project.name[loc]} />
+        <MediaCarousel items={project.gallery} alt={project.name[loc]} />
       </div>
     </>
   );

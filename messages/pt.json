@@ -357,7 +357,10 @@
         "companyPlaceholder": "Opcional",
         "message": "Mensagem",
         "messagePlaceholder": "Conte-nos um pouco sobre o seu interesse...",
-        "submit": "Enviar"
+        "submit": "Enviar",
+        "submitting": "A enviar…",
+        "successMessage": "Obrigado. Entraremos em contacto em breve.",
+        "errorMessage": "Ocorreu um erro. Tente novamente."
       }
     }
   },
@@ -382,7 +385,9 @@
       "phone": "Telefone (opcional)",
       "message": "Mensagem (opcional)",
       "messagePlaceholder": "Mais alguma coisa que devamos saber?",
-      "submit": "Pedir Orçamento"
+      "submit": "Pedir Orçamento",
+      "submitting": "A enviar…",
+      "errorMessage": "Ocorreu um erro. Tente novamente."
     },
     "success": {
       "title": "Pedido recebido.",

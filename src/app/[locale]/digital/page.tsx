@@ -3,7 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
-import { getProjects } from "@/lib/projects";
+import { getPageAssets, getProjects } from "@/lib/projects";
 import { localeAlternates } from "@/lib/seo";
 import { DigitalHero } from "@/components/digital/hero";
 import { DigitalStats } from "@/components/digital/stats";
@@ -43,11 +43,14 @@ export default async function DigitalPage({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
-  const projects = await getProjects("digital");
+  const [assets, projects] = await Promise.all([
+    getPageAssets("digital"),
+    getProjects("digital"),
+  ]);
 
   return (
     <>
-      <DigitalHero />
+      <DigitalHero src={assets.hero_image?.publicId} />
       <DigitalStats />
       <DigitalServices />
       <DigitalPortfolio projects={projects} />

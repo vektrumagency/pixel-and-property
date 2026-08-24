@@ -2,8 +2,6 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { cldUrl } from "@/lib/cloudinary";
 
-const FALLBACK = "https://images.unsplash.com/photo-1551524164-6bb6236c70fb?w=1600&q=80&auto=format&fit=crop";
-
 export function ManagementHero({ src }: { src?: string }) {
   const t = useTranslations("management.hero");
 

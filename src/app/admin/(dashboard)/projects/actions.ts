@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import type { GalleryItem } from "@/lib/projects";
 
 export type ProjectFormData = {
   id?: string;
@@ -21,7 +22,7 @@ export type ProjectFormData = {
   description: { pt: string; en: string }[];
   results: { value: string; label_pt: string; label_en: string }[];
   hero_image: string;
-  gallery: string[];
+  gallery: GalleryItem[];
   sort_order: number;
   published: boolean;
 };
@@ -44,7 +45,7 @@ export async function saveProject(data: ProjectFormData) {
       label: { pt: r.label_pt, en: r.label_en },
     })),
     hero_image: data.hero_image,
-    gallery: data.gallery.filter(Boolean),
+    gallery: data.gallery.filter((item) => item.id),
     sort_order: data.sort_order,
     published: data.published,
   };
@@ -59,6 +60,7 @@ export async function saveProject(data: ProjectFormData) {
     revalidatePath(`/${locale}/digital`, "layout");
     revalidatePath(`/${locale}/digital/${data.slug}`, "page");
     revalidatePath(`/${locale}/management`, "layout");
+    revalidatePath(`/${locale}/management/${data.slug}`, "page");
   }
 
   redirect("/admin/projects");
@@ -71,6 +73,8 @@ export async function deleteProject(id: string, slug: string) {
   for (const locale of ["pt", "en"]) {
     revalidatePath(`/${locale}/digital`, "layout");
     revalidatePath(`/${locale}/digital/${slug}`, "page");
+    revalidatePath(`/${locale}/management`, "layout");
+    revalidatePath(`/${locale}/management/${slug}`, "page");
   }
 
   redirect("/admin/projects");

@@ -3,6 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
+import { getPageAssets } from "@/lib/projects";
 import { localeAlternates } from "@/lib/seo";
 import { InvestmentsHero } from "@/components/investments/hero";
 import { InvestmentsVision } from "@/components/investments/vision";
@@ -39,9 +40,11 @@ export default async function InvestmentsPage({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
+  const assets = await getPageAssets("investments");
+
   return (
     <>
-      <InvestmentsHero />
+      <InvestmentsHero src={assets.hero_image?.publicId} />
       <InvestmentsVision />
       <InvestmentsPillars />
       <InvestmentsPartner />

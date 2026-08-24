@@ -2,8 +2,6 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { cldUrl } from "@/lib/cloudinary";
 
-const FALLBACK = "https://images.unsplash.com/photo-1728049006379-f1f2c3dbb910?w=1600&q=80&auto=format&fit=crop";
-
 export function DigitalHero({ src }: { src?: string }) {
   const t = useTranslations("digital.hero");
 

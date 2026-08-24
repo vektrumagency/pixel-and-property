@@ -6,6 +6,7 @@ const SLOTS = [
   { page: "home", slot: "hero_poster", label: "Home Hero Poster Image", mediaType: "image" as const },
   { page: "digital", slot: "hero_image", label: "Digital Hero Image", mediaType: "image" as const },
   { page: "management", slot: "hero_image", label: "Management Hero Image", mediaType: "image" as const },
+  { page: "investments", slot: "hero_image", label: "Investments Hero Image", mediaType: "image" as const },
 ];
 
 export default async function AdminAssetsPage() {

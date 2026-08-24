@@ -23,7 +23,7 @@ export default async function ManagedPropertyPage({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
-  const property = await getProjectBySlug(slug);
+  const property = await getProjectBySlug(slug, "management");
   if (!property) notFound();
 
   const loc = locale as Locale;
@@ -71,7 +71,7 @@ export default async function ManagedPropertyPage({
       </section>
 
       <div className="mb-16 lg:mb-32">
-        <MediaCarousel images={property.gallery} alt={property.name[loc]} />
+        <MediaCarousel items={property.gallery} alt={property.name[loc]} />
       </div>
     </>
   );

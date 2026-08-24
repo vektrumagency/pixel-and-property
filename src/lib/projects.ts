@@ -3,6 +3,26 @@ import { createClient as createBaseClient } from "@supabase/supabase-js";
 
 export type Localized = { pt: string; en: string };
 
+export type GalleryItem = { id: string; type: "image" | "video" };
+
+/** Gallery rows predating the jsonb migration are bare public-id strings. */
+export function normalizeGallery(raw: unknown): GalleryItem[] {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .map((entry): GalleryItem | null => {
+      if (typeof entry === "string") {
+        return entry ? { id: entry, type: "image" } : null;
+      }
+      if (entry && typeof entry === "object" && "id" in entry) {
+        const { id, type } = entry as { id?: unknown; type?: unknown };
+        if (typeof id !== "string" || !id) return null;
+        return { id, type: type === "video" ? "video" : "image" };
+      }
+      return null;
+    })
+    .filter((item): item is GalleryItem => item !== null);
+}
+
 export type Project = {
   id: string;
   slug: string;
@@ -16,7 +36,7 @@ export type Project = {
   description: Localized[];
   results: { value: string; label: Localized }[];
   heroImage: string;
-  gallery: string[];
+  gallery: GalleryItem[];
   sortOrder: number;
   published: boolean;
 };
@@ -42,7 +62,7 @@ type ProjectRow = {
   description: Localized[];
   results: { value: string; label: Localized }[];
   hero_image: string;
-  gallery: string[];
+  gallery: unknown;
   sort_order: number;
   published: boolean;
 };
@@ -61,7 +81,7 @@ function rowToProject(row: ProjectRow): Project {
     description: row.description,
     results: row.results,
     heroImage: row.hero_image,
-    gallery: row.gallery,
+    gallery: normalizeGallery(row.gallery),
     sortOrder: row.sort_order,
     published: row.published,
   };
@@ -99,12 +119,16 @@ export async function getProjects(category?: "digital" | "management"): Promise<
   return (data as ProjectRow[]).map(rowToProject);
 }
 
-export async function getProjectBySlug(slug: string): Promise<Project | null> {
+export async function getProjectBySlug(
+  slug: string,
+  category: "digital" | "management"
+): Promise<Project | null> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("projects")
     .select("*")
     .eq("slug", slug)
+    .eq("category", category)
     .single();
 
   if (error) return null;

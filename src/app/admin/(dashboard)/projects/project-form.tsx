@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { saveProject, deleteProject, type ProjectFormData } from "@/app/admin/(dashboard)/projects/actions";
 import { MediaUploader } from "@/components/admin/media-uploader";
+import type { GalleryItem } from "@/lib/projects";
 
 const EMPTY: ProjectFormData = {
   slug: "",
@@ -20,7 +21,7 @@ const EMPTY: ProjectFormData = {
   description: [{ pt: "", en: "" }],
   results: [{ value: "", label_pt: "", label_en: "" }],
   hero_image: "",
-  gallery: ["", "", "", ""],
+  gallery: [],
   sort_order: 0,
   published: true,
 };
@@ -162,16 +163,58 @@ export function ProjectForm({ initial }: { initial?: ProjectFormData }) {
           folder={`pixel/projects/${data.slug || "_new"}`}
         />
         <div className="space-y-3">
-          <label className="text-[0.68rem] font-medium text-neutral-600">Gallery (4 images)</label>
-          {data.gallery.map((url, i) => (
-            <MediaUploader
-              key={i}
-              label={`Gallery ${i + 1}`}
-              value={url}
-              onChange={(v) => set("gallery", data.gallery.map((u, j) => j === i ? v : u))}
-              folder={`pixel/projects/${data.slug || "_new"}`}
-            />
+          <label className="text-[0.68rem] font-medium text-neutral-600">Gallery</label>
+          {data.gallery.map((item, i) => (
+            <div key={i} className="rounded border border-neutral-200 p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-[0.72rem] font-medium text-neutral-500">Item {i + 1}</span>
+                <button
+                  type="button"
+                  onClick={() => set("gallery", data.gallery.filter((_, j) => j !== i))}
+                  className="text-[0.65rem] text-red-500 hover:underline"
+                >
+                  Remove
+                </button>
+              </div>
+              <Field label="Type">
+                <select
+                  value={item.type}
+                  onChange={(e) =>
+                    set(
+                      "gallery",
+                      data.gallery.map((g, j) =>
+                        j === i
+                          ? { id: "", type: e.target.value as GalleryItem["type"] }
+                          : g
+                      )
+                    )
+                  }
+                  className={`${input} w-32`}
+                >
+                  <option value="image">Image</option>
+                  <option value="video">Video</option>
+                </select>
+              </Field>
+              <MediaUploader
+                value={item.id}
+                mediaType={item.type}
+                onChange={(v) =>
+                  set(
+                    "gallery",
+                    data.gallery.map((g, j) => (j === i ? { ...g, id: v } : g))
+                  )
+                }
+                folder={`pixel/projects/${data.slug || "_new"}`}
+              />
+            </div>
           ))}
+          <button
+            type="button"
+            onClick={() => set("gallery", [...data.gallery, { id: "", type: "image" }])}
+            className="text-[0.72rem] text-black underline-offset-2 hover:underline"
+          >
+            + Add media
+          </button>
         </div>
       </Section>
 

@@ -14,6 +14,8 @@ export function ServicesCatalog() {
   const locale = useLocale() as Locale;
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
 
   const selectedItems = useMemo(
     () => services.filter((item) => selected.has(item.id)),
@@ -29,14 +31,44 @@ export function ServicesCatalog() {
     });
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSubmitted(true);
+    setStatus("submitting");
+
+    const requested = selectedItems
+      .map((item) => `- ${item.name[locale]}`)
+      .join("\n");
+
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          message: `${t("panelTitle")}:\n${requested}\n\n${form.message}`.trim(),
+          source: "services",
+        }),
+      });
+      if (!res.ok) throw new Error();
+      setStatus("idle");
+      setSubmitted(true);
+      setForm({ name: "", email: "", phone: "", message: "" });
+    } catch {
+      setStatus("error");
+    }
   }
 
   function reset() {
     setSelected(new Set());
     setSubmitted(false);
+    setStatus("idle");
+  }
+
+  function update(field: keyof typeof form) {
+    return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setForm((prev) => ({ ...prev, [field]: e.target.value }));
   }
 
   return (
@@ -147,9 +179,29 @@ export function ServicesCatalog() {
                 </ul>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                  <Field label={f("name")} type="text" placeholder={f("namePlaceholder")} required />
-                  <Field label={f("email")} type="email" placeholder="email@example.com" required />
-                  <Field label={f("phone")} type="tel" placeholder="+351 ..." />
+                  <Field
+                    label={f("name")}
+                    type="text"
+                    placeholder={f("namePlaceholder")}
+                    value={form.name}
+                    onChange={update("name")}
+                    required
+                  />
+                  <Field
+                    label={f("email")}
+                    type="email"
+                    placeholder="email@example.com"
+                    value={form.email}
+                    onChange={update("email")}
+                    required
+                  />
+                  <Field
+                    label={f("phone")}
+                    type="tel"
+                    placeholder="+351 ..."
+                    value={form.phone}
+                    onChange={update("phone")}
+                  />
                   <div className="flex flex-col gap-2">
                     <label className="text-[0.6rem] uppercase tracking-[0.15em] text-text-muted">
                       {f("message")}
@@ -157,14 +209,20 @@ export function ServicesCatalog() {
                     <textarea
                       rows={3}
                       placeholder={f("messagePlaceholder")}
+                      value={form.message}
+                      onChange={update("message")}
                       className="border border-gold/25 bg-transparent px-4 py-3 text-[0.8rem] text-black placeholder:text-black/30 focus:border-gold-dark/60 focus:outline-none"
                     />
                   </div>
+                  {status === "error" && (
+                    <p className="text-[0.72rem] text-red-600">{f("errorMessage")}</p>
+                  )}
                   <button
                     type="submit"
-                    className="mt-1 border border-gold-dark/50 py-3.5 text-[0.6rem] font-medium uppercase tracking-[0.22em] transition-colors hover:bg-gold hover:border-gold hover:text-black"
+                    disabled={status === "submitting"}
+                    className="mt-1 border border-gold-dark/50 py-3.5 text-[0.6rem] font-medium uppercase tracking-[0.22em] transition-colors hover:bg-gold hover:border-gold hover:text-black disabled:opacity-50"
                   >
-                    {f("submit")}
+                    {status === "submitting" ? f("submitting") : f("submit")}
                   </button>
                 </form>
               </>
@@ -180,11 +238,15 @@ function Field({
   label,
   type,
   placeholder,
+  value,
+  onChange,
   required,
 }: {
   label: string;
   type: string;
   placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
 }) {
   return (
@@ -195,6 +257,8 @@ function Field({
       <input
         type={type}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
         required={required}
         className="border border-gold/25 bg-transparent px-4 py-3 text-[0.8rem] text-black placeholder:text-black/30 focus:border-gold-dark/60 focus:outline-none"
       />

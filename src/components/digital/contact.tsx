@@ -20,7 +20,7 @@ export function DigitalContact() {
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, source: "contact" }),
       });
       if (!res.ok) throw new Error();
       setStatus("success");

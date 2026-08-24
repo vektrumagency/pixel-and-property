@@ -357,7 +357,10 @@
         "companyPlaceholder": "Optional",
         "message": "Message",
         "messagePlaceholder": "Tell us a bit about your interest...",
-        "submit": "Submit"
+        "submit": "Submit",
+        "submitting": "Sending…",
+        "successMessage": "Thank you. We will be in touch shortly.",
+        "errorMessage": "Something went wrong. Please try again."
       }
     }
   },
@@ -382,7 +385,9 @@
       "phone": "Phone (optional)",
       "message": "Message (optional)",
       "messagePlaceholder": "Anything else we should know?",
-      "submit": "Request Quote"
+      "submit": "Request Quote",
+      "submitting": "Sending…",
+      "errorMessage": "Something went wrong. Please try again."
     },
     "success": {
       "title": "Request received.",

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { normalizeGallery } from "@/lib/projects";
 import { ProjectForm } from "@/app/admin/(dashboard)/projects/project-form";
 import type { ProjectFormData } from "@/app/admin/(dashboard)/projects/actions";
 
@@ -34,12 +35,7 @@ export default async function EditProjectPage({
       label_en: r.label.en,
     })),
     hero_image: data.hero_image,
-    gallery: [
-      data.gallery?.[0] ?? "",
-      data.gallery?.[1] ?? "",
-      data.gallery?.[2] ?? "",
-      data.gallery?.[3] ?? "",
-    ],
+    gallery: normalizeGallery(data.gallery),
     sort_order: data.sort_order,
     published: data.published,
   };
