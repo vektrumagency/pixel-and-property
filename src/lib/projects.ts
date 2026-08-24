@@ -108,6 +108,7 @@ export async function getProjects(category?: "digital" | "management"): Promise<
   let query = supabase
     .from("projects")
     .select("*")
+    .eq("published", true)
     .order("sort_order", { ascending: true });
 
   if (category) {
@@ -129,6 +130,7 @@ export async function getProjectBySlug(
     .select("*")
     .eq("slug", slug)
     .eq("category", category)
+    .eq("published", true)
     .single();
 
   if (error) return null;

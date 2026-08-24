@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 
 export default async function AdminProjectsPage() {
   const supabase = await createClient();
-  const { data: projects } = await supabase
+  const { data: projects, error } = await supabase
     .from("projects")
     .select("id, slug, name, category, location, year, published, sort_order")
     .order("sort_order", { ascending: true });
@@ -19,6 +19,12 @@ export default async function AdminProjectsPage() {
           + New project
         </Link>
       </div>
+
+      {error && (
+        <p className="mb-4 rounded border border-red-300 bg-red-50 px-4 py-3 text-[0.78rem] text-red-700">
+          Failed to load projects: {error.message}
+        </p>
+      )}
 
       <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white">
         <table className="w-full text-[0.78rem]">

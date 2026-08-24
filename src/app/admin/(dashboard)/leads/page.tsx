@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 
 export default async function AdminLeadsPage() {
   const supabase = await createClient();
-  const { data: leads } = await supabase
+  const { data: leads, error } = await supabase
     .from("leads")
     .select("*")
     .order("created_at", { ascending: false });
@@ -13,6 +13,12 @@ export default async function AdminLeadsPage() {
         <h1 className="text-xl font-semibold text-black">Leads</h1>
         <span className="text-[0.72rem] text-neutral-500">{leads?.length ?? 0} total</span>
       </div>
+
+      {error && (
+        <p className="mb-4 rounded border border-red-300 bg-red-50 px-4 py-3 text-[0.78rem] text-red-700">
+          Failed to load leads: {error.message}
+        </p>
+      )}
 
       <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white">
         <table className="w-full text-[0.78rem]">

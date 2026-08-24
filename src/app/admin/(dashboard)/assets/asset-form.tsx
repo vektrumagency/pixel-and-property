@@ -18,13 +18,19 @@ export function AssetForm({
   const [value, setValue] = useState(currentValue);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
-    await saveAsset({ page, slot, mediaType, publicId: value });
-    setSaved(true);
+    setError(null);
+    const result = await saveAsset({ page, slot, mediaType, publicId: value });
     setSaving(false);
+    if (result.error) {
+      setError(result.error);
+      return;
+    }
+    setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   }
 
@@ -36,6 +42,7 @@ export function AssetForm({
         folder={`pixel/pages/${page}/${slot}`}
         mediaType={mediaType}
       />
+      {error && <p className="text-[0.72rem] text-red-600">{error}</p>}
       <button
         type="submit"
         disabled={saving || value === currentValue}

@@ -21,8 +21,11 @@ export function MediaCarousel({
   }
 
   const current = items[Math.min(index, items.length - 1)];
-  // Keep the side arrows clear of the native video control bar.
+  // Keep the side arrows clear of the native video control bar and, for
+  // videos, narrow them to edge strips so they don't sit on top of the
+  // video's clickable area (play button, control bar, etc.).
   const navHeight = current.type === "video" ? "bottom-20" : "bottom-0";
+  const navWidth = current.type === "video" ? "w-16" : "w-1/2";
 
   return (
     <div className="relative h-[70vh] min-h-[420px] w-full bg-white lg:h-[85vh]">
@@ -53,7 +56,7 @@ export function MediaCarousel({
             type="button"
             aria-label="Previous item"
             onClick={() => go(index - 1)}
-            className={`group/nav absolute left-0 top-0 flex w-1/2 items-center justify-start pl-6 lg:pl-12 ${navHeight}`}
+            className={`group/nav absolute left-0 top-0 flex items-center justify-start pl-6 lg:pl-12 ${navWidth} ${navHeight}`}
           >
             <span className="flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-black shadow-md opacity-0 transition-opacity duration-300 group-hover/nav:opacity-100">
               ←
@@ -63,7 +66,7 @@ export function MediaCarousel({
             type="button"
             aria-label="Next item"
             onClick={() => go(index + 1)}
-            className={`group/nav absolute right-0 top-0 flex w-1/2 items-center justify-end pr-6 lg:pr-12 ${navHeight}`}
+            className={`group/nav absolute right-0 top-0 flex items-center justify-end pr-6 lg:pr-12 ${navWidth} ${navHeight}`}
           >
             <span className="flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-black shadow-md opacity-0 transition-opacity duration-300 group-hover/nav:opacity-100">
               →

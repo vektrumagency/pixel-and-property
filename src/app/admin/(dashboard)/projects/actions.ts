@@ -27,7 +27,7 @@ export type ProjectFormData = {
   published: boolean;
 };
 
-export async function saveProject(data: ProjectFormData) {
+export async function saveProject(data: ProjectFormData): Promise<{ error?: string }> {
   const supabase = await createClient();
 
   const row = {
@@ -50,10 +50,15 @@ export async function saveProject(data: ProjectFormData) {
     published: data.published,
   };
 
-  if (data.id) {
-    await supabase.from("projects").update(row).eq("id", data.id);
-  } else {
-    await supabase.from("projects").insert(row);
+  const { error } = data.id
+    ? await supabase.from("projects").update(row).eq("id", data.id)
+    : await supabase.from("projects").insert(row);
+
+  if (error) {
+    if (error.code === "23505") {
+      return { error: `Slug "${data.slug}" is already in use by another project.` };
+    }
+    return { error: error.message };
   }
 
   for (const locale of ["pt", "en"]) {
@@ -66,9 +71,13 @@ export async function saveProject(data: ProjectFormData) {
   redirect("/admin/projects");
 }
 
-export async function deleteProject(id: string, slug: string) {
+export async function deleteProject(id: string, slug: string): Promise<{ error?: string }> {
   const supabase = await createClient();
-  await supabase.from("projects").delete().eq("id", id);
+  const { error } = await supabase.from("projects").delete().eq("id", id);
+
+  if (error) {
+    return { error: error.message };
+  }
 
   for (const locale of ["pt", "en"]) {
     revalidatePath(`/${locale}/digital`, "layout");

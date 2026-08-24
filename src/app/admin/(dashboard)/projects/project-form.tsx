@@ -5,30 +5,39 @@ import { saveProject, deleteProject, type ProjectFormData } from "@/app/admin/(d
 import { MediaUploader } from "@/components/admin/media-uploader";
 import type { GalleryItem } from "@/lib/projects";
 
-const EMPTY: ProjectFormData = {
-  slug: "",
-  category: "digital",
-  location: "",
-  year: new Date().getFullYear().toString(),
-  name_pt: "",
-  name_en: "",
-  services_pt: "",
-  services_en: "",
-  strategy_pt: "",
-  strategy_en: "",
-  what_we_did_pt: "",
-  what_we_did_en: "",
-  description: [{ pt: "", en: "" }],
-  results: [{ value: "", label_pt: "", label_en: "" }],
-  hero_image: "",
-  gallery: [],
-  sort_order: 0,
-  published: true,
-};
+function empty(nextSortOrder: number): ProjectFormData {
+  return {
+    slug: "",
+    category: "digital",
+    location: "",
+    year: new Date().getFullYear().toString(),
+    name_pt: "",
+    name_en: "",
+    services_pt: "",
+    services_en: "",
+    strategy_pt: "",
+    strategy_en: "",
+    what_we_did_pt: "",
+    what_we_did_en: "",
+    description: [{ pt: "", en: "" }],
+    results: [{ value: "", label_pt: "", label_en: "" }],
+    hero_image: "",
+    gallery: [],
+    sort_order: nextSortOrder,
+    published: true,
+  };
+}
 
-export function ProjectForm({ initial }: { initial?: ProjectFormData }) {
-  const [data, setData] = useState<ProjectFormData>(initial ?? EMPTY);
+export function ProjectForm({
+  initial,
+  nextSortOrder = 1,
+}: {
+  initial?: ProjectFormData;
+  nextSortOrder?: number;
+}) {
+  const [data, setData] = useState<ProjectFormData>(initial ?? empty(nextSortOrder));
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   function set<K extends keyof ProjectFormData>(key: K, value: ProjectFormData[K]) {
     setData((prev) => ({ ...prev, [key]: value }));
@@ -37,14 +46,24 @@ export function ProjectForm({ initial }: { initial?: ProjectFormData }) {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
-    await saveProject(data);
+    setError(null);
+    const result = await saveProject(data);
+    setSaving(false);
+    if (result?.error) {
+      setError(result.error);
+    }
   }
 
   async function handleDelete() {
     if (!data.id) return;
     if (!confirm(`Delete project "${data.name_pt}"? This cannot be undone.`)) return;
     setSaving(true);
-    await deleteProject(data.id, data.slug);
+    setError(null);
+    const result = await deleteProject(data.id, data.slug);
+    setSaving(false);
+    if (result?.error) {
+      setError(result.error);
+    }
   }
 
   return (
@@ -217,6 +236,12 @@ export function ProjectForm({ initial }: { initial?: ProjectFormData }) {
           </button>
         </div>
       </Section>
+
+      {error && (
+        <p className="rounded border border-red-300 bg-red-50 px-4 py-3 text-[0.78rem] text-red-700">
+          {error}
+        </p>
+      )}
 
       <div className="flex items-center justify-between border-t border-neutral-200 pt-6">
         {data.id && (

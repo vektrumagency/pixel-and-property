@@ -13,16 +13,22 @@ export async function saveAsset({
   slot: string;
   mediaType: "image" | "video";
   publicId: string;
-}) {
+}): Promise<{ error?: string }> {
   const supabase = await createClient();
 
-  await supabase.from("page_assets").upsert(
+  const { error } = await supabase.from("page_assets").upsert(
     { page, slot, media_type: mediaType, public_id: publicId },
     { onConflict: "page,slot" }
   );
+
+  if (error) {
+    return { error: error.message };
+  }
 
   for (const locale of ["pt", "en"]) {
     revalidatePath(`/${locale}/${page}`, "page");
     revalidatePath(`/${locale}`, "page");
   }
+
+  return {};
 }

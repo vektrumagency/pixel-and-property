@@ -22,10 +22,14 @@ export function DigitalContact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, source: "contact" }),
       });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        throw new Error(body?.error ?? `Lead submission failed (${res.status})`);
+      }
       setStatus("success");
       setForm({ name: "", email: "", phone: "", message: "" });
-    } catch {
+    } catch (err) {
+      console.error("Contact form submission failed:", err);
       setStatus("error");
     }
   }

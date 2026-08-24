@@ -51,11 +51,15 @@ export function ServicesCatalog() {
           source: "services",
         }),
       });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        throw new Error(body?.error ?? `Lead submission failed (${res.status})`);
+      }
       setStatus("idle");
       setSubmitted(true);
       setForm({ name: "", email: "", phone: "", message: "" });
-    } catch {
+    } catch (err) {
+      console.error("Services catalog form submission failed:", err);
       setStatus("error");
     }
   }
