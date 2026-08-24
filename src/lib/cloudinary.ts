@@ -25,7 +25,9 @@ export function cldVideoUrl(
   const cloud = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const w = opts.w ?? 1600;
   const q = opts.q ?? 80;
-  return `https://res.cloudinary.com/${cloud}/video/upload/w_${w},q_${q}/${publicId}`;
+  // The .mp4 extension forces transcoding: without it Cloudinary serves the
+  // source container, and a .mov source is unplayable in Chrome and Firefox.
+  return `https://res.cloudinary.com/${cloud}/video/upload/w_${w},q_${q}/${publicId}.mp4`;
 }
 
 export function cldVideoThumb(
