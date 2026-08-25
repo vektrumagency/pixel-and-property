@@ -8,7 +8,7 @@ export function ManagementHero({ src }: { src?: string }) {
   return (
     <section className="relative flex h-[100svh] min-h-[600px] flex-col justify-end overflow-hidden">
       <Image
-        src={src ? cldUrl(src) : "/images/covers/management-card.jpg"}
+        src={src ? cldUrl(src) : "/images/covers/management-hero.jpg"}
         alt=""
         fill
         priority

@@ -8,7 +8,7 @@ export function DigitalHero({ src }: { src?: string }) {
   return (
     <section className="relative flex h-[100svh] min-h-[600px] flex-col justify-end overflow-hidden">
       <Image
-        src={src ? cldUrl(src) : "/images/covers/digital-card.jpg"}
+        src={src ? cldUrl(src) : "/images/covers/digital-hero.jpg"}
         alt=""
         fill
         priority
