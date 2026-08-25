@@ -158,6 +158,91 @@ export async function getPageAssets(page: string): Promise<Record<string, PageAs
   return map;
 }
 
+export type Package = {
+  id: string;
+  name: Localized;
+  description: Localized;
+  features: Localized[];
+  popular: boolean;
+  sortOrder: number;
+  published: boolean;
+};
+
+type PackageRow = {
+  id: string;
+  name: Localized;
+  description: Localized;
+  features: Localized[];
+  popular: boolean;
+  sort_order: number;
+  published: boolean;
+};
+
+function rowToPackage(row: PackageRow): Package {
+  return {
+    id: row.id,
+    name: row.name,
+    description: row.description,
+    features: row.features,
+    popular: row.popular,
+    sortOrder: row.sort_order,
+    published: row.published,
+  };
+}
+
+export async function getPackages(): Promise<Package[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("packages")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true });
+
+  if (error) return [];
+  return (data as PackageRow[]).map(rowToPackage);
+}
+
+export type Testimonial = {
+  id: string;
+  author: string;
+  quote: Localized;
+  job: Localized;
+  sortOrder: number;
+  published: boolean;
+};
+
+type TestimonialRow = {
+  id: string;
+  author: string;
+  quote: Localized;
+  job: Localized;
+  sort_order: number;
+  published: boolean;
+};
+
+function rowToTestimonial(row: TestimonialRow): Testimonial {
+  return {
+    id: row.id,
+    author: row.author,
+    quote: row.quote,
+    job: row.job,
+    sortOrder: row.sort_order,
+    published: row.published,
+  };
+}
+
+export async function getTestimonials(): Promise<Testimonial[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("testimonials")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true });
+
+  if (error) return [];
+  return (data as TestimonialRow[]).map(rowToTestimonial);
+}
+
 export async function getAllPageAssets(): Promise<Record<string, Record<string, PageAsset>>> {
   const supabase = await createClient();
   const { data, error } = await supabase.from("page_assets").select("*");

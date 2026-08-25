@@ -1,6 +1,8 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Reveal } from "@/components/reveal";
 import { Link } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/routing";
+import type { Package } from "@/lib/projects";
 
 type Tier = {
   name: string;
@@ -9,9 +11,19 @@ type Tier = {
   features: string[];
 };
 
-export function ManagementPricing() {
+export function ManagementPricing({ packages }: { packages: Package[] }) {
   const t = useTranslations("management.pricing");
-  const tiers = t.raw("tiers") as Tier[];
+  const locale = useLocale() as Locale;
+
+  const tiers: Tier[] =
+    packages.length > 0
+      ? packages.map((pkg) => ({
+          name: pkg.name[locale],
+          tagline: pkg.description[locale],
+          popular: pkg.popular,
+          features: pkg.features.map((f) => f[locale]),
+        }))
+      : (t.raw("tiers") as Tier[]);
 
   return (
     <section className="bg-white px-6 pt-16 pb-16 lg:px-24 lg:pt-32 lg:pb-32">

@@ -3,7 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
-import { getPageAssets, getProjects } from "@/lib/projects";
+import { getPageAssets, getProjects, getPackages } from "@/lib/projects";
 import { localeAlternates } from "@/lib/seo";
 import { ManagementHero } from "@/components/management/hero";
 import { ManagementPillars } from "@/components/management/pillars";
@@ -42,9 +42,10 @@ export default async function ManagementPage({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
-  const [assets, projects] = await Promise.all([
+  const [assets, projects, packages] = await Promise.all([
     getPageAssets("management"),
     getProjects("management"),
+    getPackages(),
   ]);
 
   return (
@@ -54,7 +55,7 @@ export default async function ManagementPage({
       <ManagementServices />
       <ManagementShowroom projects={projects} />
       <ManagementHow />
-      <ManagementPricing />
+      <ManagementPricing packages={packages} />
     </>
   );
 }
