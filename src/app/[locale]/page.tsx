@@ -4,7 +4,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
-import { getPageAssets } from "@/lib/projects";
+import { getPageAssets, getAllPageAssets } from "@/lib/projects";
 import { cldUrl, cldVideoUrl } from "@/lib/cloudinary";
 import { DigitalClients } from "@/components/digital/clients";
 import { SectorsShowcase } from "@/components/sectors-showcase";
@@ -43,7 +43,15 @@ export default async function HomePage({
   setRequestLocale(locale);
 
   const t = await getTranslations("home");
-  const assets = await getPageAssets("home");
+  const [assets, allAssets] = await Promise.all([
+    getPageAssets("home"),
+    getAllPageAssets(),
+  ]);
+  const sectorHeroImages = {
+    digital: allAssets.digital?.hero_image?.publicId,
+    management: allAssets.management?.hero_image?.publicId,
+    investments: allAssets.investments?.hero_image?.publicId,
+  };
 
   // Both helpers pass absolute URLs through untouched, so the remote
   // fallbacks below still work while uploaded assets get a real Cloudinary URL.
@@ -126,7 +134,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      <SectorsShowcase />
+      <SectorsShowcase heroImages={sectorHeroImages} />
 
       <TestimonialsCarousel />
     </>
