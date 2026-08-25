@@ -13,6 +13,7 @@ function empty(nextSortOrder: number): PackageFormData {
     popular: false,
     sort_order: nextSortOrder,
     published: true,
+    section: "management",
   };
 }
 

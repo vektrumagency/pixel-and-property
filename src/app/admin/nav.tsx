@@ -7,9 +7,9 @@ import { useRouter } from "next/navigation";
 
 const links = [
   { href: "/admin/projects", label: "Projects" },
+  { href: "/admin/assets", label: "Assets" },
   { href: "/admin/packages", label: "Packages" },
   { href: "/admin/testimonials", label: "Testimonials" },
-  { href: "/admin/assets", label: "Assets" },
   { href: "/admin/leads", label: "Leads" },
 ];
 

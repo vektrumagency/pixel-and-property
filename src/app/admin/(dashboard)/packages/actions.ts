@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
+export type PackageSection = "management" | "digital";
+
 export type PackageFormData = {
   id?: string;
   name_pt: string;
@@ -14,6 +16,7 @@ export type PackageFormData = {
   popular: boolean;
   sort_order: number;
   published: boolean;
+  section: PackageSection;
 };
 
 export async function savePackage(data: PackageFormData): Promise<{ error?: string }> {
@@ -26,6 +29,7 @@ export async function savePackage(data: PackageFormData): Promise<{ error?: stri
     popular: data.popular,
     sort_order: data.sort_order,
     published: data.published,
+    section: data.section,
   };
 
   const { error } = data.id
@@ -38,6 +42,7 @@ export async function savePackage(data: PackageFormData): Promise<{ error?: stri
 
   for (const locale of ["pt", "en"]) {
     revalidatePath(`/${locale}/management`, "layout");
+    revalidatePath(`/${locale}/digital`, "layout");
   }
 
   redirect("/admin/packages");
@@ -53,6 +58,7 @@ export async function deletePackage(id: string): Promise<{ error?: string }> {
 
   for (const locale of ["pt", "en"]) {
     revalidatePath(`/${locale}/management`, "layout");
+    revalidatePath(`/${locale}/digital`, "layout");
   }
 
   redirect("/admin/packages");

@@ -23,6 +23,7 @@ export default async function EditPackagePage({
     popular: data.popular,
     sort_order: data.sort_order,
     published: data.published,
+    section: data.section,
   };
 
   return (

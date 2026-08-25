@@ -45,7 +45,7 @@ export default async function ManagementPage({
   const [assets, projects, packages] = await Promise.all([
     getPageAssets("management"),
     getProjects("management"),
-    getPackages(),
+    getPackages("management"),
   ]);
 
   return (

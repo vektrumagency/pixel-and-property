@@ -158,6 +158,8 @@ export async function getPageAssets(page: string): Promise<Record<string, PageAs
   return map;
 }
 
+export type PackageSection = "management" | "digital";
+
 export type Package = {
   id: string;
   name: Localized;
@@ -166,6 +168,7 @@ export type Package = {
   popular: boolean;
   sortOrder: number;
   published: boolean;
+  section: PackageSection;
 };
 
 type PackageRow = {
@@ -176,6 +179,7 @@ type PackageRow = {
   popular: boolean;
   sort_order: number;
   published: boolean;
+  section: PackageSection;
 };
 
 function rowToPackage(row: PackageRow): Package {
@@ -187,15 +191,17 @@ function rowToPackage(row: PackageRow): Package {
     popular: row.popular,
     sortOrder: row.sort_order,
     published: row.published,
+    section: row.section,
   };
 }
 
-export async function getPackages(): Promise<Package[]> {
+export async function getPackages(section: PackageSection): Promise<Package[]> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("packages")
     .select("*")
     .eq("published", true)
+    .eq("section", section)
     .order("sort_order", { ascending: true });
 
   if (error) return [];
