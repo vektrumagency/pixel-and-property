@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Reveal } from "@/components/reveal";
+import type { Locale } from "@/i18n/routing";
+import type { Testimonial as DbTestimonial } from "@/lib/projects";
 
 type Testimonial = { text: string; author: string; role: string };
 
@@ -36,11 +38,23 @@ function TestimonialCard({
   );
 }
 
-export function TestimonialsCarousel() {
+export function TestimonialsCarousel({
+  testimonials,
+}: {
+  testimonials: DbTestimonial[];
+}) {
   const t = useTranslations("home.testimonials");
-  const items = useTranslations("digital.testimonials").raw(
-    "items",
-  ) as Testimonial[];
+  const fallbackT = useTranslations("digital.testimonials");
+  const locale = useLocale() as Locale;
+
+  const items: Testimonial[] =
+    testimonials.length > 0
+      ? testimonials.map((item) => ({
+          text: item.quote[locale],
+          author: item.author,
+          role: item.job[locale],
+        }))
+      : (fallbackT.raw("items") as Testimonial[]);
   const track = [...items, ...items];
   const mobileTrackRef = useRef<HTMLDivElement>(null);
 

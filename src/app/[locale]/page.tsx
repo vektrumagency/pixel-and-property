@@ -4,7 +4,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
-import { getPageAssets, getAllPageAssets } from "@/lib/projects";
+import { getPageAssets, getAllPageAssets, getTestimonials } from "@/lib/projects";
 import { cldUrl, cldVideoUrl } from "@/lib/cloudinary";
 import { DigitalClients } from "@/components/digital/clients";
 import { SectorsShowcase } from "@/components/sectors-showcase";
@@ -43,9 +43,10 @@ export default async function HomePage({
   setRequestLocale(locale);
 
   const t = await getTranslations("home");
-  const [assets, allAssets] = await Promise.all([
+  const [assets, allAssets, testimonials] = await Promise.all([
     getPageAssets("home"),
     getAllPageAssets(),
+    getTestimonials(),
   ]);
   const sectorHeroImages = {
     digital: allAssets.digital?.hero_image?.publicId,
@@ -136,7 +137,7 @@ export default async function HomePage({
 
       <SectorsShowcase heroImages={sectorHeroImages} />
 
-      <TestimonialsCarousel />
+      <TestimonialsCarousel testimonials={testimonials} />
     </>
   );
 }
