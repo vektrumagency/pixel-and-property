@@ -206,7 +206,10 @@
         "phone": "Phone (optional)",
         "message": "Message",
         "messagePlaceholder": "How can we help?",
-        "submit": "Send Message"
+        "submit": "Send Message",
+        "submitting": "Sending…",
+        "successMessage": "Message sent! We'll be in touch shortly.",
+        "errorMessage": "Something went wrong. Please try again or contact us directly."
       }
     }
   },
@@ -354,7 +357,10 @@
         "companyPlaceholder": "Optional",
         "message": "Message",
         "messagePlaceholder": "Tell us a bit about your interest...",
-        "submit": "Submit"
+        "submit": "Submit",
+        "submitting": "Sending…",
+        "successMessage": "Thank you. We will be in touch shortly.",
+        "errorMessage": "Something went wrong. Please try again."
       }
     }
   },
@@ -379,7 +385,9 @@
       "phone": "Phone (optional)",
       "message": "Message (optional)",
       "messagePlaceholder": "Anything else we should know?",
-      "submit": "Request Quote"
+      "submit": "Request Quote",
+      "submitting": "Sending…",
+      "errorMessage": "Something went wrong. Please try again."
     },
     "success": {
       "title": "Request received.",

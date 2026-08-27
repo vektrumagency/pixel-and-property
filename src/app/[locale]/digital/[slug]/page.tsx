@@ -4,13 +4,14 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { routing, type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
-import { unsplash } from "@/lib/assets";
-import { projects, getProject } from "@/data/projects";
+import { cldUrl } from "@/lib/cloudinary";
+import { getProjectSlugs, getProjectBySlug } from "@/lib/projects";
 import { Reveal } from "@/components/reveal";
 import { MediaCarousel } from "@/components/media-carousel";
 
-export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+export async function generateStaticParams() {
+  const slugs = await getProjectSlugs("digital");
+  return slugs.map((slug) => ({ slug }));
 }
 
 export default async function ProjectPage({
@@ -22,7 +23,7 @@ export default async function ProjectPage({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
-  const project = getProject(slug);
+  const project = await getProjectBySlug(slug, "digital");
   if (!project) notFound();
 
   const loc = locale as Locale;
@@ -32,7 +33,7 @@ export default async function ProjectPage({
     <>
       <section className="relative flex h-[70vh] min-h-[480px] flex-col justify-end overflow-hidden">
         <Image
-          src={unsplash(project.heroImage)}
+          src={cldUrl(project.heroImage, { w: 1600 })}
           alt={project.name[loc]}
           fill
           priority
@@ -77,7 +78,7 @@ export default async function ProjectPage({
       </section>
 
       <div className="mb-16 lg:mb-32">
-        <MediaCarousel images={project.gallery} alt={project.name[loc]} />
+        <MediaCarousel items={project.gallery} alt={project.name[loc]} />
       </div>
     </>
   );

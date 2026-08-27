@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { absoluteUrl } from "@/lib/seo";
-import { projects } from "@/data/projects";
-import { managedProperties } from "@/data/managed-properties";
+import { getProjects } from "@/lib/projects";
 
 function localizedUrls(path: string) {
   const clean = path === "/" ? "" : path;
@@ -25,7 +24,11 @@ function entriesFor(
   }));
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [digitalProjects, managementProjects] = await Promise.all([
+    getProjects("digital"),
+    getProjects("management"),
+  ]);
   return [
     ...entriesFor("/", 1, "monthly"),
     ...entriesFor("/digital", 0.8, "monthly"),
@@ -33,9 +36,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...entriesFor("/investments", 0.8, "monthly"),
     ...entriesFor("/services", 0.7, "monthly"),
     ...entriesFor("/contact", 0.6, "yearly"),
-    ...projects.flatMap((project) => entriesFor(`/digital/${project.slug}`, 0.7, "monthly")),
-    ...managedProperties.flatMap((property) =>
-      entriesFor(`/management/${property.slug}`, 0.7, "monthly"),
+    ...digitalProjects.flatMap((project) =>
+      entriesFor(`/digital/${project.slug}`, 0.7, "monthly"),
+    ),
+    ...managementProjects.flatMap((project) =>
+      entriesFor(`/management/${project.slug}`, 0.7, "monthly"),
     ),
   ];
 }

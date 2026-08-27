@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Reveal } from "@/components/reveal";
 
+
 const logos = [
   { file: "vendo.svg", alt: "Vendo" },
   { file: "coldwell-banker.png", alt: "Coldwell Banker" },

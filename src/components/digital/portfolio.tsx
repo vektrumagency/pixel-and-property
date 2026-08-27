@@ -1,13 +1,13 @@
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { unsplash } from "@/lib/assets";
+import { cldUrl } from "@/lib/cloudinary";
 import { Reveal } from "@/components/reveal";
 import { Link } from "@/i18n/navigation";
 import { HorizontalScrollGallery } from "@/components/horizontal-scroll-gallery";
-import { projects } from "@/data/projects";
+import type { Project } from "@/lib/projects";
 import type { Locale } from "@/i18n/routing";
 
-export function DigitalPortfolio() {
+export function DigitalPortfolio({ projects }: { projects: Project[] }) {
   const t = useTranslations("digital.portfolio");
   const locale = useLocale() as Locale;
 
@@ -28,7 +28,7 @@ export function DigitalPortfolio() {
           >
             <div className="relative h-[90vh] w-full overflow-hidden bg-black/5 lg:h-auto lg:aspect-[21/9]">
               <Image
-                src={unsplash(project.heroImage)}
+                src={cldUrl(project.heroImage, { w: 1400 })}
                 alt={project.name[locale]}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"

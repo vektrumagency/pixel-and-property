@@ -2,31 +2,36 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/reveal";
+import { cldUrl } from "@/lib/cloudinary";
 
 const sectors = [
   {
     key: "digital",
     href: "/digital",
     enabled: true,
-    image: "/images/covers/digital-card.jpg",
+    fallbackImage: "/images/covers/digital-card.jpg",
   },
   {
     key: "management",
     href: "/management",
     enabled: true,
-    image: "/images/covers/management-card.jpg",
+    fallbackImage: "/images/covers/management-card.jpg",
   },
   {
     key: "investments",
     href: "/investments",
     enabled: true,
-    image: "/images/covers/investments-card.jpg",
+    fallbackImage: "/images/covers/investments-card.jpg",
   },
 ] as const;
 
 type About = { title: string; text1: string; text2: string; tagline: string };
 
-export function SectorsShowcase() {
+export function SectorsShowcase({
+  heroImages,
+}: {
+  heroImages?: Partial<Record<(typeof sectors)[number]["key"], string>>;
+}) {
   const t = useTranslations("home.sectors");
   const tDigitalAbout = useTranslations("digital.about");
   const tManagementAbout = useTranslations("management.about");
@@ -72,11 +77,12 @@ export function SectorsShowcase() {
           const tags = t(`items.${sector.key}.tags`);
           const cta = t(`items.${sector.key}.cta`);
           const about = aboutByKey[sector.key];
+          const heroPublicId = heroImages?.[sector.key];
 
           const card = (
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-black/5 lg:aspect-[21/9]">
               <Image
-                src={sector.image}
+                src={heroPublicId ? cldUrl(heroPublicId) : sector.fallbackImage}
                 alt={name}
                 fill
                 className={`object-cover transition-transform duration-700 ${

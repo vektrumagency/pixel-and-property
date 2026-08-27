@@ -1,25 +1,6 @@
-export const LEGACY_ASSETS = "https://pixelandproperty.netlify.app";
-
-export function legacyAsset(path: string) {
-  return `${LEGACY_ASSETS}/${path}`;
-}
-
-/**
- * Placeholder real estate photography (Unsplash) until the client provides
- * real shoot assets. The original HTML/live site's image paths are broken
- * (Netlify serves its SPA fallback instead of the actual files), so these
- * stand in for now — swap for Cloudinary-hosted real assets later.
- */
 export function unsplash(id: string, params = "w=1600&q=80&auto=format&fit=crop") {
   return `https://images.unsplash.com/photo-${id}?${params}`;
 }
-
-/**
- * Placeholder hero video (Pexels, royalty-free) — swap for a real Pixel &
- * Property shoot (ideally Cloudinary-hosted, transcoded/compressed) later.
- */
-export const PLACEHOLDER_HERO_VIDEO =
-  "https://videos.pexels.com/video-files/4407791/4407791-uhd_2732_1440_25fps.mp4";
 
 export const PLACEHOLDER_IMAGES = {
   homeHero: "1613977257592-4871e5fcd7c4",

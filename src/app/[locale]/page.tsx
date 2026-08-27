@@ -4,7 +4,8 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
-import { unsplash, PLACEHOLDER_IMAGES, PLACEHOLDER_HERO_VIDEO } from "@/lib/assets";
+import { getPageAssets, getAllPageAssets, getTestimonials } from "@/lib/projects";
+import { cldUrl, cldVideoUrl, cldVideoThumb } from "@/lib/cloudinary";
 import { DigitalClients } from "@/components/digital/clients";
 import { SectorsShowcase } from "@/components/sectors-showcase";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
@@ -42,6 +43,38 @@ export default async function HomePage({
   setRequestLocale(locale);
 
   const t = await getTranslations("home");
+  const [assets, allAssets, testimonials] = await Promise.all([
+    getPageAssets("home"),
+    getAllPageAssets(),
+    getTestimonials(),
+  ]);
+  const sectorHeroImages = {
+    digital: allAssets.digital?.hero_image?.publicId,
+    management: allAssets.management?.hero_image?.publicId,
+    investments: allAssets.investments?.hero_image?.publicId,
+  };
+
+  // Every cld* helper passes absolute URLs through untouched, so the stock
+  // fallbacks below still work while uploaded assets get a real Cloudinary URL.
+  const STOCK_VIDEO =
+    "https://videos.pexels.com/video-files/4407791/4407791-uhd_2732_1440_25fps.mp4";
+  const STOCK_POSTER =
+    "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1600&q=80&auto=format&fit=crop";
+
+  const heroVideoId = assets.hero_video?.publicId ?? STOCK_VIDEO;
+  const heroVideo = cldVideoUrl(heroVideoId);
+
+  // The poster stands in until the first frame decodes, and stays for good when
+  // autoplay is refused (iOS Low Power Mode, data saver). Taking it from the
+  // video's own first frame keeps the two in step and needs no second upload.
+  // Only a Cloudinary id can be transformed into a still, so the stock video —
+  // an absolute URL — keeps the stock poster instead.
+  const uploadedPoster = assets.hero_poster?.publicId;
+  const heroPoster = uploadedPoster
+    ? cldUrl(uploadedPoster, { w: 1600 })
+    : heroVideoId === STOCK_VIDEO
+      ? STOCK_POSTER
+      : cldVideoThumb(heroVideoId, { w: 1600 });
 
   return (
     <>
@@ -51,10 +84,10 @@ export default async function HomePage({
           muted
           loop
           playsInline
-          poster={unsplash(PLACEHOLDER_IMAGES.homeHero)}
+          poster={heroPoster}
           className="absolute inset-0 h-full w-full object-cover object-[center_60%]"
         >
-          <source src={PLACEHOLDER_HERO_VIDEO} type="video/mp4" />
+          <source src={heroVideo} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/25" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
@@ -113,9 +146,9 @@ export default async function HomePage({
         </div>
       </section>
 
-      <SectorsShowcase />
+      <SectorsShowcase heroImages={sectorHeroImages} />
 
-      <TestimonialsCarousel />
+      <TestimonialsCarousel testimonials={testimonials} />
     </>
   );
 }
