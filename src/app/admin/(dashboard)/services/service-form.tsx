@@ -10,26 +10,19 @@ const categoryLabels: Record<ServiceCategory, string> = {
   ondemand: "On Demand",
 };
 
-function empty(nextSortOrder: number): ServiceFormData {
+function empty(): ServiceFormData {
   return {
     category: "media",
     name_pt: "",
     name_en: "",
     desc_pt: "",
     desc_en: "",
-    sort_order: nextSortOrder,
     published: true,
   };
 }
 
-export function ServiceForm({
-  initial,
-  nextSortOrder = 1,
-}: {
-  initial?: ServiceFormData;
-  nextSortOrder?: number;
-}) {
-  const [data, setData] = useState<ServiceFormData>(initial ?? empty(nextSortOrder));
+export function ServiceForm({ initial }: { initial?: ServiceFormData }) {
+  const [data, setData] = useState<ServiceFormData>(initial ?? empty());
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -63,29 +56,23 @@ export function ServiceForm({
   return (
     <form onSubmit={handleSave} className="space-y-8">
       <Section title="Basic Info">
-        <div className="grid grid-cols-2 gap-4">
-          <Field label="Category" required>
-            <select
-              value={data.category}
-              onChange={(e) => set("category", e.target.value as ServiceCategory)}
-              className={input}
-            >
-              {(Object.keys(categoryLabels) as ServiceCategory[]).map((key) => (
-                <option key={key} value={key}>
-                  {categoryLabels[key]}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field label="Sort order">
-            <input
-              type="number"
-              value={data.sort_order}
-              onChange={(e) => set("sort_order", Number(e.target.value))}
-              className={input}
-            />
-          </Field>
-        </div>
+        <Field label="Category" required>
+          <select
+            value={data.category}
+            onChange={(e) => set("category", e.target.value as ServiceCategory)}
+            className={`${input} max-w-xs`}
+          >
+            {(Object.keys(categoryLabels) as ServiceCategory[]).map((key) => (
+              <option key={key} value={key}>
+                {categoryLabels[key]}
+              </option>
+            ))}
+          </select>
+          <p className="text-[0.62rem] text-neutral-400">
+            A new service goes to the end of its category. Change the order by
+            dragging rows on the services list.
+          </p>
+        </Field>
         <div className="flex items-center gap-3">
           <input
             type="checkbox"

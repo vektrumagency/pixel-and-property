@@ -20,7 +20,6 @@ export default async function EditServicePage({
     name_en: data.name.en,
     desc_pt: data.desc.pt,
     desc_en: data.desc.en,
-    sort_order: data.sort_order,
     published: data.published,
   };
 

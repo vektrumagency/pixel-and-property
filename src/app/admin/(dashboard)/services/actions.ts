@@ -12,20 +12,49 @@ export type ServiceFormData = {
   name_en: string;
   desc_pt: string;
   desc_en: string;
-  sort_order: number;
   published: boolean;
 };
+
+/** Next free position at the end of a category. */
+async function endOfCategory(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  category: ServiceCategory
+) {
+  const { data } = await supabase
+    .from("services")
+    .select("sort_order")
+    .eq("category", category)
+    .order("sort_order", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  return (data?.sort_order ?? 0) + 1;
+}
 
 export async function saveService(data: ServiceFormData): Promise<{ error?: string }> {
   const supabase = await createClient();
 
-  const row = {
+  const row: Record<string, unknown> = {
     category: data.category,
     name: { pt: data.name_pt, en: data.name_en },
     desc: { pt: data.desc_pt, en: data.desc_en },
-    sort_order: data.sort_order,
     published: data.published,
   };
+
+  // The order is set by dragging, never typed in. A new service, or one moved
+  // to another category, goes to the end of that category; otherwise the
+  // position the admin dragged it to is left alone.
+  if (!data.id) {
+    row.sort_order = await endOfCategory(supabase, data.category);
+  } else {
+    const { data: current } = await supabase
+      .from("services")
+      .select("category")
+      .eq("id", data.id)
+      .maybeSingle();
+    if (current && current.category !== data.category) {
+      row.sort_order = await endOfCategory(supabase, data.category);
+    }
+  }
 
   const { error } = data.id
     ? await supabase.from("services").update(row).eq("id", data.id)
@@ -59,4 +88,27 @@ export async function deleteService(id: string): Promise<{ error?: string }> {
   revalidatePath("/admin/projects", "layout");
 
   redirect("/admin/services");
+}
+
+export async function reorderServices(ids: string[]): Promise<{ error?: string }> {
+  const supabase = await createClient();
+
+  const results = await Promise.all(
+    ids.map((id, index) =>
+      supabase.from("services").update({ sort_order: index + 1 }).eq("id", id)
+    )
+  );
+
+  const failed = results.find((r) => r.error);
+  if (failed?.error) {
+    return { error: failed.error.message };
+  }
+
+  for (const locale of ["pt", "en"]) {
+    revalidatePath(`/${locale}/services`, "page");
+  }
+  revalidatePath("/admin/services");
+  revalidatePath("/admin/projects", "layout");
+
+  return {};
 }

@@ -1,24 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { reorderProjects } from "@/app/admin/(dashboard)/projects/actions";
+import { reorderServices } from "@/app/admin/(dashboard)/services/actions";
 import { useDragOrder } from "@/components/admin/use-drag-order";
+import type { ServiceCategory } from "@/lib/projects";
 
-export type ProjectRow = {
+export type ServiceRow = {
   id: string;
+  category: ServiceCategory;
   name: string;
-  category: "digital" | "management";
-  location: string;
-  year: string;
+  desc: string;
   published: boolean;
 };
 
-const categories: ProjectRow["category"][] = ["digital", "management"];
+const categoryLabels: Record<ServiceCategory, string> = {
+  media: "Photography & Video",
+  ondemand: "On Demand",
+};
 
-export function ProjectsTable({ rows }: { rows: ProjectRow[] }) {
+const categoryOrder: ServiceCategory[] = ["media", "ondemand"];
+
+export function ServicesTable({ rows }: { rows: ServiceRow[] }) {
   const { items, dragId, status, rowProps } = useDragOrder(rows, async (idsByCategory) => {
     for (const ids of Object.values(idsByCategory)) {
-      const result = await reorderProjects(ids);
+      const result = await reorderServices(ids);
       if (result?.error) return result;
     }
   });
@@ -31,14 +36,14 @@ export function ProjectsTable({ rows }: { rows: ProjectRow[] }) {
         </p>
       )}
 
-      {categories.map((category) => {
-        const group = items.filter((x) => x.category === category);
+      {categoryOrder.map((category) => {
+        const group = items.filter((s) => s.category === category);
         if (!group.length) return null;
         return (
           <div key={category}>
             <div className="mb-2 flex items-center gap-3">
-              <h2 className="text-[0.78rem] font-medium capitalize text-neutral-700">
-                {category}
+              <h2 className="text-[0.78rem] font-medium text-neutral-700">
+                {categoryLabels[category]}
               </h2>
               <span className="text-[0.65rem] text-neutral-400">
                 {status === "saving" ? "Saving order…" : "Drag a row to reorder"}
@@ -50,41 +55,37 @@ export function ProjectsTable({ rows }: { rows: ProjectRow[] }) {
                   <tr>
                     <th className="w-8 px-2 py-3" />
                     <th className="px-4 py-3 font-medium text-neutral-600">Name</th>
-                    <th className="px-4 py-3 font-medium text-neutral-600">Location</th>
-                    <th className="px-4 py-3 font-medium text-neutral-600">Year</th>
+                    <th className="px-4 py-3 font-medium text-neutral-600">Description</th>
                     <th className="px-4 py-3 font-medium text-neutral-600">Status</th>
                     <th className="px-4 py-3" />
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-neutral-100">
-                  {group.map((p) => (
+                  {group.map((s) => (
                     <tr
-                      key={p.id}
-                      {...rowProps(p.id)}
-                      className={`hover:bg-neutral-50 ${
-                        dragId === p.id ? "opacity-40" : ""
-                      }`}
+                      key={s.id}
+                      {...rowProps(s.id)}
+                      className={`hover:bg-neutral-50 ${dragId === s.id ? "opacity-40" : ""}`}
                     >
                       <td className="cursor-grab px-2 py-3 text-center text-neutral-400 active:cursor-grabbing">
                         ⠿
                       </td>
-                      <td className="px-4 py-3 font-medium text-black">{p.name}</td>
-                      <td className="px-4 py-3 text-neutral-600">{p.location}</td>
-                      <td className="px-4 py-3 text-neutral-600">{p.year}</td>
+                      <td className="px-4 py-3 font-medium text-black">{s.name}</td>
+                      <td className="max-w-md truncate px-4 py-3 text-neutral-600">{s.desc}</td>
                       <td className="px-4 py-3">
                         <span
                           className={`rounded-full px-2 py-0.5 text-[0.65rem] font-medium ${
-                            p.published
+                            s.published
                               ? "bg-green-100 text-green-700"
                               : "bg-neutral-100 text-neutral-500"
                           }`}
                         >
-                          {p.published ? "Published" : "Draft"}
+                          {s.published ? "Published" : "Draft"}
                         </span>
                       </td>
                       <td className="px-4 py-3 text-right">
                         <Link
-                          href={`/admin/projects/${p.id}`}
+                          href={`/admin/services/${s.id}`}
                           className="text-[0.72rem] text-black underline-offset-2 hover:underline"
                         >
                           Edit
