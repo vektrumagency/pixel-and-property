@@ -6,10 +6,12 @@ import { useDragOrder } from "@/components/admin/use-drag-order";
 
 export type ProjectRow = {
   id: string;
+  slug: string;
   name: string;
   category: "digital" | "management";
   location: string;
   year: string;
+  heroImage: string;
   published: boolean;
 };
 

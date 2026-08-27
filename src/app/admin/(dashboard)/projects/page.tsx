@@ -1,21 +1,24 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { ProjectsTable, type ProjectRow } from "@/app/admin/(dashboard)/projects/projects-table";
+import type { ProjectRow } from "@/app/admin/(dashboard)/projects/projects-table";
+import { ProjectsView } from "@/app/admin/(dashboard)/projects/projects-view";
 
 export default async function AdminProjectsPage() {
   const supabase = await createClient();
   const { data: projects, error } = await supabase
     .from("projects")
-    .select("id, slug, name, category, location, year, published, sort_order")
+    .select("id, slug, name, category, location, year, hero_image, published, sort_order")
     .order("category", { ascending: true })
     .order("sort_order", { ascending: true });
 
   const rows: ProjectRow[] = (projects ?? []).map((p) => ({
     id: p.id,
+    slug: p.slug,
     name: (p.name as { pt: string }).pt,
     category: p.category as ProjectRow["category"],
     location: p.location,
     year: p.year,
+    heroImage: p.hero_image ?? "",
     published: p.published,
   }));
 
@@ -39,7 +42,7 @@ export default async function AdminProjectsPage() {
 
       {/* Keyed on the row order so a save elsewhere in the admin remounts the
           table with fresh server data instead of keeping stale local state. */}
-      <ProjectsTable key={rows.map((r) => r.id).join(":")} rows={rows} />
+      <ProjectsView key={rows.map((r) => r.id).join(":")} rows={rows} />
     </div>
   );
 }

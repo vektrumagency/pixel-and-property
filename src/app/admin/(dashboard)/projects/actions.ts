@@ -113,3 +113,30 @@ export async function reorderProjects(ids: string[]): Promise<{ error?: string }
 
   return {};
 }
+
+/** Swaps only the hero image, for the card grid on the projects overview. */
+export async function updateProjectHeroImage(
+  id: string,
+  slug: string,
+  publicId: string
+): Promise<{ error?: string }> {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("projects")
+    .update({ hero_image: publicId })
+    .eq("id", id);
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  for (const locale of ["pt", "en"]) {
+    revalidatePath(`/${locale}/digital`, "layout");
+    revalidatePath(`/${locale}/digital/${slug}`, "page");
+    revalidatePath(`/${locale}/management`, "layout");
+    revalidatePath(`/${locale}/management/${slug}`, "page");
+  }
+  revalidatePath("/admin/projects");
+
+  return {};
+}
