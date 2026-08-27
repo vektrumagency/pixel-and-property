@@ -46,7 +46,9 @@ export function Footer() {
           <Link href="/management" className="text-sm text-black/70 hover:text-black">
             {nav("management")}
           </Link>
-          <span className="text-sm text-black/25">{nav("investments")}</span>
+          <Link href="/investments" className="text-sm text-black/70 hover:text-black">
+            {nav("investments")}
+          </Link>
           <Link href="/contact" className="text-sm text-black/70 hover:text-black">
             {t("connect")}
           </Link>
