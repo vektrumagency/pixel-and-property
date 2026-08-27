@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { cldUrl, cldVideoThumb } from "@/lib/cloudinary";
 
@@ -82,9 +83,11 @@ export function MediaUploader({
   const preview = value ? (
     mediaType === "video" ? (
       <div className="relative h-24 w-40">
-        <img
+        <Image
           src={cldVideoThumb(value, { w: 320 })}
           alt=""
+          width={160}
+          height={96}
           className="h-24 w-40 rounded border border-neutral-300 bg-neutral-100 object-cover"
         />
         <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
@@ -94,9 +97,11 @@ export function MediaUploader({
         </span>
       </div>
     ) : (
-      <img
+      <Image
         src={cldUrl(value, { w: 320, q: 70 })}
         alt=""
+        width={160}
+        height={96}
         className="h-24 w-40 rounded border border-neutral-300 object-cover"
       />
     )

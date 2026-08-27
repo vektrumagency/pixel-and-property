@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { saveProject, deleteProject, type ProjectFormData } from "@/app/admin/(dashboard)/projects/actions";
 import { MediaUploader } from "@/components/admin/media-uploader";
@@ -255,9 +256,9 @@ export function ProjectForm({
           </button>
         )}
         <div className="ml-auto flex gap-3">
-          <a href="/admin/projects" className="rounded border border-neutral-300 px-4 py-2 text-[0.72rem] text-neutral-600 hover:bg-neutral-50">
+          <Link href="/admin/projects" className="rounded border border-neutral-300 px-4 py-2 text-[0.72rem] text-neutral-600 hover:bg-neutral-50">
             Cancel
-          </a>
+          </Link>
           <button
             type="submit"
             disabled={saving}

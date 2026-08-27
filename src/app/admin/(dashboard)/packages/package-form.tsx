@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { savePackage, deletePackage, type PackageFormData } from "@/app/admin/(dashboard)/packages/actions";
 
@@ -133,9 +134,9 @@ export function PackageForm({
           </button>
         )}
         <div className="ml-auto flex gap-3">
-          <a href="/admin/packages" className="rounded border border-neutral-300 px-4 py-2 text-[0.72rem] text-neutral-600 hover:bg-neutral-50">
+          <Link href="/admin/packages" className="rounded border border-neutral-300 px-4 py-2 text-[0.72rem] text-neutral-600 hover:bg-neutral-50">
             Cancel
-          </a>
+          </Link>
           <button
             type="submit"
             disabled={saving}
