@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { normalizeGallery } from "@/lib/projects";
+import { normalizeGallery, getServices } from "@/lib/projects";
 import { ProjectForm } from "@/app/admin/(dashboard)/projects/project-form";
 import type { ProjectFormData } from "@/app/admin/(dashboard)/projects/actions";
 
@@ -13,6 +13,8 @@ export default async function EditProjectPage({
   const supabase = await createClient();
   const { data } = await supabase.from("projects").select("*").eq("id", id).single();
   if (!data) notFound();
+
+  const serviceCatalog = await getServices();
 
   const initial: ProjectFormData = {
     id: data.id,
@@ -43,7 +45,7 @@ export default async function EditProjectPage({
   return (
     <div>
       <h1 className="mb-6 text-xl font-semibold text-black">Edit Project</h1>
-      <ProjectForm initial={initial} />
+      <ProjectForm initial={initial} serviceCatalog={serviceCatalog} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { ProjectForm } from "@/app/admin/(dashboard)/projects/project-form";
 import { createClient } from "@/lib/supabase/server";
+import { getServices } from "@/lib/projects";
 
 export default async function NewProjectPage() {
   const supabase = await createClient();
@@ -11,11 +12,12 @@ export default async function NewProjectPage() {
     .maybeSingle();
 
   const nextSortOrder = (data?.sort_order ?? 0) + 1;
+  const serviceCatalog = await getServices();
 
   return (
     <div>
       <h1 className="mb-6 text-xl font-semibold text-black">New Project</h1>
-      <ProjectForm nextSortOrder={nextSortOrder} />
+      <ProjectForm nextSortOrder={nextSortOrder} serviceCatalog={serviceCatalog} />
     </div>
   );
 }

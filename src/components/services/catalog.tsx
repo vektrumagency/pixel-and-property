@@ -3,12 +3,21 @@
 import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Reveal } from "@/components/reveal";
-import { services, type ServiceCategory } from "@/data/services";
+import type { ServiceCategory } from "@/lib/projects";
 import type { Locale } from "@/i18n/routing";
 
 const categoryOrder: ServiceCategory[] = ["media", "ondemand"];
 
-export function ServicesCatalog() {
+/** The fields the catalogue needs, shared by database rows and the fallback. */
+export type CatalogItem = {
+  id: string;
+  category: ServiceCategory;
+  name: { pt: string; en: string };
+  desc: { pt: string; en: string };
+};
+
+export function ServicesCatalog({ items }: { items: CatalogItem[] }) {
+  const services = items;
   const t = useTranslations("servicesCatalog");
   const f = useTranslations("servicesCatalog.form");
   const locale = useLocale() as Locale;
@@ -19,7 +28,7 @@ export function ServicesCatalog() {
 
   const selectedItems = useMemo(
     () => services.filter((item) => selected.has(item.id)),
-    [selected],
+    [services, selected],
   );
 
   function toggle(id: string) {
@@ -79,7 +88,7 @@ export function ServicesCatalog() {
     <section className="grid gap-12 bg-white px-6 pt-16 pb-16 lg:grid-cols-[1fr_360px] lg:items-start lg:gap-16 lg:px-24 lg:pt-24 lg:pb-32">
       <div>
         {categoryOrder.map((category, ci) => {
-          const items = services.filter((item) => item.category === category);
+          const groupItems = services.filter((item) => item.category === category);
           return (
             <div key={category} className={ci > 0 ? "mt-12 lg:mt-16" : ""}>
               <Reveal>
@@ -88,7 +97,7 @@ export function ServicesCatalog() {
                 </span>
               </Reveal>
               <div className="grid gap-4 sm:grid-cols-2">
-                {items.map((item, i) => {
+                {groupItems.map((item, i) => {
                   const isSelected = selected.has(item.id);
                   return (
                     <Reveal key={item.id} delay={i * 60}>

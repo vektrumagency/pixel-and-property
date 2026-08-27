@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { createClient as createBaseClient } from "@supabase/supabase-js";
+import { services as fallbackServices } from "@/data/services";
 
 export type Localized = { pt: string; en: string };
 
@@ -265,4 +266,62 @@ export async function getAllPageAssets(): Promise<Record<string, Record<string, 
     };
   }
   return map;
+}
+
+export type ServiceCategory = "media" | "ondemand";
+
+export type Service = {
+  id: string;
+  category: ServiceCategory;
+  name: Localized;
+  desc: Localized;
+  sortOrder: number;
+  published: boolean;
+};
+
+type ServiceRow = {
+  id: string;
+  category: ServiceCategory;
+  name: Localized;
+  desc: Localized;
+  sort_order: number;
+  published: boolean;
+};
+
+function rowToService(row: ServiceRow): Service {
+  return {
+    id: row.id,
+    category: row.category,
+    name: row.name,
+    desc: row.desc,
+    sortOrder: row.sort_order,
+    published: row.published,
+  };
+}
+
+/**
+ * The catalogue shown on the public quote page and in the admin project form.
+ * Falls back to the list that used to be hardcoded, so a failed query or an
+ * unseeded table never leaves either page with nothing to offer.
+ */
+export async function getServices(): Promise<Service[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("services")
+    .select("*")
+    .eq("published", true)
+    .order("category", { ascending: true })
+    .order("sort_order", { ascending: true });
+
+  if (error || !data?.length) {
+    return fallbackServices.map((item, index) => ({
+      id: item.id,
+      category: item.category,
+      name: item.name,
+      desc: item.desc,
+      sortOrder: index + 1,
+      published: true,
+    }));
+  }
+  return (data as ServiceRow[]).map(rowToService);
 }

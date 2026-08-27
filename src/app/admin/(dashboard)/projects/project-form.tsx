@@ -6,7 +6,7 @@ import { saveProject, deleteProject, type ProjectFormData } from "@/app/admin/(d
 import { MediaUploader } from "@/components/admin/media-uploader";
 import { BulkUploader } from "@/components/admin/bulk-uploader";
 import type { GalleryItem } from "@/lib/projects";
-import { services as serviceCatalog } from "@/data/services";
+import type { Service } from "@/lib/projects";
 
 function empty(nextSortOrder: number): ProjectFormData {
   return {
@@ -43,9 +43,12 @@ function slugify(value: string) {
 export function ProjectForm({
   initial,
   nextSortOrder = 1,
+  serviceCatalog,
 }: {
   initial?: ProjectFormData;
   nextSortOrder?: number;
+  /** The same catalogue the public quote page offers, so the two never drift. */
+  serviceCatalog: Service[];
 }) {
   const [data, setData] = useState<ProjectFormData>(initial ?? empty(nextSortOrder));
   const [saving, setSaving] = useState(false);
@@ -121,7 +124,7 @@ export function ProjectForm({
                 set("slug", e.target.value);
               }}
               required
-              placeholder="villa-moderna"
+              placeholder="Gerado Automaticamente - mudar apenas se pretendido"
               className={input}
             />
           </Field>

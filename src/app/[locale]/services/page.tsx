@@ -6,6 +6,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { localeAlternates } from "@/lib/seo";
 import { Reveal } from "@/components/reveal";
 import { ServicesCatalog } from "@/components/services/catalog";
+import { getServices } from "@/lib/projects";
 
 export async function generateMetadata({
   params,
@@ -38,6 +39,7 @@ export default async function ServicesPage({
   setRequestLocale(locale);
 
   const t = await getTranslations("servicesCatalog");
+  const services = await getServices();
 
   return (
     <>
@@ -55,7 +57,7 @@ export default async function ServicesPage({
           </p>
         </Reveal>
       </div>
-      <ServicesCatalog />
+      <ServicesCatalog items={services} />
     </>
   );
 }
