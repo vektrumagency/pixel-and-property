@@ -88,3 +88,28 @@ export async function deleteProject(id: string, slug: string): Promise<{ error?:
 
   redirect("/admin/projects");
 }
+
+export async function reorderProjects(ids: string[]): Promise<{ error?: string }> {
+  const supabase = await createClient();
+
+  // sort_order is only compared inside a category on the public pages, so each
+  // category is numbered from 1 independently.
+  const results = await Promise.all(
+    ids.map((id, index) =>
+      supabase.from("projects").update({ sort_order: index + 1 }).eq("id", id)
+    )
+  );
+
+  const failed = results.find((r) => r.error);
+  if (failed?.error) {
+    return { error: failed.error.message };
+  }
+
+  for (const locale of ["pt", "en"]) {
+    revalidatePath(`/${locale}/digital`, "layout");
+    revalidatePath(`/${locale}/management`, "layout");
+  }
+  revalidatePath("/admin/projects");
+
+  return {};
+}
