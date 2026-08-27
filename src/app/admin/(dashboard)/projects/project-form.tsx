@@ -5,6 +5,7 @@ import { useState } from "react";
 import { saveProject, deleteProject, type ProjectFormData } from "@/app/admin/(dashboard)/projects/actions";
 import { MediaUploader } from "@/components/admin/media-uploader";
 import type { GalleryItem } from "@/lib/projects";
+import { services as serviceCatalog } from "@/data/services";
 
 function empty(nextSortOrder: number): ProjectFormData {
   return {
@@ -29,6 +30,15 @@ function empty(nextSortOrder: number): ProjectFormData {
   };
 }
 
+function slugify(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export function ProjectForm({
   initial,
   nextSortOrder = 1,
@@ -39,9 +49,40 @@ export function ProjectForm({
   const [data, setData] = useState<ProjectFormData>(initial ?? empty(nextSortOrder));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Never auto-rewrite the slug of a saved project: it is the public URL and
+  // the Cloudinary folder name for media already uploaded under it.
+  const [slugLocked, setSlugLocked] = useState(Boolean(initial?.id));
 
   function set<K extends keyof ProjectFormData>(key: K, value: ProjectFormData[K]) {
     setData((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function setNamePt(value: string) {
+    setData((prev) => ({
+      ...prev,
+      name_pt: value,
+      slug: slugLocked ? prev.slug : slugify(value),
+    }));
+  }
+
+  // The PT and EN service lists are kept index-aligned, so a catalogue entry is
+  // considered selected only when both locales carry its name.
+  function toggleService(id: string) {
+    const item = serviceCatalog.find((x) => x.id === id);
+    if (!item) return;
+    setData((prev) => {
+      const parts = (value: string) => value.split(",").map((x) => x.trim()).filter(Boolean);
+      const ptParts = parts(prev.services_pt);
+      const enParts = parts(prev.services_en);
+      const selected = ptParts.includes(item.name.pt) && enParts.includes(item.name.en);
+      const next = (list: string[], name: string) =>
+        (selected ? list.filter((x) => x !== name) : [...list, name]).join(", ");
+      return {
+        ...prev,
+        services_pt: next(ptParts, item.name.pt),
+        services_en: next(enParts, item.name.en),
+      };
+    });
   }
 
   async function handleSave(e: React.FormEvent) {
@@ -74,7 +115,10 @@ export function ProjectForm({
           <Field label="Slug" required>
             <input
               value={data.slug}
-              onChange={(e) => set("slug", e.target.value)}
+              onChange={(e) => {
+                setSlugLocked(true);
+                set("slug", e.target.value);
+              }}
               required
               placeholder="villa-moderna"
               className={input}
@@ -110,12 +154,38 @@ export function ProjectForm({
 
       <Section title="Name">
         <BilingualField
-          labelPt="Name PT" valuePt={data.name_pt} onChangePt={(v) => set("name_pt", v)}
+          labelPt="Name PT" valuePt={data.name_pt} onChangePt={setNamePt}
           labelEn="Name EN" valueEn={data.name_en} onChangeEn={(v) => set("name_en", v)}
         />
       </Section>
 
       <Section title="Services">
+        <div className="flex flex-wrap gap-2">
+          {serviceCatalog.map((item) => {
+            const selected =
+              data.services_pt.split(",").map((x) => x.trim()).includes(item.name.pt) &&
+              data.services_en.split(",").map((x) => x.trim()).includes(item.name.en);
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => toggleService(item.id)}
+                title={item.desc.pt}
+                className={`rounded border px-3 py-1.5 text-[0.68rem] transition-colors ${
+                  selected
+                    ? "border-black bg-black text-white"
+                    : "border-neutral-300 text-neutral-600 hover:bg-neutral-50"
+                }`}
+              >
+                {item.name.pt}
+              </button>
+            );
+          })}
+        </div>
+        <p className="text-[0.62rem] text-neutral-400">
+          Click a service to add or remove it in both languages. The fields below stay
+          editable for anything not in the catalogue.
+        </p>
         <BilingualField
           labelPt="Services PT" valuePt={data.services_pt} onChangePt={(v) => set("services_pt", v)}
           labelEn="Services EN" valueEn={data.services_en} onChangeEn={(v) => set("services_en", v)}
