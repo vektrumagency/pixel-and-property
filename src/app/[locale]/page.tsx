@@ -5,7 +5,7 @@ import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { getPageAssets, getAllPageAssets, getTestimonials } from "@/lib/projects";
-import { cldUrl, cldVideoUrl } from "@/lib/cloudinary";
+import { cldUrl, cldVideoUrl, cldVideoThumb } from "@/lib/cloudinary";
 import { DigitalClients } from "@/components/digital/clients";
 import { SectorsShowcase } from "@/components/sectors-showcase";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
@@ -54,16 +54,27 @@ export default async function HomePage({
     investments: allAssets.investments?.hero_image?.publicId,
   };
 
-  // Both helpers pass absolute URLs through untouched, so the remote
+  // Every cld* helper passes absolute URLs through untouched, so the stock
   // fallbacks below still work while uploaded assets get a real Cloudinary URL.
-  const heroVideo = cldVideoUrl(
-    assets.hero_video?.publicId ??
-      "https://videos.pexels.com/video-files/4407791/4407791-uhd_2732_1440_25fps.mp4"
-  );
-  const heroPoster = cldUrl(
-    assets.hero_poster?.publicId ??
-      "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1600&q=80&auto=format&fit=crop"
-  );
+  const STOCK_VIDEO =
+    "https://videos.pexels.com/video-files/4407791/4407791-uhd_2732_1440_25fps.mp4";
+  const STOCK_POSTER =
+    "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1600&q=80&auto=format&fit=crop";
+
+  const heroVideoId = assets.hero_video?.publicId ?? STOCK_VIDEO;
+  const heroVideo = cldVideoUrl(heroVideoId);
+
+  // The poster stands in until the first frame decodes, and stays for good when
+  // autoplay is refused (iOS Low Power Mode, data saver). Taking it from the
+  // video's own first frame keeps the two in step and needs no second upload.
+  // Only a Cloudinary id can be transformed into a still, so the stock video —
+  // an absolute URL — keeps the stock poster instead.
+  const uploadedPoster = assets.hero_poster?.publicId;
+  const heroPoster = uploadedPoster
+    ? cldUrl(uploadedPoster, { w: 1600 })
+    : heroVideoId === STOCK_VIDEO
+      ? STOCK_POSTER
+      : cldVideoThumb(heroVideoId, { w: 1600 });
 
   return (
     <>

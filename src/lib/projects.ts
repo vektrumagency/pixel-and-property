@@ -148,6 +148,10 @@ export async function getPageAssets(page: string): Promise<Record<string, PageAs
   if (error) return {};
   const map: Record<string, PageAsset> = {};
   for (const row of data) {
+    // The admin Remove button clears public_id to "" rather than deleting the
+    // row. An empty id builds a URL with nothing on the end, so treat the slot
+    // as unset and let the caller fall back.
+    if (!row.public_id) continue;
     map[row.slot] = {
       id: row.id,
       page: row.page,
@@ -256,6 +260,7 @@ export async function getAllPageAssets(): Promise<Record<string, Record<string, 
   if (error) return {};
   const map: Record<string, Record<string, PageAsset>> = {};
   for (const row of data) {
+    if (!row.public_id) continue;
     if (!map[row.page]) map[row.page] = {};
     map[row.page][row.slot] = {
       id: row.id,
