@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { saveProject, deleteProject, type ProjectFormData } from "@/app/admin/(dashboard)/projects/actions";
 import { MediaUploader } from "@/components/admin/media-uploader";
+import { BulkUploader } from "@/components/admin/bulk-uploader";
 import type { GalleryItem } from "@/lib/projects";
 import { services as serviceCatalog } from "@/data/services";
 
@@ -305,6 +306,12 @@ export function ProjectForm({
           >
             + Add media
           </button>
+          <BulkUploader
+            folder={`pixel/projects/${data.slug || "_new"}`}
+            onUploaded={(items) =>
+              setData((prev) => ({ ...prev, gallery: [...prev.gallery, ...items] }))
+            }
+          />
         </div>
       </Section>
 

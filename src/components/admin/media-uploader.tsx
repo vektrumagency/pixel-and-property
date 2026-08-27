@@ -3,6 +3,11 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { cldUrl, cldVideoThumb } from "@/lib/cloudinary";
+import {
+  maxLabelFor,
+  uploadToCloudinary,
+  validateFile,
+} from "@/lib/cloudinary-upload";
 
 type Props = {
   value: string;
@@ -11,9 +16,6 @@ type Props = {
   mediaType?: "image" | "video";
   label?: string;
 };
-
-const MAX_IMAGE_BYTES = 20 * 1024 * 1024;
-const MAX_VIDEO_BYTES = 200 * 1024 * 1024;
 
 export function MediaUploader({
   value,
@@ -26,52 +28,20 @@ export function MediaUploader({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const maxBytes = mediaType === "video" ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES;
-  const maxLabel = mediaType === "video" ? "200 MB" : "20 MB";
+  const maxLabel = maxLabelFor(mediaType);
 
   async function handleFile(file: File) {
     setError(null);
 
-    if (mediaType === "image" && !file.type.startsWith("image/")) {
-      setError("Please select an image file.");
-      return;
-    }
-    if (mediaType === "video" && !file.type.startsWith("video/")) {
-      setError("Please select a video file.");
-      return;
-    }
-    if (file.size > maxBytes) {
-      setError(`File too large. Max ${maxLabel}.`);
+    const invalid = validateFile(file, mediaType);
+    if (invalid) {
+      setError(invalid);
       return;
     }
 
     setUploading(true);
     try {
-      const signRes = await fetch("/api/cloudinary/sign", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ folder }),
-      });
-      if (!signRes.ok) throw new Error("Failed to authorise upload");
-      const { signature, timestamp, api_key, cloud_name } = await signRes.json();
-
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("api_key", api_key);
-      formData.append("timestamp", String(timestamp));
-      formData.append("signature", signature);
-      formData.append("folder", folder);
-
-      const uploadRes = await fetch(
-        `https://api.cloudinary.com/v1_1/${cloud_name}/${mediaType}/upload`,
-        { method: "POST", body: formData }
-      );
-      if (!uploadRes.ok) {
-        const body = await uploadRes.json().catch(() => ({}));
-        throw new Error(body?.error?.message ?? "Upload failed");
-      }
-      const result = await uploadRes.json();
-      onChange(result.public_id);
+      onChange(await uploadToCloudinary(file, folder, mediaType));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed");
     } finally {
