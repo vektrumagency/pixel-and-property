@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { Resend } from "resend";
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
@@ -48,5 +49,53 @@ export async function POST(request: Request) {
     return Response.json({ error: "Failed to submit" }, { status: 500 });
   }
 
+  await notifyPixelTeam({
+    name: name.trim(),
+    email: email.trim(),
+    phone: phone?.trim() || null,
+    message: message.trim(),
+    source: leadSource,
+  });
+
   return Response.json({ ok: true });
+}
+
+async function notifyPixelTeam(lead: {
+  name: string;
+  email: string;
+  phone: string | null;
+  message: string;
+  source: string;
+}) {
+  const recipients = process.env.LEADS_NOTIFICATION_EMAILS?.split(",")
+    .map((address) => address.trim())
+    .filter(Boolean);
+
+  if (!process.env.RESEND_API_KEY || !process.env.LEADS_FROM_EMAIL || !recipients?.length) {
+    console.error("Lead notification email skipped: missing Resend configuration");
+    return;
+  }
+
+  try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const { error } = await resend.emails.send({
+      from: process.env.LEADS_FROM_EMAIL,
+      to: recipients,
+      subject: `New ${lead.source} lead: ${lead.name}`,
+      html: `
+        <p><strong>Source:</strong> ${lead.source}</p>
+        <p><strong>Name:</strong> ${lead.name}</p>
+        <p><strong>Email:</strong> ${lead.email}</p>
+        <p><strong>Phone:</strong> ${lead.phone ?? "-"}</p>
+        <p><strong>Message:</strong></p>
+        <p>${lead.message.replace(/\n/g, "<br />")}</p>
+      `,
+    });
+
+    if (error) {
+      console.error("Lead notification email failed:", error);
+    }
+  } catch (err) {
+    console.error("Lead notification email failed:", err);
+  }
 }
