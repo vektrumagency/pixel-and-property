@@ -29,7 +29,7 @@ export function DigitalContact() {
       setStatus("success");
       setForm({ name: "", email: "", phone: "", message: "" });
     } catch (err) {
-      console.error("Contact form submission failed:", err);
+      console.warn("Contact form submission failed:", err);
       setStatus("error");
     }
   }
@@ -102,6 +102,8 @@ export function DigitalContact() {
               placeholder="email@example.com"
               value={form.email}
               onChange={update("email")}
+              pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+              title="Enter a complete email address, e.g. name@example.com"
               required
             />
             <Field
@@ -148,6 +150,8 @@ function Field({
   value,
   onChange,
   required,
+  pattern,
+  title,
 }: {
   label: string;
   type: string;
@@ -155,6 +159,8 @@ function Field({
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
+  pattern?: string;
+  title?: string;
 }) {
   return (
     <div className="flex flex-col gap-2">
@@ -167,6 +173,8 @@ function Field({
         value={value}
         onChange={onChange}
         required={required}
+        pattern={pattern}
+        title={title}
         className="border border-gold/25 bg-transparent px-4 py-3 text-[0.8rem] text-black placeholder:text-black/30 focus:border-gold-dark/60 focus:outline-none"
       />
     </div>

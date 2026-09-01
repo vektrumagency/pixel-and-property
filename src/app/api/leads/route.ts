@@ -13,6 +13,11 @@ export async function POST(request: Request) {
     return Response.json({ error: "Missing required fields" }, { status: 400 });
   }
 
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (typeof email !== "string" || !EMAIL_REGEX.test(email.trim())) {
+    return Response.json({ error: "Invalid email address" }, { status: 400 });
+  }
+
   const SOURCES = ["contact", "investments", "services"];
   const leadSource = SOURCES.includes(source) ? source : "contact";
 
