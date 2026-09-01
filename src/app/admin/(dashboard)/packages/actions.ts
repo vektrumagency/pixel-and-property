@@ -32,12 +32,28 @@ export async function savePackage(data: PackageFormData): Promise<{ error?: stri
     section: data.section,
   };
 
-  const { error } = data.id
-    ? await supabase.from("packages").update(row).eq("id", data.id)
-    : await supabase.from("packages").insert(row);
+  let savedId = data.id;
 
-  if (error) {
-    return { error: error.message };
+  if (data.id) {
+    const { error } = await supabase.from("packages").update(row).eq("id", data.id);
+    if (error) return { error: error.message };
+  } else {
+    const { data: inserted, error } = await supabase.from("packages").insert(row).select("id").single();
+    if (error) return { error: error.message };
+    savedId = inserted.id;
+  }
+
+  if (data.popular) {
+    const { error: clearError } = await supabase
+      .from("packages")
+      .update({ popular: false })
+      .eq("section", data.section)
+      .eq("popular", true)
+      .neq("id", savedId);
+
+    if (clearError) {
+      return { error: clearError.message };
+    }
   }
 
   for (const locale of ["pt", "en"]) {
