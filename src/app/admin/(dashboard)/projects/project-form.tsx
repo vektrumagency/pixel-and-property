@@ -5,6 +5,7 @@ import { useState } from "react";
 import { saveProject, deleteProject, type ProjectFormData } from "@/app/admin/(dashboard)/projects/actions";
 import { MediaUploader } from "@/components/admin/media-uploader";
 import { BulkUploader } from "@/components/admin/bulk-uploader";
+import { slugify } from "@/lib/slug";
 import type { GalleryItem } from "@/lib/projects";
 import type { Service } from "@/lib/projects";
 
@@ -31,15 +32,6 @@ function empty(nextSortOrder: number): ProjectFormData {
   };
 }
 
-function slugify(value: string) {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
 export function ProjectForm({
   initial,
   nextSortOrder = 1,
@@ -53,9 +45,11 @@ export function ProjectForm({
   const [data, setData] = useState<ProjectFormData>(initial ?? empty(nextSortOrder));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // Never auto-rewrite the slug of a saved project: it is the public URL and
-  // the Cloudinary folder name for media already uploaded under it.
-  const [slugLocked, setSlugLocked] = useState(Boolean(initial?.id));
+  // Slug is derived from the name automatically and never shown or edited
+  // in this form. Once a project exists, its slug stays fixed (it's the
+  // public URL and the Cloudinary folder name for media already uploaded
+  // under it) — only new projects derive theirs from the name as it's typed.
+  const slugLocked = Boolean(initial?.id);
 
   function set<K extends keyof ProjectFormData>(key: K, value: ProjectFormData[K]) {
     setData((prev) => ({ ...prev, [key]: value }));
@@ -115,19 +109,7 @@ export function ProjectForm({
   return (
     <form onSubmit={handleSave} className="space-y-8">
       <Section title="Basic Info">
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <Field label="Slug" required>
-            <input
-              value={data.slug}
-              onChange={(e) => {
-                setSlugLocked(true);
-                set("slug", e.target.value);
-              }}
-              required
-              placeholder="Gerado Automaticamente - mudar apenas se pretendido"
-              className={input}
-            />
-          </Field>
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
           <Field label="Category">
             <select value={data.category} onChange={(e) => set("category", e.target.value as "digital" | "management")} className={input}>
               <option value="digital">Digital</option>

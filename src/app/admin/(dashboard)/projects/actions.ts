@@ -3,7 +3,22 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { slugify } from "@/lib/slug";
 import type { GalleryItem } from "@/lib/projects";
+
+type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>;
+
+/** Appends -2, -3, ... until the slug is free, so two similarly-named projects never collide. */
+async function uniqueSlug(supabase: SupabaseServerClient, base: string): Promise<string> {
+  const root = base || "project";
+  let candidate = root;
+  let n = 2;
+  while (true) {
+    const { data } = await supabase.from("projects").select("id").eq("slug", candidate).maybeSingle();
+    if (!data) return candidate;
+    candidate = `${root}-${n++}`;
+  }
+}
 
 export type ProjectFormData = {
   id?: string;
@@ -30,8 +45,15 @@ export type ProjectFormData = {
 export async function saveProject(data: ProjectFormData): Promise<{ error?: string }> {
   const supabase = await createClient();
 
+  const name = data.name_pt.trim();
+  let dupQuery = supabase.from("projects").select("id").ilike("name->>pt", name);
+  if (data.id) dupQuery = dupQuery.neq("id", data.id);
+  const { data: duplicate } = await dupQuery.maybeSingle();
+  if (duplicate) {
+    return { error: `Name "${name}" is already in use by another project.` };
+  }
+
   const row = {
-    slug: data.slug,
     category: data.category,
     location: data.location,
     year: data.year,
@@ -50,22 +72,26 @@ export async function saveProject(data: ProjectFormData): Promise<{ error?: stri
     published: data.published,
   };
 
+  // The slug is never taken from the client: on create it's derived from the
+  // name here, and on update the existing slug is left untouched so a saved
+  // project's public URL never changes underneath it.
+  let slug = data.slug;
   const { error } = data.id
     ? await supabase.from("projects").update(row).eq("id", data.id)
-    : await supabase.from("projects").insert(row);
+    : await (async () => {
+        slug = await uniqueSlug(supabase, slugify(name));
+        return supabase.from("projects").insert({ ...row, slug });
+      })();
 
   if (error) {
-    if (error.code === "23505") {
-      return { error: `Slug "${data.slug}" is already in use by another project.` };
-    }
     return { error: error.message };
   }
 
   for (const locale of ["pt", "en"]) {
     revalidatePath(`/${locale}/digital`, "layout");
-    revalidatePath(`/${locale}/digital/${data.slug}`, "page");
+    revalidatePath(`/${locale}/digital/${slug}`, "page");
     revalidatePath(`/${locale}/management`, "layout");
-    revalidatePath(`/${locale}/management/${data.slug}`, "page");
+    revalidatePath(`/${locale}/management/${slug}`, "page");
   }
 
   redirect("/admin/projects");
