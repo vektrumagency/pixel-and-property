@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Reveal } from "@/components/reveal";
+import { PHONE_PATTERN } from "@/lib/phone";
 import type { ServiceCategory } from "@/lib/projects";
 import type { Locale } from "@/i18n/routing";
 
@@ -216,6 +217,8 @@ export function ServicesCatalog({ items }: { items: CatalogItem[] }) {
                     placeholder="+351 ..."
                     value={form.phone}
                     onChange={update("phone")}
+                    pattern={PHONE_PATTERN}
+                    title="Enter a valid phone number, e.g. +351 912 345 678"
                   />
                   <div className="flex flex-col gap-2">
                     <label className="text-[0.6rem] uppercase tracking-[0.15em] text-text-muted">

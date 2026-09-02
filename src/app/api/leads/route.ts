@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { Resend } from "resend";
+import { isValidPhone } from "@/lib/phone";
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
@@ -16,6 +17,10 @@ export async function POST(request: Request) {
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (typeof email !== "string" || !EMAIL_REGEX.test(email.trim())) {
     return Response.json({ error: "Invalid email address" }, { status: 400 });
+  }
+
+  if (typeof phone === "string" && !isValidPhone(phone)) {
+    return Response.json({ error: "Invalid phone number" }, { status: 400 });
   }
 
   const SOURCES = ["contact", "investments", "services"];

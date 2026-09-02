@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Reveal } from "@/components/reveal";
+import { PHONE_PATTERN } from "@/lib/phone";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -112,6 +113,8 @@ export function DigitalContact() {
               placeholder="+351 ..."
               value={form.phone}
               onChange={update("phone")}
+              pattern={PHONE_PATTERN}
+              title="Enter a valid phone number, e.g. +351 912 345 678"
             />
             <div className="flex flex-col gap-2">
               <label className="text-[0.6rem] uppercase tracking-[0.15em] text-text-muted">
