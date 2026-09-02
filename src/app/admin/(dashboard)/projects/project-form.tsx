@@ -5,6 +5,7 @@ import { useState } from "react";
 import { saveProject, deleteProject, type ProjectFormData } from "@/app/admin/(dashboard)/projects/actions";
 import { MediaUploader } from "@/components/admin/media-uploader";
 import { BulkUploader } from "@/components/admin/bulk-uploader";
+import { ProjectPreview } from "@/app/admin/(dashboard)/projects/project-preview";
 import { slugify } from "@/lib/slug";
 import type { GalleryItem } from "@/lib/projects";
 import type { Service } from "@/lib/projects";
@@ -45,6 +46,7 @@ export function ProjectForm({
   const [data, setData] = useState<ProjectFormData>(initial ?? empty(nextSortOrder));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
   // Slug is derived from the name automatically and never shown or edited
   // in this form. Once a project exists, its slug stays fixed (it's the
   // public URL and the Cloudinary folder name for media already uploaded
@@ -318,6 +320,13 @@ export function ProjectForm({
           </button>
         )}
         <div className="ml-auto flex gap-3">
+          <button
+            type="button"
+            onClick={() => setShowPreview(true)}
+            className="rounded border border-neutral-300 px-4 py-2 text-[0.72rem] text-neutral-600 hover:bg-neutral-50"
+          >
+            Preview
+          </button>
           <Link href="/admin/projects" className="rounded border border-neutral-300 px-4 py-2 text-[0.72rem] text-neutral-600 hover:bg-neutral-50">
             Cancel
           </Link>
@@ -330,6 +339,8 @@ export function ProjectForm({
           </button>
         </div>
       </div>
+
+      {showPreview && <ProjectPreview data={data} onClose={() => setShowPreview(false)} />}
     </form>
   );
 }
