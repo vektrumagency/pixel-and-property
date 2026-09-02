@@ -30,12 +30,7 @@ export type ProjectFormData = {
   name_en: string;
   services_pt: string;
   services_en: string;
-  strategy_pt: string;
-  strategy_en: string;
-  what_we_did_pt: string;
-  what_we_did_en: string;
   description: { pt: string; en: string }[];
-  results: { value: string; label_pt: string; label_en: string }[];
   hero_image: string;
   gallery: GalleryItem[];
   sort_order: number;
@@ -59,13 +54,7 @@ export async function saveProject(data: ProjectFormData): Promise<{ error?: stri
     year: data.year,
     name: { pt: data.name_pt, en: data.name_en },
     services: { pt: data.services_pt, en: data.services_en },
-    strategy: { pt: data.strategy_pt, en: data.strategy_en },
-    what_we_did: { pt: data.what_we_did_pt, en: data.what_we_did_en },
     description: data.description,
-    results: data.results.map((r) => ({
-      value: r.value,
-      label: { pt: r.label_pt, en: r.label_en },
-    })),
     hero_image: data.hero_image,
     gallery: data.gallery.filter((item) => item.id),
     sort_order: data.sort_order,
@@ -80,7 +69,18 @@ export async function saveProject(data: ProjectFormData): Promise<{ error?: stri
     ? await supabase.from("projects").update(row).eq("id", data.id)
     : await (async () => {
         slug = await uniqueSlug(supabase, slugify(name));
-        return supabase.from("projects").insert({ ...row, slug });
+        // strategy/what_we_did/results are DB columns (NOT NULL, no default)
+        // that the admin form no longer collects - they're never rendered on
+        // the public site. New rows get empty placeholders so the insert
+        // succeeds; existing rows keep whatever they already have, since
+        // updates above never touch these three columns.
+        return supabase.from("projects").insert({
+          ...row,
+          slug,
+          strategy: { pt: "", en: "" },
+          what_we_did: { pt: "", en: "" },
+          results: [],
+        });
       })();
 
   if (error) {

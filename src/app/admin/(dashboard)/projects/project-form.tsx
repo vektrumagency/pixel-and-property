@@ -20,12 +20,7 @@ function empty(nextSortOrder: number): ProjectFormData {
     name_en: "",
     services_pt: "",
     services_en: "",
-    strategy_pt: "",
-    strategy_en: "",
-    what_we_did_pt: "",
-    what_we_did_en: "",
     description: [{ pt: "", en: "" }],
-    results: [{ value: "", label_pt: "", label_en: "" }],
     hero_image: "",
     gallery: [],
     sort_order: nextSortOrder,
@@ -180,20 +175,6 @@ export function ProjectForm({
         />
       </Section>
 
-      <Section title="Strategy">
-        <BilingualTextarea
-          labelPt="Strategy PT" valuePt={data.strategy_pt} onChangePt={(v) => set("strategy_pt", v)}
-          labelEn="Strategy EN" valueEn={data.strategy_en} onChangeEn={(v) => set("strategy_en", v)}
-        />
-      </Section>
-
-      <Section title="What We Did">
-        <BilingualTextarea
-          labelPt="What We Did PT" valuePt={data.what_we_did_pt} onChangePt={(v) => set("what_we_did_pt", v)}
-          labelEn="What We Did EN" valueEn={data.what_we_did_en} onChangeEn={(v) => set("what_we_did_en", v)}
-        />
-      </Section>
-
       <Section title="Description Paragraphs">
         {data.description.map((para, i) => (
           <div key={i} className="rounded border border-neutral-200 p-4 space-y-3">
@@ -210,27 +191,6 @@ export function ProjectForm({
           </div>
         ))}
         <button type="button" onClick={() => set("description", [...data.description, { pt: "", en: "" }])} className="text-[0.72rem] text-black underline-offset-2 hover:underline">+ Add paragraph</button>
-      </Section>
-
-      <Section title="Results">
-        {data.results.map((result, i) => (
-          <div key={i} className="rounded border border-neutral-200 p-4 space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-[0.72rem] font-medium text-neutral-500">Result {i + 1}</span>
-              {data.results.length > 1 && (
-                <button type="button" onClick={() => set("results", data.results.filter((_, j) => j !== i))} className="text-[0.65rem] text-red-500 hover:underline">Remove</button>
-              )}
-            </div>
-            <Field label="Value">
-              <input value={result.value} onChange={(e) => set("results", data.results.map((r, j) => j === i ? { ...r, value: e.target.value } : r))} placeholder="12" className={input} />
-            </Field>
-            <BilingualField
-              labelPt="Label PT" valuePt={result.label_pt} onChangePt={(v) => set("results", data.results.map((r, j) => j === i ? { ...r, label_pt: v } : r))}
-              labelEn="Label EN" valueEn={result.label_en} onChangeEn={(v) => set("results", data.results.map((r, j) => j === i ? { ...r, label_en: v } : r))}
-            />
-          </div>
-        ))}
-        <button type="button" onClick={() => set("results", [...data.results, { value: "", label_pt: "", label_en: "" }])} className="text-[0.72rem] text-black underline-offset-2 hover:underline">+ Add result</button>
       </Section>
 
       <Section title="Media">
