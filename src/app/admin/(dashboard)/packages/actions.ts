@@ -64,6 +64,50 @@ export async function savePackage(data: PackageFormData): Promise<{ error?: stri
   redirect("/admin/packages");
 }
 
+/**
+ * Sets (or clears) a single package's popular flag from the admin overview,
+ * without round-tripping the whole edit form. Mirrors the same per-section
+ * exclusivity rule savePackage enforces: turning a package on clears
+ * popular from every other package in the same section; turning it off
+ * just clears that one row, leaving the section with no popular pick.
+ */
+export async function setPackagePopular(
+  id: string,
+  popular: boolean
+): Promise<{ error?: string }> {
+  const supabase = await createClient();
+
+  const { data: pkg, error: fetchError } = await supabase
+    .from("packages")
+    .select("section")
+    .eq("id", id)
+    .single();
+  if (fetchError || !pkg) {
+    return { error: fetchError?.message ?? "Package not found" };
+  }
+
+  const { error } = await supabase.from("packages").update({ popular }).eq("id", id);
+  if (error) return { error: error.message };
+
+  if (popular) {
+    const { error: clearError } = await supabase
+      .from("packages")
+      .update({ popular: false })
+      .eq("section", pkg.section)
+      .eq("popular", true)
+      .neq("id", id);
+    if (clearError) return { error: clearError.message };
+  }
+
+  for (const locale of ["pt", "en"]) {
+    revalidatePath(`/${locale}/management`, "layout");
+    revalidatePath(`/${locale}/digital`, "layout");
+  }
+  revalidatePath("/admin/packages");
+
+  return {};
+}
+
 export async function deletePackage(id: string): Promise<{ error?: string }> {
   const supabase = await createClient();
   const { error } = await supabase.from("packages").delete().eq("id", id);

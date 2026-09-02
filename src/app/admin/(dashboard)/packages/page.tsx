@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { PackagesTable, type PackageRow } from "@/app/admin/(dashboard)/packages/packages-table";
 
 const SECTIONS: { key: string; label: string }[] = [
   { key: "management", label: "Management" },
@@ -33,7 +34,16 @@ export default async function AdminPackagesPage() {
       )}
 
       {SECTIONS.map(({ key, label }) => {
-        const rows = packages?.filter((p) => (p.section ?? "management") === key) ?? [];
+        const rows: PackageRow[] = (packages ?? [])
+          .filter((p) => (p.section ?? "management") === key)
+          .map((p) => ({
+            id: p.id,
+            name: (p.name as { pt: string }).pt,
+            section: key as PackageRow["section"],
+            popular: p.popular,
+            published: p.published,
+            sortOrder: p.sort_order,
+          }));
         return (
           <div key={key} className="mb-8">
             <div className="mb-2 flex items-center gap-2">
@@ -45,56 +55,7 @@ export default async function AdminPackagesPage() {
               </span>
             </div>
 
-            <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white">
-              <table className="w-full text-[0.78rem]">
-                <thead className="border-b border-neutral-200 bg-neutral-50 text-left">
-                  <tr>
-                    <th className="px-4 py-3 font-medium text-neutral-600">Name</th>
-                    <th className="px-4 py-3 font-medium text-neutral-600">Popular</th>
-                    <th className="px-4 py-3 font-medium text-neutral-600">Sort</th>
-                    <th className="px-4 py-3 font-medium text-neutral-600">Status</th>
-                    <th className="px-4 py-3" />
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-neutral-100">
-                  {rows.length === 0 && (
-                    <tr>
-                      <td colSpan={5} className="px-4 py-3 text-neutral-400">
-                        No {label.toLowerCase()} packages yet.
-                      </td>
-                    </tr>
-                  )}
-                  {rows.map((p) => (
-                    <tr key={p.id} className="hover:bg-neutral-50">
-                      <td className="px-4 py-3 font-medium text-black">
-                        {(p.name as { pt: string }).pt}
-                      </td>
-                      <td className="px-4 py-3 text-neutral-600">{p.popular ? "Yes" : ""}</td>
-                      <td className="px-4 py-3 text-neutral-600">{p.sort_order}</td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`rounded-full px-2 py-0.5 text-[0.65rem] font-medium ${
-                            p.published
-                              ? "bg-green-100 text-green-700"
-                              : "bg-neutral-100 text-neutral-500"
-                          }`}
-                        >
-                          {p.published ? "Published" : "Draft"}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-right">
-                        <Link
-                          href={`/admin/packages/${p.id}`}
-                          className="text-[0.72rem] text-black underline-offset-2 hover:underline"
-                        >
-                          Edit
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <PackagesTable key={rows.map((r) => `${r.id}:${r.popular}`).join(",")} label={label} rows={rows} />
           </div>
         );
       })}
