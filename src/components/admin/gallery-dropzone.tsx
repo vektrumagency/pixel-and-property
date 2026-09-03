@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import type { GalleryItem } from "@/lib/projects";
 import {
   mediaTypeOf,
@@ -11,11 +11,17 @@ import {
 type Props = {
   folder: string;
   onUploaded: (items: GalleryItem[]) => void;
+  disabled?: boolean;
 };
 
-/** Uploads many local files at once and appends one gallery item per file. */
-export function BulkUploader({ folder, onUploaded }: Props) {
+/**
+ * Drag files in from the OS, or click to pick, to upload many files at once.
+ * Appends one gallery item per file, in drop/pick order.
+ */
+export function GalleryDropzone({ folder, onUploaded, disabled }: Props) {
+  const inputId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
+  const [dragActive, setDragActive] = useState(false);
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -27,7 +33,7 @@ export function BulkUploader({ folder, onUploaded }: Props) {
     const uploaded: GalleryItem[] = [];
     const failures: string[] = [];
 
-    // Sequential on purpose: the order the admin picked the files becomes the
+    // Sequential on purpose: the order files are dropped/picked in becomes the
     // gallery order, and Cloudinary is not hammered with parallel uploads.
     for (const file of files) {
       const mediaType = mediaTypeOf(file);
@@ -60,18 +66,49 @@ export function BulkUploader({ folder, onUploaded }: Props) {
   const busy = progress !== null;
 
   return (
-    <div className="space-y-2">
-      <button
-        type="button"
-        onClick={() => inputRef.current?.click()}
-        disabled={busy}
-        className="rounded border border-neutral-300 px-3 py-1.5 text-[0.68rem] text-neutral-600 hover:bg-neutral-50 disabled:opacity-50"
-      >
-        {busy ? `Uploading ${progress.done}/${progress.total}…` : "Bulk upload files"}
-      </button>
+    <div
+      onDragEnter={(e) => {
+        e.preventDefault();
+        if (!disabled && e.dataTransfer.types.includes("Files")) setDragActive(true);
+      }}
+      onDragOver={(e) => {
+        e.preventDefault();
+        if (!disabled && e.dataTransfer.types.includes("Files")) setDragActive(true);
+      }}
+      onDragLeave={(e) => {
+        e.preventDefault();
+        setDragActive(false);
+      }}
+      onDrop={(e) => {
+        e.preventDefault();
+        setDragActive(false);
+        if (disabled) return;
+        if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
+      }}
+      className={`space-y-2 rounded border border-dashed px-4 py-5 text-center transition-colors ${
+        dragActive ? "border-black bg-neutral-50" : "border-neutral-300"
+      }`}
+    >
+      <p className="text-[0.72rem] text-neutral-500">
+        Drag images or videos here, or{" "}
+        <label
+          htmlFor={inputId}
+          className={`font-medium text-black underline-offset-2 hover:underline ${
+            busy || disabled ? "pointer-events-none opacity-50" : "cursor-pointer"
+          }`}
+        >
+          browse files
+        </label>
+        .
+      </p>
+      {busy && (
+        <p className="text-[0.68rem] text-neutral-500">
+          Uploading {progress.done}/{progress.total}…
+        </p>
+      )}
       <p className="text-[0.62rem] text-neutral-400">
-        Select several images or videos at once. Each file is added to the gallery in
-        the order you pick it. Max 20 MB per image, 200 MB per video.
+        Several files may be selected at once. Each is added to the gallery in the
+        order dropped or picked. Max 10 MB per image, 200 MB per video.
       </p>
       {errors.map((message) => (
         <p key={message} className="text-[0.65rem] text-red-600">
@@ -80,9 +117,11 @@ export function BulkUploader({ folder, onUploaded }: Props) {
       ))}
       <input
         ref={inputRef}
+        id={inputId}
         type="file"
         multiple
         accept="image/*,video/*"
+        disabled={busy || disabled}
         className="hidden"
         onChange={(e) => {
           const files = e.target.files;

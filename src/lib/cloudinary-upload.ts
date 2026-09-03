@@ -1,4 +1,7 @@
-export const MAX_IMAGE_BYTES = 20 * 1024 * 1024;
+// Must match the Cloudinary account's actual upload limit, not just our own
+// preference — a higher client-side limit only defers the same rejection to
+// after the upload round trip, with a confusing Cloudinary-side error.
+export const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 export const MAX_VIDEO_BYTES = 200 * 1024 * 1024;
 
 export type MediaType = "image" | "video";
@@ -8,7 +11,7 @@ export function maxBytesFor(mediaType: MediaType) {
 }
 
 export function maxLabelFor(mediaType: MediaType) {
-  return mediaType === "video" ? "200 MB" : "20 MB";
+  return mediaType === "video" ? "200 MB" : "10 MB";
 }
 
 /** Reads the media type from the browser MIME type; null for anything else. */
