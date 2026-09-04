@@ -21,6 +21,7 @@ export function ManagementShowroom({ projects }: { projects: Project[] }) {
       </Reveal>
 
       <HorizontalScrollGallery
+        slideClassName="w-full shrink-0 snap-center"
         slides={projects.map((property) => (
           <Link
             key={property.slug}

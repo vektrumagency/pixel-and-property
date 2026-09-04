@@ -2,7 +2,13 @@
 
 import { useRef, type ReactNode } from "react";
 
-export function HorizontalScrollGallery({ slides }: { slides: ReactNode[] }) {
+export function HorizontalScrollGallery({
+  slides,
+  slideClassName = "w-[88vw] shrink-0 snap-center lg:w-[68vw]",
+}: {
+  slides: ReactNode[];
+  slideClassName?: string;
+}) {
   const trackRef = useRef<HTMLDivElement>(null);
 
   function scrollByOne(direction: 1 | -1) {
@@ -22,11 +28,7 @@ export function HorizontalScrollGallery({ slides }: { slides: ReactNode[] }) {
         className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-2 lg:px-24 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {slides.map((slide, i) => (
-          <div
-            key={i}
-            data-slide
-            className="w-[88vw] shrink-0 snap-center lg:w-[68vw]"
-          >
+          <div key={i} data-slide className={slideClassName}>
             {slide}
           </div>
         ))}

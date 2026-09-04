@@ -20,6 +20,7 @@ export function DigitalPortfolio({ projects }: { projects: Project[] }) {
       </Reveal>
 
       <HorizontalScrollGallery
+        slideClassName="w-full shrink-0 snap-center"
         slides={projects.map((project) => (
           <Link
             key={project.slug}
