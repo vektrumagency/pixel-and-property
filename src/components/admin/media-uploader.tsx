@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { cldUrl, cldVideoThumb } from "@/lib/cloudinary";
 import {
+  compressImageIfNeeded,
   maxLabelFor,
   uploadToCloudinary,
   validateFile,
@@ -33,7 +34,8 @@ export function MediaUploader({
   async function handleFile(file: File) {
     setError(null);
 
-    const invalid = validateFile(file, mediaType);
+    const compressed = await compressImageIfNeeded(file, mediaType);
+    const invalid = validateFile(compressed, mediaType);
     if (invalid) {
       setError(invalid);
       return;
@@ -41,7 +43,7 @@ export function MediaUploader({
 
     setUploading(true);
     try {
-      onChange(await uploadToCloudinary(file, folder, mediaType));
+      onChange(await uploadToCloudinary(compressed, folder, mediaType));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed");
     } finally {

@@ -5,7 +5,11 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { updateProjectHeroImage } from "@/app/admin/(dashboard)/projects/actions";
 import { cldUrl } from "@/lib/cloudinary";
-import { uploadToCloudinary, validateFile } from "@/lib/cloudinary-upload";
+import {
+  compressImageIfNeeded,
+  uploadToCloudinary,
+  validateFile,
+} from "@/lib/cloudinary-upload";
 import type { ProjectRow } from "@/app/admin/(dashboard)/projects/projects-table";
 
 const categoryLabels = { digital: "Digital", management: "Management" } as const;
@@ -42,7 +46,8 @@ function Card({ project }: { project: ProjectRow }) {
 
   async function handleFile(file: File) {
     setError(null);
-    const invalid = validateFile(file, "image");
+    const compressed = await compressImageIfNeeded(file, "image");
+    const invalid = validateFile(compressed, "image");
     if (invalid) {
       setError(invalid);
       return;
@@ -51,7 +56,7 @@ function Card({ project }: { project: ProjectRow }) {
     setBusy(true);
     try {
       const publicId = await uploadToCloudinary(
-        file,
+        compressed,
         `pixel/projects/${project.slug}`,
         "image"
       );

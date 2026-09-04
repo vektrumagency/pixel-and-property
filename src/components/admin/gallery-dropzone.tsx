@@ -3,6 +3,7 @@
 import { useId, useRef, useState } from "react";
 import type { GalleryItem } from "@/lib/projects";
 import {
+  compressImageIfNeeded,
   mediaTypeOf,
   uploadToCloudinary,
   validateFile,
@@ -40,12 +41,13 @@ export function GalleryDropzone({ folder, onUploaded, disabled }: Props) {
       if (!mediaType) {
         failures.push(`${file.name}: not an image or a video.`);
       } else {
-        const invalid = validateFile(file, mediaType);
+        const compressed = await compressImageIfNeeded(file, mediaType);
+        const invalid = validateFile(compressed, mediaType);
         if (invalid) {
           failures.push(`${file.name}: ${invalid}`);
         } else {
           try {
-            const id = await uploadToCloudinary(file, folder, mediaType);
+            const id = await uploadToCloudinary(compressed, folder, mediaType);
             uploaded.push({ id, type: mediaType });
           } catch (err) {
             failures.push(
