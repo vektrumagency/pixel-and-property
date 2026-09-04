@@ -1,3 +1,5 @@
+import imageCompression from "browser-image-compression";
+
 // Must match the Cloudinary account's actual upload limit, not just our own
 // preference — a higher client-side limit only defers the same rejection to
 // after the upload round trip, with a confusing Cloudinary-side error.
@@ -19,6 +21,26 @@ export function mediaTypeOf(file: File): MediaType | null {
   if (file.type.startsWith("image/")) return "image";
   if (file.type.startsWith("video/")) return "video";
   return null;
+}
+
+/**
+ * Re-encodes an oversized image down toward MAX_IMAGE_BYTES so it clears
+ * validateFile instead of being rejected outright. Videos and images
+ * already under the limit are returned untouched.
+ */
+export async function compressImageIfNeeded(file: File, mediaType: MediaType): Promise<File> {
+  if (mediaType !== "image" || file.size <= MAX_IMAGE_BYTES) return file;
+  try {
+    return await imageCompression(file, {
+      maxSizeMB: MAX_IMAGE_BYTES / (1024 * 1024),
+      useWebWorker: true,
+      preserveExif: true,
+    });
+  } catch {
+    // Compression is a best-effort convenience — fall back to the original
+    // file and let validateFile reject it with the usual size error.
+    return file;
+  }
 }
 
 /** Returns an error message, or null when the file may be uploaded. */
