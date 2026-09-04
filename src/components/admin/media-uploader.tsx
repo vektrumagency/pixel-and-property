@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { cldUrl, cldVideoThumb } from "@/lib/cloudinary";
 import {
-  compressImageIfNeeded,
+  compressMediaIfNeeded,
   maxLabelFor,
   uploadToCloudinary,
   validateFile,
@@ -27,6 +27,7 @@ export function MediaUploader({
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [compressProgress, setCompressProgress] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const maxLabel = maxLabelFor(mediaType);
@@ -34,7 +35,10 @@ export function MediaUploader({
   async function handleFile(file: File) {
     setError(null);
 
-    const compressed = await compressImageIfNeeded(file, mediaType);
+    const compressed = await compressMediaIfNeeded(file, mediaType, (ratio) =>
+      setCompressProgress(ratio)
+    );
+    setCompressProgress(null);
     const invalid = validateFile(compressed, mediaType);
     if (invalid) {
       setError(invalid);
@@ -97,10 +101,16 @@ export function MediaUploader({
             <button
               type="button"
               onClick={() => inputRef.current?.click()}
-              disabled={uploading}
+              disabled={uploading || compressProgress !== null}
               className="rounded bg-black px-3 py-1.5 text-[0.68rem] font-medium text-white hover:opacity-80 disabled:opacity-50"
             >
-              {uploading ? "Uploading…" : value ? "Replace" : "Upload"}
+              {compressProgress !== null
+                ? `Compressing… ${Math.round(compressProgress * 100)}%`
+                : uploading
+                  ? "Uploading…"
+                  : value
+                    ? "Replace"
+                    : "Upload"}
             </button>
             {value && !uploading && (
               <button
@@ -119,6 +129,7 @@ export function MediaUploader({
           )}
           <p className="text-[0.62rem] text-neutral-400">
             Max {maxLabel}. {mediaType === "image" ? "JPG, PNG, WebP" : "MP4, MOV"}.
+            {mediaType === "video" && " Larger videos are compressed automatically."}
           </p>
           {error && <p className="text-[0.65rem] text-red-600">{error}</p>}
         </div>
