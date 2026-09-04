@@ -3,7 +3,7 @@
 import { useId, useRef, useState } from "react";
 import type { GalleryItem } from "@/lib/projects";
 import {
-  compressImageIfNeeded,
+  compressMediaIfNeeded,
   mediaTypeOf,
   uploadToCloudinary,
   validateFile,
@@ -24,6 +24,9 @@ export function GalleryDropzone({ folder, onUploaded, disabled }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragActive, setDragActive] = useState(false);
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
+  const [compressing, setCompressing] = useState<{ name: string; ratio: number } | null>(
+    null
+  );
   const [errors, setErrors] = useState<string[]>([]);
 
   async function handleFiles(fileList: FileList) {
@@ -41,7 +44,10 @@ export function GalleryDropzone({ folder, onUploaded, disabled }: Props) {
       if (!mediaType) {
         failures.push(`${file.name}: not an image or a video.`);
       } else {
-        const compressed = await compressImageIfNeeded(file, mediaType);
+        const compressed = await compressMediaIfNeeded(file, mediaType, (ratio) =>
+          setCompressing({ name: file.name, ratio })
+        );
+        setCompressing(null);
         const invalid = validateFile(compressed, mediaType);
         if (invalid) {
           failures.push(`${file.name}: ${invalid}`);
@@ -105,12 +111,15 @@ export function GalleryDropzone({ folder, onUploaded, disabled }: Props) {
       </p>
       {busy && (
         <p className="text-[0.68rem] text-neutral-500">
-          Uploading {progress.done}/{progress.total}…
+          {compressing
+            ? `Compressing ${compressing.name}… ${Math.round(compressing.ratio * 100)}%`
+            : `Uploading ${progress.done}/${progress.total}…`}
         </p>
       )}
       <p className="text-[0.62rem] text-neutral-400">
         Several files may be selected at once. Each is added to the gallery in the
-        order dropped or picked. Max 10 MB per image, 200 MB per video.
+        order dropped or picked. Max 10 MB per image, 100 MB per video (larger videos
+        are compressed automatically).
       </p>
       {errors.map((message) => (
         <p key={message} className="text-[0.65rem] text-red-600">
