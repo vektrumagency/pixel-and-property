@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { cldUrl, cldVideoUrl, cldVideoThumb } from "@/lib/cloudinary";
 import type { GalleryItem } from "@/lib/projects";
@@ -13,6 +13,27 @@ export function MediaCarousel({
   alt: string;
 }) {
   const [index, setIndex] = useState(0);
+
+  // Warm the browser cache for every gallery asset as soon as the page
+  // opens, so stepping through the carousel doesn't wait on network
+  // requests. Images are preloaded in full; videos only by their poster
+  // thumbnail, since preloading full video files would be wasteful.
+  useEffect(() => {
+    const preloaded = items.map((item) =>
+      item.type === "video" ? cldVideoThumb(item.id, { w: 1600 }) : cldUrl(item.id, { w: 1600 })
+    );
+    const images = preloaded.map((src) => {
+      const img = new window.Image();
+      img.src = src;
+      return img;
+    });
+    return () => {
+      images.forEach((img) => {
+        img.src = "";
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (items.length === 0) return null;
 
@@ -35,6 +56,9 @@ export function MediaCarousel({
           src={cldVideoUrl(current.id, { w: 1600 })}
           poster={cldVideoThumb(current.id, { w: 1600 })}
           controls
+          autoPlay
+          muted
+          loop
           playsInline
           preload="metadata"
           className="absolute inset-0 h-full w-full object-contain"
