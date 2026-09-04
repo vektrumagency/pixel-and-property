@@ -70,6 +70,7 @@ export function MediaCarousel({
           alt={alt}
           fill
           priority={index === 0}
+          unoptimized
           className="object-contain"
         />
       )}
