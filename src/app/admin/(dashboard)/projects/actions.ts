@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/slug";
-import type { GalleryItem } from "@/lib/projects";
+import { normalizeGallery, type GalleryItem } from "@/lib/projects";
+import { cleanupOrphanedAssets } from "@/lib/cloudinary-server";
 
 type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -48,6 +49,21 @@ export async function saveProject(data: ProjectFormData): Promise<{ error?: stri
     return { error: `Name "${name}" is already in use by another project.` };
   }
 
+  // Snapshot the assets this project referenced before the edit, so we can
+  // clean up any that the admin removed once the new row is committed.
+  const oldAssets: GalleryItem[] = [];
+  if (data.id) {
+    const { data: prev } = await supabase
+      .from("projects")
+      .select("hero_image, gallery")
+      .eq("id", data.id)
+      .maybeSingle();
+    if (prev) {
+      if (prev.hero_image) oldAssets.push({ id: prev.hero_image, type: "image" });
+      oldAssets.push(...normalizeGallery(prev.gallery));
+    }
+  }
+
   const row = {
     category: data.category,
     location: data.location,
@@ -87,6 +103,18 @@ export async function saveProject(data: ProjectFormData): Promise<{ error?: stri
     return { error: error.message };
   }
 
+  // Delete from Cloudinary any asset the admin removed in this edit, unless it
+  // is still referenced elsewhere (reference-checked inside the helper).
+  if (data.id && oldAssets.length) {
+    const keptIds = new Set<string>();
+    if (data.hero_image) keptIds.add(data.hero_image);
+    for (const item of data.gallery) if (item.id) keptIds.add(item.id);
+    await cleanupOrphanedAssets(
+      supabase,
+      oldAssets.filter((asset) => !keptIds.has(asset.id))
+    );
+  }
+
   for (const locale of ["pt", "en"]) {
     revalidatePath(`/${locale}/digital`, "layout");
     revalidatePath(`/${locale}/digital/${slug}`, "page");
@@ -99,10 +127,26 @@ export async function saveProject(data: ProjectFormData): Promise<{ error?: stri
 
 export async function deleteProject(id: string, slug: string): Promise<{ error?: string }> {
   const supabase = await createClient();
+
+  // Snapshot the project's assets before deleting the row, then clean up any
+  // that are now orphaned (reference-checked — a shared asset is kept).
+  const { data: prev } = await supabase
+    .from("projects")
+    .select("hero_image, gallery")
+    .eq("id", id)
+    .maybeSingle();
+
   const { error } = await supabase.from("projects").delete().eq("id", id);
 
   if (error) {
     return { error: error.message };
+  }
+
+  if (prev) {
+    const removed: GalleryItem[] = [];
+    if (prev.hero_image) removed.push({ id: prev.hero_image, type: "image" });
+    removed.push(...normalizeGallery(prev.gallery));
+    await cleanupOrphanedAssets(supabase, removed);
   }
 
   for (const locale of ["pt", "en"]) {
@@ -147,6 +191,13 @@ export async function updateProjectHeroImage(
   publicId: string
 ): Promise<{ error?: string }> {
   const supabase = await createClient();
+
+  const { data: prev } = await supabase
+    .from("projects")
+    .select("hero_image")
+    .eq("id", id)
+    .maybeSingle();
+
   const { error } = await supabase
     .from("projects")
     .update({ hero_image: publicId })
@@ -154,6 +205,11 @@ export async function updateProjectHeroImage(
 
   if (error) {
     return { error: error.message };
+  }
+
+  // The previous hero was swapped out — remove it from Cloudinary if orphaned.
+  if (prev?.hero_image && prev.hero_image !== publicId) {
+    await cleanupOrphanedAssets(supabase, [{ id: prev.hero_image, type: "image" }]);
   }
 
   for (const locale of ["pt", "en"]) {
