@@ -21,7 +21,7 @@ export function DigitalPortfolio({ projects }: { projects: Project[] }) {
 
       <HorizontalScrollGallery
         slideClassName="w-full shrink-0 snap-center"
-        slides={projects.map((project) => (
+        slides={projects.map((project, index) => (
           <Link
             key={project.slug}
             href={`/digital/${project.slug}`}
@@ -32,6 +32,8 @@ export function DigitalPortfolio({ projects }: { projects: Project[] }) {
                 src={cldUrl(project.heroImage, { w: 1400 })}
                 alt={project.name[locale]}
                 fill
+                priority={index === 0}
+                unoptimized
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
