@@ -3,7 +3,6 @@ import { AssetForm } from "./asset-form";
 
 const SLOTS = [
   { page: "home", slot: "hero_video", label: "Home Hero Video", mediaType: "video" as const },
-  { page: "home", slot: "hero_poster", label: "Home Hero Poster Image (opcional — aparece antes do vídeo; se vazio, usa o 1.º fotograma)", mediaType: "image" as const },
   { page: "digital", slot: "hero_image", label: "Digital Hero Image", mediaType: "image" as const },
   { page: "management", slot: "hero_image", label: "Management Hero Image", mediaType: "image" as const },
   { page: "investments", slot: "hero_image", label: "Investments Hero Image", mediaType: "image" as const },
